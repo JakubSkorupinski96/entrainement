@@ -4,18 +4,59 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import dao.Computer;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import dao.ComputerDAO;
+
+import java.awt.Button;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.Label;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener; 
 
 
+public class Main extends Frame implements ActionListener, WindowListener {
 
-public class Main {
-
+	private final static String URL = "jdbc:mysql://localhost:3306/computer-database-db";
+	private final static String USER = "root";
+	private final static String PASS = "";
+	
+	private Label pcNameLabel;     
+	private TextField nameTF; 
+	private Button pcBouton;   
+	private int count = 0;   
+	
+	public Main () {
+		setLayout(new FlowLayout());
+		addWindowListener(this);
+		 
+		pcNameLabel = new Label("PC Name");  
+		add(pcNameLabel);                    
+		 
+		nameTF = new TextField(count + "", 10); 
+		nameTF.setEditable(false);       
+		add(nameTF);                    
+		      
+		pcBouton = new Button("Search");  
+		add(pcBouton);                   
+		 
+		pcBouton.addActionListener(this);
+		 
+		setTitle("User Interface"); 
+		setSize(500, 300);        
+		 
+		setVisible(true);        	 
+	}
+	
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		String URL = "jdbc:mysql://localhost:3306/computer-database-db";
-		String USER = "root";
-		String PASS = "";
+			
+		Main app = new Main();
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -26,20 +67,74 @@ public class Main {
 		
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT name FROM computer WHERE company_id = 1");
-			while (rs.next()) {
-				  String name = rs.getString("name");
-				  System.out.println(name + "\n");
-				}
 			//dao.Computer.createComputer(conn,"IBM 5100",null,null,1);
-			dao.Computer.deleteComputer(conn,"IBM 5100");
-			dao.Computer.listDetails(conn, "IBM 5100");
+			dao.ComputerDAO.deleteComputer(conn,"IBM 5100");
+			dao.ComputerDAO.listDetails(conn, "IBM 5100");
+			dao.CompanyDAO.listCompanies(conn);
+			dao.ComputerDAO.listComputers(conn);
 		} catch (SQLException e) {
 			System.out.println("lol");
 			e.printStackTrace();
 		}
 		
 	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		System.exit(0);
+		
+	}
+
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	 
 
 }

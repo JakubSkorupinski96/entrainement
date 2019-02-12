@@ -8,14 +8,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Computer {
+public class ComputerDAO {
 
 	public String name;
 	public Date intro_date;
 	public Date discontinued_date;
-	public Company company;
+	public CompanyDAO company;
 	
-	public Computer(String name, Company company) {
+	public ComputerDAO(String name, CompanyDAO company) {
 		this.name = name;
 		this.company = company;
 	}
@@ -23,6 +23,7 @@ public class Computer {
 	public static void createComputer (Connection conn, String name, Date intro, Date discon, int comp_id) {
 		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
 		try {
+			
 			PreparedStatement preparedS = conn.prepareStatement(insert);
 			preparedS.setString(1, name);
 			preparedS.setDate(2, intro);
@@ -39,7 +40,7 @@ public class Computer {
 	
 	//work?
 	public static void deleteComputer (Connection conn, String name) {
-		String delete = "delete from computer where NAME = ?";
+		String delete = "DELETE FROM computer WHERE NAME = ?";
 		try {
 			PreparedStatement preparedS = conn.prepareStatement(delete);
 			preparedS.setString(1, name);
@@ -61,10 +62,44 @@ public class Computer {
 				  Date date_intro = rs.getDate(3);
 				  Date date_discon = rs.getDate(4);
 				  int comp_id = rs.getInt(5);
-				  System.out.println(name + " " + date_intro + " " + date_discon + " " + comp_id);
+				  System.out.println(pcName + " " + date_intro + " " + date_discon + " " + comp_id);
 				}
 		} catch (SQLException e) {
 			System.out.println("Fatal Error: Select");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void updatePC(Connection conn, String name, String newName, Date newIntro, Date newDiscon, int newCompanyId) {
+		String update = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
+		try {
+			
+			PreparedStatement preparedS = conn.prepareStatement(update);
+			preparedS.setString(1, newName);
+			preparedS.setDate(2, newIntro);
+			preparedS.setDate(3, newDiscon);
+			preparedS.setInt(4, newCompanyId);
+			preparedS.setString(5, name);
+			preparedS.executeUpdate();
+
+			System.out.println("updated");
+		} catch (SQLException e) {
+			System.out.println("Update Error");
+			e.printStackTrace();
+		}
+	}
+	
+	public static void listComputers(Connection conn) {
+		Statement stmt;
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM computer");
+			while (rs.next()) {
+				  String name = rs.getString("name");
+				  System.out.println(name + "\n");
+				}
+		} catch (SQLException e) {
+			System.out.println("computer list error");
 			e.printStackTrace();
 		}
 	}

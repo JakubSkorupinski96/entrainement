@@ -35,10 +35,14 @@ public class ComputerDAO {
 	//marche?
 	public static void deleteComputer (Connection conn, String name) {
 		String delete = "DELETE FROM computer WHERE NAME = ?";
+		//String delete = "DELETE FROM computer WHERE ";
+		//delete += query;
 		try {
+			//Statement stmt = conn.createStatement();
 			PreparedStatement preparedS = conn.prepareStatement(delete);
 			preparedS.setString(1, name);
 			preparedS.executeUpdate();
+			//stmt.executeUpdate(delete);
 			System.out.println("Deleted");
 		} catch (SQLException e) {
 			System.out.println("Fatal Error");

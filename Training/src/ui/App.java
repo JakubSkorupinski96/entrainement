@@ -10,6 +10,9 @@ public class App {
 	private final static String USER = "root";
 	private final static String PASS = "";
 	
+	//Expression regex pour les dates
+	private final static String REGEX_DATE = "\\d{4}-[0-1][0-9]-[0-3][0-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]";
+	
 	
 	private static void interfaceCases(Connection conn, Scanner scan) {
 		switch(scan.next()) {
@@ -72,7 +75,7 @@ public class App {
 		int index = 0;
 		
 		System.out.println(current_scan);
-		while (!current_scan.equals("end") || scan.hasNext("end")) {  //|| non nul
+		while (!current_scan.equals("end") || scan.hasNext("end")) {
 			name += current_scan + " ";
 			current_scan = scan.next();
 		}
@@ -80,64 +83,80 @@ public class App {
 	}
 	
 	public static void createPcUserInterface(Connection conn) {
+		String introStr = "";
+		String decStr = "";
 		System.out.println("Entrer le nom du nouvel ordinateur:");
 		Scanner nameScan = new Scanner(System.in);
 		String nameStr = nameScan.nextLine();
-		System.out.println("Entrer la date de création de l'ordinateur:");
-		Scanner introScan = new Scanner(System.in);
-		String introStr = introScan.nextLine();
-		System.out.println("Entrer la date d'arret de production de l'ordinateur:");
-		Scanner decScan = new Scanner(System.in);
-		String decStr = decScan.nextLine();
-		System.out.println("Entrer l'id de la companie (peut être 'null'):");
+		do {
+			System.out.println("Entrer la date de création de l'ordinateur:");
+			Scanner introScan = new Scanner(System.in);
+			introStr = introScan.nextLine();
+			if(!introStr.matches(REGEX_DATE)) {
+				System.out.println("Mauvais format de date, veuillez reessayer");
+			}
+		}while(!introStr.matches(REGEX_DATE));
+		do {
+			System.out.println("Entrer la date d'arret de production de l'ordinateur:");
+			Scanner decScan = new Scanner(System.in);
+			decStr = decScan.nextLine();
+			if(!introStr.matches(REGEX_DATE)) {
+				System.out.println("Mauvais format de date, veuillez reessayer");
+			}
+		}while(!introStr.matches(REGEX_DATE));
+		System.out.println("Entrer l'id de la companie:");
 		Scanner idScan = new Scanner(System.in);
-		String idStr = decScan.nextLine();
+		String idStr = idScan.nextLine();
 		dao.ComputerDAO.createComputer(conn,nameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
 	
 	public static void updatePcUserInterface(Connection conn) {
+		String introStr = "";
+		String decStr = "";
 		System.out.println("Entrer le nom de l'ordinateur à mofifier:");
 		Scanner oldNameScan = new Scanner(System.in);
 		String oldNameStr = oldNameScan.nextLine();
 		System.out.println("Entrer le nouveau nom de l'ordinateur:");
 		Scanner newNameScan = new Scanner(System.in);
 		String newNameStr = newNameScan.nextLine();
-		System.out.println("Entrer la nouvelle date de creation de l'ordinateur:");
-		Scanner introScan = new Scanner(System.in);
-		String introStr = introScan.nextLine();
-		System.out.println("Entrer la nouvelle date d'arret de production de l'ordinateur:");
-		Scanner decScan = new Scanner(System.in);
-		String decStr = decScan.nextLine();
-		System.out.println("Entrer le nouvel id de la companie (peut être 'null'):");
+		do {
+			System.out.println("Entrer la nouvelle date de creation de l'ordinateur:");
+			Scanner introScan = new Scanner(System.in);
+			introStr = introScan.nextLine();
+			if(!introStr.matches(REGEX_DATE)) {
+				System.out.println("Mauvais format de date, veuillez reessayer");
+			}
+		}while(!introStr.matches(REGEX_DATE));
+		do {
+			System.out.println("Entrer la nouvelle date d'arret de production de l'ordinateur:");
+			Scanner decScan = new Scanner(System.in);
+			decStr = decScan.nextLine();
+			if(!decStr.matches(REGEX_DATE)) {
+				System.out.println("Mauvais format de date, veuillez reessayer");
+			}
+		}while(!decStr.matches(REGEX_DATE));
+		System.out.println("Entrer le nouvel id de la companie:");
 		Scanner idScan = new Scanner(System.in);
-		String idStr = decScan.nextLine();
+		String idStr = idScan.nextLine();
 		dao.ComputerDAO.updatePC(conn,oldNameStr,newNameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
 	
 	public static void deletePcUserInterface(Connection conn) {
-		System.out.println("quelle critere? (name, date_intro, date_dis, companyId):");
-		Scanner response = new Scanner(System.in);
-		
+		//System.out.println("quelle critere? (name, date_intro, date_dis, companyId):");
+		//Scanner response = new Scanner(System.in);
+		//String query = response.nextLine();
 		System.out.println("Entrer le nom de l'ordinateur à supprimer:");
 		Scanner nameScan = new Scanner(System.in);
 		String nameStr = nameScan.nextLine();
 		dao.ComputerDAO.deleteComputer(conn, nameStr);
 	}
-	
-	public static void deleteCases(String delete) {
-		switch(delete) {
-			case "name":
-				
-		}
 			
-	}
 	public static void showPcDetailsUserInterface(Connection conn) {
 		System.out.println("Entrer le nom de l'ordinateur:");
 		Scanner nameScan = new Scanner(System.in);
 		String nameStr = nameScan.nextLine();
 		dao.ComputerDAO.listDetails(conn, nameStr);
 	}
-	
 	
 	
 	public static void main(String[] args) {

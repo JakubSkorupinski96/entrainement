@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,13 +15,13 @@ import model.Computer;
 
 public class ComputerDAO {
 	
-	public static void createComputer (Connection conn, String name, Date intro, Date discon, int comp_id) {
+	public static void createComputer (Connection conn, String name, String intro, String discon, int comp_id) {
 		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
 		try {		
 			PreparedStatement preparedS = conn.prepareStatement(insert);
 			preparedS.setString(1, name);
-			preparedS.setDate(2, intro);
-			preparedS.setDate(3, discon);
+			preparedS.setTimestamp(2,Timestamp.valueOf(intro));
+			preparedS.setTimestamp(3,Timestamp.valueOf(discon));
 			preparedS.setInt(4, comp_id);
 			preparedS.executeUpdate();
 
@@ -37,6 +38,7 @@ public class ComputerDAO {
 		try {
 			PreparedStatement preparedS = conn.prepareStatement(delete);
 			preparedS.setString(1, name);
+			preparedS.executeUpdate();
 			System.out.println("Deleted");
 		} catch (SQLException e) {
 			System.out.println("Fatal Error");
@@ -63,14 +65,14 @@ public class ComputerDAO {
 		}
 	}
 	
-	public static void updatePC(Connection conn, String name, String newName, Date newIntro, Date newDiscon, int newCompanyId) {
+	public static void updatePC(Connection conn, String name, String newName, String newIntro, String newDiscon, int newCompanyId) {
 		String update = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
 		try {
 			
 			PreparedStatement preparedS = conn.prepareStatement(update);
 			preparedS.setString(1, newName);
-			preparedS.setDate(2, newIntro);
-			preparedS.setDate(3, newDiscon);
+			preparedS.setTimestamp(2,Timestamp.valueOf(newIntro));
+			preparedS.setTimestamp(3,Timestamp.valueOf(newDiscon));
 			preparedS.setInt(4, newCompanyId);
 			preparedS.setString(5, name);
 			preparedS.executeUpdate();

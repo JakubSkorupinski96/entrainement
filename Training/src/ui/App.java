@@ -1,3 +1,4 @@
+package ui;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -5,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class App {
-	private final static String URL = "jdbc:mysql://localhost:3306/computer-database-db";
+	private final static String URL = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
 	private final static String USER = "root";
 	private final static String PASS = "";
 	
@@ -20,16 +21,17 @@ public class App {
 				dao.CompanyDAO.listCompanies(conn);
 				break;
 			case "createPC":
-				String CreateName = returnPcName(scan);
-				dao.ComputerDAO.createComputer(conn,CreateName,null,null,Integer.parseInt(scan.next()));
+				String createName = returnPcName(scan);
+				dao.ComputerDAO.createComputer(conn,createName,null,null,Integer.parseInt(scan.next()));
 				break;
 			case "deletePC":
-				dao.ComputerDAO.deleteComputer(conn, scan.next());
+				String deleteName  = returnPcName(scan);
+				dao.ComputerDAO.deleteComputer(conn, deleteName);
 				break;
 			case "updatePC":
-				String UpdateName = returnPcName(scan);
+				String updateName = returnPcName(scan);
 				String NewUpdatename = returnPcName(scan);
-				dao.ComputerDAO.updatePC(conn,UpdateName,NewUpdatename,null,null,Integer.parseInt(scan.next()));
+				dao.ComputerDAO.updatePC(conn,updateName,NewUpdatename,null,null,Integer.parseInt(scan.next()));
 				break;
 			case "showComputers":
 				dao.ComputerDAO.listComputers(conn);
@@ -41,10 +43,19 @@ public class App {
 				break;
 			case "syntax":
 				System.out.println("[method] [args]");
-				System.out.println("createPC [Pc Name] [Company ID]");
+				System.out.println("createPC [Pc Name] [Pc Name] ... end [Company ID]");
 				System.out.println("deletePC [Pc Name] [Pc Name] ... end ");
 				System.out.println("showPCDetails [Pc Name] [Pc Name] ... end ");
 				System.out.println("updatePC [Pc Name] [Pc Name] ... end [new Pc Name] [new Pc Name] ... end [company_id]");
+				break;
+			case "methods":
+				System.out.println("showCompanies");
+				System.out.println("showComputers");
+				System.out.println("createPC");
+				System.out.println("deletePC");
+				System.out.println("updatePC");
+				System.out.println("showPCDetails");
+				System.out.println("exit");
 				break;
 			default:
 				System.out.println("Invalid command");

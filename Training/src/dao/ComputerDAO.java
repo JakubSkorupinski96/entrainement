@@ -7,23 +7,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Computer;
 
 public class ComputerDAO {
-
-	public String name;
-	public Date intro_date;
-	public Date discontinued_date;
-	public CompanyDAO company;
-	
-	public ComputerDAO(String name, CompanyDAO company) {
-		this.name = name;
-		this.company = company;
-	}
 	
 	public static void createComputer (Connection conn, String name, Date intro, Date discon, int comp_id) {
 		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
-		try {
-			
+		try {		
 			PreparedStatement preparedS = conn.prepareStatement(insert);
 			preparedS.setString(1, name);
 			preparedS.setDate(2, intro);
@@ -38,7 +31,7 @@ public class ComputerDAO {
 		}
 	}
 	
-	//work?
+	//marche?
 	public static void deleteComputer (Connection conn, String name) {
 		String delete = "DELETE FROM computer WHERE NAME = ?";
 		try {
@@ -90,13 +83,25 @@ public class ComputerDAO {
 	}
 	
 	public static void listComputers(Connection conn) {
+		List<Computer> computers = new ArrayList<>();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM computer");
 			while (rs.next()) {
-				  String name = rs.getString("name");
-				  System.out.println(name + "\n");
+				Computer computer = Computer.getInstance();
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				Date intro_date = rs.getDate("introduced");
+				Date discontinued_date = rs.getDate("discontinued");
+				int companyId = rs.getInt("company_id");
+				computer.setId(id);
+				computer.setName(name);
+				computer.setIntro_date(intro_date);
+				computer.setDiscontinued_date(discontinued_date);
+				computer.setCompany(companyId);
+				System.out.println(computer.toString());
+				computers.add(computer);
 				}
 		} catch (SQLException e) {
 			System.out.println("computer list error");

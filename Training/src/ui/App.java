@@ -14,7 +14,7 @@ public class App {
 	private static void interfaceCases(Connection conn, Scanner scan) {
 		switch(scan.next()) {
 			case "exit":
-				System.out.println("Goodbye");
+				System.out.println("Au revoir");
 				System.exit(0);
 				break;
 			case "showCompanies":
@@ -81,16 +81,16 @@ public class App {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
-			System.out.println("First catch");
+			System.out.println("JDBC error");
 			e1.printStackTrace();
 		}
 		
 		try {
 			Connection conn = DriverManager.getConnection(URL, USER, PASS);
-			System.out.println("Hello user");
+			System.out.println("Bonjour utilisateur");
 			while (true) {
 				//dao.ComputerDAO.updatePC(conn, "IBN 5100", "IBM 5100", new Date(0), "1996-02-01 12:01:33", 9);
-				System.out.println("Choose your action:");
+				System.out.println("Entrer votre commande:");
 				Scanner in = new Scanner(System.in);  
 				interfaceCases(conn,in);
 				//System.in.read();

@@ -14,6 +14,13 @@ public class App {
 	private final static String REGEX_DATE = "\\d{4}-[0-1][0-9]-[0-3][0-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]";
 	
 	
+	/**
+	 * Renvoie différentes méthodes par rapport aux caractères entrées
+	 * 
+	 * @param conn : Connexion a la BDD
+	 * @param scan : chaine de caractères entrées par l'utilisateur
+	 */
+	
 	private static void interfaceCases(Connection conn, Scanner scan) {
 		switch(scan.next()) {
 			case "exit":
@@ -82,6 +89,12 @@ public class App {
 		return name;
 	}
 	
+	
+	/**
+	 * Cree un nouvel ordinateur avec les donnees entrees
+	 * 
+	 * @param conn : Connexion a la BDD
+	 */
 	public static void createPcUserInterface(Connection conn) {
 		String introStr = "";
 		String decStr = "";
@@ -109,6 +122,12 @@ public class App {
 		String idStr = idScan.nextLine();
 		dao.ComputerDAO.createComputer(conn,nameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
+	
+	/**
+	 * Mets a jour un ordinateur dans la BDD a partir du nom 
+	 * 
+	 * @param conn : Connexion a la BDD
+	 */
 	
 	public static void updatePcUserInterface(Connection conn) {
 		String introStr = "";
@@ -141,6 +160,12 @@ public class App {
 		dao.ComputerDAO.updatePC(conn,oldNameStr,newNameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
 	
+	/**
+	 * Supprime un ordinateur dans la BDD a partir de son nom
+	 * 
+	 * @param conn : Connexion a la BDD
+	 */
+	
 	public static void deletePcUserInterface(Connection conn) {
 		//System.out.println("quelle critere? (name, date_intro, date_dis, companyId):");
 		//Scanner response = new Scanner(System.in);
@@ -150,7 +175,14 @@ public class App {
 		String nameStr = nameScan.nextLine();
 		dao.ComputerDAO.deleteComputer(conn, nameStr);
 	}
-			
+	
+	
+	/**
+	 * Affiche les détails d'un ordinateur dans la BDD à partir de son nom
+	 * 
+	 * @param conn : Connexion a la BDD
+	 */
+	
 	public static void showPcDetailsUserInterface(Connection conn) {
 		System.out.println("Entrer le nom de l'ordinateur:");
 		Scanner nameScan = new Scanner(System.in);
@@ -160,7 +192,6 @@ public class App {
 	
 	
 	public static void main(String[] args) {
-
 		
 		try {
 			Class.forName("com.mysql.jdbc.Driver");

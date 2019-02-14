@@ -101,7 +101,7 @@ public class ComputerDAO {
 		}
 	}
 	
-	public static void listComputers(Connection conn) {
+	public static List<Computer> listComputers(Connection conn) {
 		List<Computer> computers = new ArrayList<>();
 		Statement stmt;
 		try {
@@ -126,5 +126,6 @@ public class ComputerDAO {
 			System.out.println("computer list error");
 			e.printStackTrace();
 		}
+		return computers;
 	}
 }

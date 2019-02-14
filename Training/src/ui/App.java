@@ -8,6 +8,8 @@ import java.util.Scanner;
 import dao.CompanyDAO;
 import dao.ComputerDAO;
 import model.Computer;
+import services.CompanyServices;
+import services.ComputerServices;
 
 public class App {
 	private final static String URL = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
@@ -17,9 +19,8 @@ public class App {
 	//Expression regex pour les dates
 	private final static String REGEX_DATE = "\\d{4}-[0-1][0-9]-[0-3][0-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]";
 	
-	
-	private static CompanyDAO companyDAO = CompanyDAO.getInstance();
-	private static ComputerDAO computerDAO = ComputerDAO.getInstance();
+	private static CompanyServices companyServices = CompanyServices.getInstance();
+	private static ComputerServices computerServices = ComputerServices.getInstance();
 	
 	/**
 	 * Renvoie différentes méthodes par rapport aux caractères entrées
@@ -35,7 +36,7 @@ public class App {
 				System.exit(0);
 				break;
 			case "showCompanies":
-				companyDAO.listCompanies(conn);
+				companyServices.listCompanies(conn);
 				break;
 			case "createPC":
 				createPcUserInterface(conn);
@@ -54,7 +55,7 @@ public class App {
 				//dao.ComputerDAO.updatePC(conn,updateName,NewUpdatename,null,null,Integer.parseInt(scan.next()));
 				break;
 			case "showComputers":
-				computerDAO.listComputers(conn);
+				computerServices.listComputers(conn);
 				break;
 			case "showPCDetails":
 				showPcDetailsUserInterface(conn);
@@ -127,7 +128,7 @@ public class App {
 		System.out.println("Entrer l'id de la companie:");
 		Scanner idScan = new Scanner(System.in);
 		String idStr = idScan.nextLine();
-		computerDAO.createComputer(conn,nameStr,introStr,decStr,Integer.parseInt(idStr));
+		computerServices.createComputer(conn,nameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
 	
 	/**
@@ -164,7 +165,7 @@ public class App {
 		System.out.println("Entrer le nouvel id de la companie:");
 		Scanner idScan = new Scanner(System.in);
 		String idStr = idScan.nextLine();
-		computerDAO.updatePC(conn,oldNameStr,newNameStr,introStr,decStr,Integer.parseInt(idStr));
+		computerServices.updateComputer(conn,oldNameStr,newNameStr,introStr,decStr,Integer.parseInt(idStr));
 	}
 	
 	/**
@@ -180,7 +181,7 @@ public class App {
 		System.out.println("Entrer le nom de l'ordinateur à supprimer:");
 		Scanner nameScan = new Scanner(System.in);
 		String nameStr = nameScan.nextLine();
-		computerDAO.deleteComputer(conn, nameStr);
+		computerServices.deleteComputer(conn, nameStr);
 	}
 	
 	
@@ -194,7 +195,7 @@ public class App {
 		System.out.println("Entrer le nom de l'ordinateur:");
 		Scanner nameScan = new Scanner(System.in);
 		String nameStr = nameScan.nextLine();
-		computerDAO.listDetails(conn, nameStr);
+		computerServices.showComputer(conn, nameStr);
 	}
 	
 	

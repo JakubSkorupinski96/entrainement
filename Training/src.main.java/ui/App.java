@@ -218,6 +218,7 @@ public class App {
 			System.out.println("Bonjour utilisateur");
 			while (true) {
 				//dao.ComputerDAO.updatePC(conn, "IBN 5100", "IBM 5100", new Date(0), "1996-02-01 12:01:33", 9);
+				logger.info("apllication démarre");
 				System.out.println("Entrer votre commande:");
 				Scanner in = new Scanner(System.in);  
 				interfaceCases(conn,in);

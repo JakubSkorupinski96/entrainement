@@ -12,6 +12,19 @@ import model.Company;
 
 public class CompanyDAO {
 	
+	private static CompanyDAO instance;
+    
+    private CompanyDAO(){
+    	
+    }
+    
+    public static CompanyDAO getInstance(){
+        if(instance == null){
+            instance = new CompanyDAO();
+        }
+        return instance;
+    }
+	
 	public static List<Company> listCompanies(Connection conn) {
 		List<Company>companies = new ArrayList<>();
 		Statement stmt;

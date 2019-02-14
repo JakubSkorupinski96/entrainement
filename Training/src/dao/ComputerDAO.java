@@ -14,6 +14,19 @@ import java.util.List;
 import model.Computer;
 
 public class ComputerDAO {
+		
+	private static ComputerDAO instance;
+    
+    private ComputerDAO(){
+    	
+    }
+    
+    public static ComputerDAO getInstance(){
+        if(instance == null){
+            instance = new ComputerDAO();
+        }
+        return instance;
+    }
 	
 	public static void createComputer (Connection conn, String name, String intro, String discon, int comp_id) {
 		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";

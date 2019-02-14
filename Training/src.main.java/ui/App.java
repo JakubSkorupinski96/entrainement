@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import dao.CompanyDAO;
 import dao.ComputerDAO;
 import model.Computer;
@@ -21,6 +24,8 @@ public class App {
 	
 	private static CompanyServices companyServices = CompanyServices.getInstance();
 	private static ComputerServices computerServices = ComputerServices.getInstance();
+	
+	private static Logger logger = LoggerFactory.getLogger(App.class);
 	
 	/**
 	 * Renvoie différentes méthodes par rapport aux caractères entrées
@@ -114,15 +119,15 @@ public class App {
 			Scanner introScan = new Scanner(System.in);
 			introStr = introScan.nextLine();
 			if(!introStr.matches(REGEX_DATE)) {
-				System.out.println("Mauvais format de date, veuillez reessayer");
+				logger.error("Mauvais format de date, veuillez reessayer");
 			}
 		}while(!introStr.matches(REGEX_DATE));
 		do {
 			System.out.println("Entrer la date d'arret de production de l'ordinateur:");
 			Scanner decScan = new Scanner(System.in);
 			decStr = decScan.nextLine();
-			if(!introStr.matches(REGEX_DATE)) {
-				System.out.println("Mauvais format de date, veuillez reessayer");
+			if(!decStr.matches(REGEX_DATE)) {
+				logger.error("Mauvais format de date, veuillez reessayer");
 			}
 		}while(!introStr.matches(REGEX_DATE));
 		System.out.println("Entrer l'id de la companie:");
@@ -151,7 +156,7 @@ public class App {
 			Scanner introScan = new Scanner(System.in);
 			introStr = introScan.nextLine();
 			if(!introStr.matches(REGEX_DATE)) {
-				System.out.println("Mauvais format de date, veuillez reessayer");
+				logger.error("Mauvais format de date, veuillez reessayer");
 			}
 		}while(!introStr.matches(REGEX_DATE));
 		do {
@@ -159,7 +164,7 @@ public class App {
 			Scanner decScan = new Scanner(System.in);
 			decStr = decScan.nextLine();
 			if(!decStr.matches(REGEX_DATE)) {
-				System.out.println("Mauvais format de date, veuillez reessayer");
+				logger.error("Mauvais format de date, veuillez reessayer");
 			}
 		}while(!decStr.matches(REGEX_DATE));
 		System.out.println("Entrer le nouvel id de la companie:");
@@ -204,7 +209,7 @@ public class App {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
-			System.out.println("JDBC error");
+			logger.error("JDBC error");
 			e1.printStackTrace();
 		}
 		
@@ -219,7 +224,7 @@ public class App {
 				//System.in.read();
 			}
 		} catch (SQLException e) {
-			System.out.println("connection error");
+			logger.error("connection error");
 			e.printStackTrace();
 		}
 		

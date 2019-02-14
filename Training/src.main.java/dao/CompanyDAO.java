@@ -8,12 +8,17 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import model.Company;
 
 public class CompanyDAO {
 	
 	private static CompanyDAO instance;
     
+	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+	
     private CompanyDAO(){
     	
     }
@@ -41,7 +46,7 @@ public class CompanyDAO {
 				companies.add(company);
 				}
 		} catch (SQLException e) {
-			System.out.println("company list error");
+			logger.error("erreur de liste");
 			e.printStackTrace();
 		}
 		return companies;

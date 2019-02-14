@@ -11,11 +11,17 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import model.Computer;
+import ui.App;
 
 public class ComputerDAO {
 		
 	private static ComputerDAO instance;
+	
+	private static Logger logger = LoggerFactory.getLogger(ComputerDAO.class);
     
     private ComputerDAO(){
     	
@@ -40,7 +46,7 @@ public class ComputerDAO {
 
 			System.out.println("OK");
 		} catch (SQLException e) {
-			System.out.println("Fatal Error");
+			logger.error("erreur de création");
 			e.printStackTrace();
 		}
 	}
@@ -58,7 +64,7 @@ public class ComputerDAO {
 			//stmt.executeUpdate(delete);
 			System.out.println("Deleted");
 		} catch (SQLException e) {
-			System.out.println("Fatal Error");
+			logger.error("erreur de suppression");
 			e.printStackTrace();
 		}
 	}
@@ -78,6 +84,7 @@ public class ComputerDAO {
 				}
 		} catch (SQLException e) {
 			System.out.println("Fatal Error: Select");
+			logger.error("erreur de sélection");
 			e.printStackTrace();
 		}
 	}
@@ -96,7 +103,7 @@ public class ComputerDAO {
 
 			System.out.println("updated");
 		} catch (SQLException e) {
-			System.out.println("Update Error");
+			logger.error("erreur de mise à jour");
 			e.printStackTrace();
 		}
 	}
@@ -123,7 +130,7 @@ public class ComputerDAO {
 				computers.add(computer);
 				}
 		} catch (SQLException e) {
-			System.out.println("computer list error");
+			logger.error("erreur de liste");
 			e.printStackTrace();
 		}
 		return computers;

@@ -34,6 +34,16 @@ public class ComputerDAO {
         return instance;
     }
 	
+    /**
+     * Crée un ordinateur dans la BDD
+     * 
+     * @param conn : la connexion à la BDD
+     * @param name : nom de l'ordinateur
+     * @param intro : date d'introduction de l'ordinateur
+     * @param discon : date d'arrêt de production de l'ordinateur
+     * @param comp_id : id de la companie
+     */
+    
 	public static void createComputer (Connection conn, String name, String intro, String discon, int comp_id) {
 		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
 		try {		
@@ -51,7 +61,13 @@ public class ComputerDAO {
 		}
 	}
 	
-	//marche?
+	/**
+	 * Supprime un ordinateur dans la BDD à partir de son nom
+	 * 
+	 * @param conn : la connexion à la BDD
+	 * @param name : nom de l'ordinateur
+	 */
+	
 	public static void deleteComputer (Connection conn, String name) {
 		String delete = "DELETE FROM computer WHERE NAME = ?";
 		//String delete = "DELETE FROM computer WHERE ";
@@ -68,6 +84,13 @@ public class ComputerDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Liste les details d'un ordinateur à l'aide de son nom
+	 * 
+	 * @param conn : La connection à la BDD
+	 * @param name : nom de l'ordinateur
+	 */
 	
 	public static void listDetails(Connection conn, String name) {
 		String select = "SELECT * FROM computer WHERE name = ?";
@@ -115,7 +138,7 @@ public class ComputerDAO {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM computer");
 			while (rs.next()) {
-				Computer computer = Computer.getInstance();
+				Computer computer = new Computer();
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				Date intro_date = rs.getDate("introduced");

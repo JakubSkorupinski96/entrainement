@@ -5,22 +5,22 @@ import dao.CompanyDAO;
 
 public class Computer {
 	
-	private static Computer instance;
 	public int id;
 	public String name;
 	public Date intro_date;
 	public Date discontinued_date;
 	public int companyId;
 
-	private Computer(){
+	public Computer(){
     	
     }
     
-    public static Computer getInstance(){
-        if(instance == null){
-            instance = new Computer();
-        }
-        return instance;
+    public Computer(int id, String name, Date intro_date, Date discontinued_date, int companyId){
+    	this.id = id;
+    	this.name = name;
+    	this.intro_date = intro_date;
+    	this.discontinued_date = discontinued_date;
+    	this.companyId = companyId;
     }
     
 	public int getId() {

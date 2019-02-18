@@ -30,6 +30,13 @@ public class CompanyDAO {
         return instance;
     }
 	
+    /**
+     * Renvoie la liste des companies dans la BDD
+     * 
+     * @param conn : la connexion à la BDD
+     * @return List<Company>
+     */
+    
 	public static List<Company> listCompanies(Connection conn) {
 		List<Company>companies = new ArrayList<>();
 		Statement stmt;
@@ -37,7 +44,7 @@ public class CompanyDAO {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM company");
 			while (rs.next()) {
-				Company company = Company.getInstance();
+				Company company = new Company();
 				int id = rs.getInt("id");
 				String name = rs.getString("name");
 				company.setId(id);

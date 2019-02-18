@@ -1,19 +1,15 @@
 package model;
 public class Company {
 	
-	private static Company instance;
-	int id;
-	String name;
+	private int id;
+	private String name;
     
-    private Company(){
-    	
+    public Company(){
     }
-    
-    public static Company getInstance(){
-        if(instance == null){
-            instance = new Company();
-        }
-        return instance;
+	
+    public Company(int id, String name){
+    	this.id = id;
+    	this.name = name;
     }
 
 	public int getId() {

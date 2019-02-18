@@ -24,22 +24,22 @@ public class ComputerServices {
 	ComputerDAO computerDAO = ComputerDAO.getInstance();
 	
 	public List<Computer> listComputers(Connection conn){
-		return computerDAO.listComputers(conn);
+		return ComputerDAO.listComputers(conn);
 	}
 	
 	public void createComputer(Connection conn, String name, String intro, String discon, int comp_id) {
-		computerDAO.createComputer(conn, name, intro, discon, comp_id);
+		ComputerDAO.createComputer(conn, name, intro, discon, comp_id);
 	}
 	
 	public void updateComputer(Connection conn, String name, String newName, String newIntro, String newDiscon, int newCompanyId) {
-		computerDAO.updatePC(conn, name, newName, newIntro, newDiscon, newCompanyId);
+		ComputerDAO.updatePC(conn, name, newName, newIntro, newDiscon, newCompanyId);
 	}
 	
 	public void deleteComputer(Connection conn, String name) {
-		computerDAO.deleteComputer(conn, name);
+		ComputerDAO.deleteComputer(conn, name);
 	}
 	
 	public void showComputer(Connection conn, String name) {
-		computerDAO.listDetails(conn, name);
+		ComputerDAO.listDetails(conn, name);
 	}
 }

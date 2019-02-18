@@ -19,6 +19,8 @@ public class CompanyDAO {
     
 	private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 	
+	private static final String SELECT_ALL = "SELECT id, name FROM company";
+	
     private CompanyDAO(){
     	
     }
@@ -42,7 +44,7 @@ public class CompanyDAO {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM company");
+			ResultSet rs = stmt.executeQuery(SELECT_ALL);
 			while (rs.next()) {
 				Company company = new Company();
 				int id = rs.getInt("id");

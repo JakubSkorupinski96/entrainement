@@ -23,6 +23,12 @@ public class ComputerDAO {
 	
 	private static Logger logger = LoggerFactory.getLogger(ComputerDAO.class);
     
+	private static final String INSERT_COMPUTER = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
+	private static final String DELETE_BY_NAME = "DELETE FROM computer WHERE NAME = ?";
+	private static final String SELECT_COMPUTER = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE name = ?";
+	private static final String UPDATE_BY_NAME = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
+	private static final String SELECT_COMPUTERS = "SELECT id, name, introduced, discontinued, company_id FROM computer";
+	
     private ComputerDAO(){
     	
     }
@@ -45,7 +51,7 @@ public class ComputerDAO {
      */
     
 	public static void createComputer (Connection conn, String name, String intro, String discon, int comp_id) {
-		String insert = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
+		String insert = INSERT_COMPUTER;
 		try {		
 			PreparedStatement preparedS = conn.prepareStatement(insert);
 			preparedS.setString(1, name);
@@ -69,15 +75,11 @@ public class ComputerDAO {
 	 */
 	
 	public static void deleteComputer (Connection conn, String name) {
-		String delete = "DELETE FROM computer WHERE NAME = ?";
-		//String delete = "DELETE FROM computer WHERE ";
-		//delete += query;
+		String delete = DELETE_BY_NAME;
 		try {
-			//Statement stmt = conn.createStatement();
 			PreparedStatement preparedS = conn.prepareStatement(delete);
 			preparedS.setString(1, name);
 			preparedS.executeUpdate();
-			//stmt.executeUpdate(delete);
 			System.out.println("Deleted");
 		} catch (SQLException e) {
 			logger.error("erreur de suppression");
@@ -93,7 +95,7 @@ public class ComputerDAO {
 	 */
 	
 	public static void listDetails(Connection conn, String name) {
-		String select = "SELECT * FROM computer WHERE name = ?";
+		String select = SELECT_COMPUTER;
 		try {
 			PreparedStatement preparedS = conn.prepareStatement(select);
 			preparedS.setString(1, name);
@@ -113,7 +115,7 @@ public class ComputerDAO {
 	}
 	
 	public static void updatePC(Connection conn, String name, String newName, String newIntro, String newDiscon, int newCompanyId) {
-		String update = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
+		String update = UPDATE_BY_NAME;
 		try {
 			
 			PreparedStatement preparedS = conn.prepareStatement(update);
@@ -136,7 +138,7 @@ public class ComputerDAO {
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM computer");
+			ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
 			while (rs.next()) {
 				Computer computer = new Computer();
 				int id = rs.getInt("id");

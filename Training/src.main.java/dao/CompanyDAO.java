@@ -39,12 +39,12 @@ public class CompanyDAO {
      * @return List<Company>
      */
     
-	public static List<Company> listCompanies(Connection conn) {
+	public static List<Company> listCompanies(Connection conn, int page) {
 		List<Company>companies = new ArrayList<>();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ALL);
+			ResultSet rs = stmt.executeQuery(SELECT_ALL + " Limit " + (page-1) * 25 + ", " + 25);
 			while (rs.next()) {
 				Company company = new Company();
 				int id = rs.getInt("id");

@@ -22,7 +22,7 @@ public class CompanyServices {
 	
 	CompanyDAO companyDAO = CompanyDAO.getInstance();
 	
-	public List<Company> listCompanies(Connection conn){
-		return CompanyDAO.listCompanies(conn);
+	public List<Company> listCompanies(Connection conn, int page){
+		return CompanyDAO.listCompanies(conn, page);
 	}
 }

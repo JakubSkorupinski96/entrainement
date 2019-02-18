@@ -41,7 +41,10 @@ public class App {
 				System.exit(0);
 				break;
 			case "showCompanies":
-				companyServices.listCompanies(conn);
+				System.out.println("Quelle page?:");
+				Scanner companyPageScan = new Scanner(System.in);
+				int companyPage = Integer.parseInt(companyPageScan.nextLine());
+				companyServices.listCompanies(conn, companyPage);
 				break;
 			case "createPC":
 				createPcUserInterface(conn);
@@ -53,7 +56,10 @@ public class App {
 				updatePcUserInterface(conn);
 				break;
 			case "showComputers":
-				computerServices.listComputers(conn);
+				System.out.println("Quelle page?:");
+				Scanner computerPageScan = new Scanner(System.in);
+				int computerPage = Integer.parseInt(computerPageScan.nextLine());
+				computerServices.listComputers(conn, computerPage);
 				break;
 			case "showPCDetails":
 				showPcDetailsUserInterface(conn);

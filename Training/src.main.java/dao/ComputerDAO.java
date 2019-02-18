@@ -133,12 +133,13 @@ public class ComputerDAO {
 		}
 	}
 	
-	public static List<Computer> listComputers(Connection conn) {
+	public static List<Computer> listComputers(Connection conn, int page) {
 		List<Computer> computers = new ArrayList<>();
 		Statement stmt;
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
+			//ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
+			ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS + " Limit " + (page-1) * 25 + ", " + 25);
 			while (rs.next()) {
 				Computer computer = new Computer();
 				int id = rs.getInt("id");

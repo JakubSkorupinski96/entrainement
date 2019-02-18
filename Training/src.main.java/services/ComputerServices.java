@@ -23,8 +23,8 @@ public class ComputerServices {
 	
 	ComputerDAO computerDAO = ComputerDAO.getInstance();
 	
-	public List<Computer> listComputers(Connection conn){
-		return ComputerDAO.listComputers(conn);
+	public List<Computer> listComputers(Connection conn, int page){
+		return ComputerDAO.listComputers(conn, page);
 	}
 	
 	public void createComputer(Connection conn, String name, String intro, String discon, int comp_id) {

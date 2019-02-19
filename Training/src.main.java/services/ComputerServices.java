@@ -9,6 +9,8 @@ import model.Computer;
 public class ComputerServices {
 
 	private static ComputerServices instance;
+	
+	ComputerDAO computerDAO = ComputerDAO.getInstance();
     
     private ComputerServices(){	
     }
@@ -20,8 +22,6 @@ public class ComputerServices {
         return instance;
     }
 	
-	
-	ComputerDAO computerDAO = ComputerDAO.getInstance();
 	
 	public List<Computer> listComputers(Connection conn, int page){
 		return ComputerDAO.listComputers(conn, page);

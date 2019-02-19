@@ -9,6 +9,8 @@ import model.Company;
 public class CompanyServices {
 	
 	private static CompanyServices instance;
+	
+	CompanyDAO companyDAO = CompanyDAO.getInstance();
     
     private CompanyServices(){	
     }
@@ -20,9 +22,7 @@ public class CompanyServices {
         return instance;
     }
 	
-	CompanyDAO companyDAO = CompanyDAO.getInstance();
-	
 	public List<Company> listCompanies(Connection conn, int page){
-		return CompanyDAO.listCompanies(conn, page);
+		return companyDAO.listCompanies(conn, page);
 	}
 }

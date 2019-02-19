@@ -14,7 +14,7 @@
           <target>1.8</target>
         </configuration>
       </plugin>
-    </plugins>
+    	</plugins>
   </build>
   <dependencies>
 	<dependency>
@@ -29,15 +29,19 @@
 	</dependency>
   </dependencies>
   <reporting>
-    <plugins>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-checkstyle-plugin</artifactId>
-            <version>3.0.0</version>
-            <configuration>
-                <configLocation>checkstyle.xml</configLocation>
-            </configuration>
-        </plugin>
-    </plugins>
-</reporting>
+  <plugins>
+      		<plugin>
+   				<groupId>org.apache.maven.plugins</groupId>
+   				<artifactId>maven-checkstyle-plugin</artifactId>
+   				<version>3.0.0</version>
+   				<configuration>
+         					<configLocation>scr/main/resources/checkstyle.xml</configLocation>
+<!--          					<encoding>UTF-8</encoding> -->
+<!--          					<consoleOutput>true</consoleOutput> -->
+<!--          					<failsOnError>true</failsOnError> -->
+<!--          					<linkXRef>false</linkXRef> -->
+       			</configuration>
+ 			</plugin>
+ 		</plugins>
+  </reporting>
 </project>

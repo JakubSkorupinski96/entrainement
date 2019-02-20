@@ -1,71 +1,81 @@
 package model;
+
 import java.sql.Date;
 
-import dao.CompanyDAO;
-
 public class Computer {
-	
-	public int id;
-	public String name;
-	public Date intro_date;
-	public Date discontinued_date;
-	public int companyId;
 
-	public Computer(){
-    	
-    }
-    
-    public Computer(int id, String name, Date intro_date, Date discontinued_date, int companyId){
-    	this.id = id;
-    	this.name = name;
-    	this.intro_date = intro_date;
-    	this.discontinued_date = discontinued_date;
-    	this.companyId = companyId;
-    }
-    
-	public int getId() {
-		return id;
-	}
+  public int id;
+  public String name;
+  public Date intro_date;
+  public Date discontinued_date;
+  public int companyId;
 
-	public void setId(int id) {
-		this.id = id;
-	}
-    
-    public String getName() {
-		return name;
-	}
+  /**
+   * . Constructeur vide de computer
+   */
+  public Computer() {
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  /**
+   * . Constructeur de computer
+   *
+   * @param id : id de l'ordinateur
+   * @param name : nom de l'ordinateur
+   * @param introDate : date d'introduction de l'ordinateur
+   * @param discontinuedDate : date d'arrêt de production de l'ordinateur
+   * @param companyId : id de la companie associé
+   */
+  public Computer(int id, String name, Date introDate, Date discontinuedDate, int companyId) {
+    this.id = id;
+    this.name = name;
+    this.intro_date = introDate;
+    this.discontinued_date = discontinuedDate;
+    this.companyId = companyId;
+  }
 
-	public Date getIntro_date() {
-		return intro_date;
-	}
+  public int getId() {
+    return id;
+  }
 
-	public void setIntro_date(Date intro_date) {
-		this.intro_date = intro_date;
-	}
+  public void setId(int id) {
+    this.id = id;
+  }
 
-	public Date getDiscontinued_date() {
-		return discontinued_date;
-	}
+  public String getName() {
+    return name;
+  }
 
-	public void setDiscontinued_date(Date discontinued_date) {
-		this.discontinued_date = discontinued_date;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public int getCompany() {
-		return companyId;
-	}
+  public Date getIntroDate() {
+    return intro_date;
+  }
 
-	public void setCompany(int companyId) {
-		this.companyId = companyId;
-	}
+  public void setIntroDate(Date introDate) {
+    this.intro_date = introDate;
+  }
 
-	@Override
-	public String toString() {
-		return "Computer [id=" + id + ", name=" + name + ", intro_date=" + intro_date + ", discontinued_date=" + discontinued_date
-				+ ", company=" + companyId + "]";
-	}
+  public Date getDiscontinuedDate() {
+    return discontinued_date;
+  }
+
+  public void setDiscontinuedDate(Date discontinuedDate) {
+    this.discontinued_date = discontinuedDate;
+  }
+
+  public int getCompany() {
+    return companyId;
+  }
+
+  public void setCompany(int companyId) {
+    this.companyId = companyId;
+  }
+
+  @Override
+  public String toString() {
+    return "Computer [id=" + id + ", name=" + name + ", intro_date=" + intro_date
+        + ", discontinued_date=" + discontinued_date + ", company=" + companyId + "]";
+  }
 }

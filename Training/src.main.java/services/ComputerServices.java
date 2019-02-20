@@ -8,38 +8,91 @@ import model.Computer;
 
 public class ComputerServices {
 
-	private static ComputerServices instance;
-	
-	ComputerDAO computerDAO = ComputerDAO.getInstance();
-    
-    private ComputerServices(){	
+  private static ComputerServices instance;
+
+  ComputerDAO computerDAO = ComputerDAO.getInstance();
+
+  /**
+   * . Constructeu vide des services de computer
+   */
+
+  private ComputerServices() {
+  }
+
+  /**
+   * . Instancie le singleton ComputerServices
+   *
+   * @return instance
+   */
+  public static ComputerServices getInstance() {
+    if (instance == null) {
+      instance = new ComputerServices();
     }
-    
-    public static ComputerServices getInstance(){
-        if(instance == null){
-            instance = new ComputerServices();
-        }
-        return instance;
-    }
-	
-	
-	public List<Computer> listComputers(Connection conn, int page){
-		return ComputerDAO.listComputers(conn, page);
-	}
-	
-	public void createComputer(Connection conn, String name, String intro, String discon, int comp_id) {
-		ComputerDAO.createComputer(conn, name, intro, discon, comp_id);
-	}
-	
-	public void updateComputer(Connection conn, String name, String newName, String newIntro, String newDiscon, int newCompanyId) {
-		ComputerDAO.updatePC(conn, name, newName, newIntro, newDiscon, newCompanyId);
-	}
-	
-	public void deleteComputer(Connection conn, String name) {
-		ComputerDAO.deleteComputer(conn, name);
-	}
-	
-	public void showComputer(Connection conn, String name) {
-		ComputerDAO.listDetails(conn, name);
-	}
+    return instance;
+  }
+
+  /**
+   * . Affiche la liste des ordinateur dans la BDD
+   *
+   * @param conn : la connexion à la BDD
+   * @param page : la page sélectionné
+   *
+   * @return List<Computer>
+   */
+  public List<Computer> listComputers(Connection conn, int page) {
+    return ComputerDAO.listComputers(conn, page);
+  }
+
+  /**
+   * . Crée un ordinateur dans la BDD
+   *
+   * @param conn : la connexion à la BDD
+   * @param name : nom de l'ordinateur
+   * @param intro : date d'introduction
+   * @param discon : date d'arrêt de production
+   * @param compId : id de la companie
+   */
+
+  public void createComputer(Connection conn, String name, String intro, String discon,
+      int compId) {
+    ComputerDAO.createComputer(conn, name, intro, discon, compId);
+  }
+
+  /**
+   * . Met à jour un ordinateur dans la BDD
+   *
+   * @param conn : la connexion à la BDD
+   * @param name : nom de l'ordinateur
+   * @param newName : nouveau nom de l'ordinateur
+   * @param newIntro : nouvelle date d'introduction
+   * @param newDiscon : nouvelle date d'arrêt de production
+   * @param newCompanyId : nouvel id de companie
+   */
+
+  public void updateComputer(Connection conn, String name, String newName, String newIntro,
+      String newDiscon, int newCompanyId) {
+    ComputerDAO.updatePC(conn, name, newName, newIntro, newDiscon, newCompanyId);
+  }
+
+  /**
+   * . Supprime un ordinateur dans la BDD
+   *
+   * @param conn : la connexion à la BDD
+   * @param name : nom de l'ordinateur
+   */
+
+  public void deleteComputer(Connection conn, String name) {
+    ComputerDAO.deleteComputer(conn, name);
+  }
+
+  /**
+   * . Affiche les détails d'un ordinateur dans la BDD
+   *
+   * @param conn : la connexion à la BDD
+   * @param name : le nom de l'ordinateur
+   */
+
+  public void showComputer(Connection conn, String name) {
+    ComputerDAO.listDetails(conn, name);
+  }
 }

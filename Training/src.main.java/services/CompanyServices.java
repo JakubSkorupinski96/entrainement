@@ -7,22 +7,38 @@ import dao.CompanyDAO;
 import model.Company;
 
 public class CompanyServices {
-	
-	private static CompanyServices instance;
-	
-	CompanyDAO companyDAO = CompanyDAO.getInstance();
-    
-    private CompanyServices(){	
+
+  private static CompanyServices instance;
+
+  CompanyDAO companyDAO = CompanyDAO.getInstance();
+
+  /**
+   * . Constructeur vide des services de company
+   */
+  private CompanyServices() {
+  }
+
+  /**
+   * . Constructeur des services de company
+   *
+   * @return instance
+   */
+  public static CompanyServices getInstance() {
+    if (instance == null) {
+      instance = new CompanyServices();
     }
-    
-    public static CompanyServices getInstance(){
-        if(instance == null){
-            instance = new CompanyServices();
-        }
-        return instance;
-    }
-	
-	public List<Company> listCompanies(Connection conn, int page){
-		return companyDAO.listCompanies(conn, page);
-	}
+    return instance;
+  }
+
+  /**
+   * . Retourne la liste des companies
+   *
+   * @param conn : la connexion à la BDD
+   * @param page : la page sélectionné
+   *
+   * @return List<Company>
+   */
+  public List<Company> listCompanies(Connection conn, int page) {
+    return CompanyDAO.listCompanies(conn, page);
+  }
 }

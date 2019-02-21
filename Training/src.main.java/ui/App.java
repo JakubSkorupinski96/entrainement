@@ -8,6 +8,8 @@ import java.util.Scanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import controller.CompanyController;
+import controller.ComputerController;
 import services.CompanyServices;
 import services.ComputerServices;
 
@@ -20,8 +22,8 @@ public class App {
   // Expression regex pour les dates
   private static final String REGEX_DATE = "\\d{4}-[0-1][0-9]-[0-3][0-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]";
 
-  private static CompanyServices companyServices = CompanyServices.getInstance();
-  private static ComputerServices computerServices = ComputerServices.getInstance();
+  private static CompanyController companyController = CompanyController.getInstance();
+  private static ComputerController computerController = ComputerController.getInstance();
 
   private static Logger logger = LoggerFactory.getLogger(App.class);
 
@@ -32,7 +34,7 @@ public class App {
    * @param scan : chaine de caractères entrées par l'utilisateur
    */
 
-  private static void interfaceCases(Connection conn, Scanner scan) {
+  private static void interfaceCases(Scanner scan) {
     switch (scan.next()) {
     case "exit":
       System.out.println("Au revoir");
@@ -42,25 +44,25 @@ public class App {
       System.out.println("Quelle page?:");
       Scanner companyPageScan = new Scanner(System.in);
       int companyPage = Integer.parseInt(companyPageScan.nextLine());
-      companyServices.listCompanies(conn, companyPage);
+      companyController.listCompanies(companyPage);
       break;
     case "createPC":
-      createPcUserInterface(conn);
+      createPcUserInterface();
       break;
     case "deletePC":
-      deletePcUserInterface(conn);
+      deletePcUserInterface();
       break;
     case "updatePC":
-      updatePcUserInterface(conn);
+      updatePcUserInterface();
       break;
     case "showComputers":
       System.out.println("Quelle page?:");
       Scanner computerPageScan = new Scanner(System.in);
       int computerPage = Integer.parseInt(computerPageScan.nextLine());
-      computerServices.listComputers(conn, computerPage);
+      computerController.list(computerPage);
       break;
     case "showPCDetails":
-      showPcDetailsUserInterface(conn);
+      showPcDetailsUserInterface();
       break;
     case "methods":
       System.out.println("showCompanies");
@@ -81,7 +83,7 @@ public class App {
    *
    * @param conn : Connexion a la BDD
    */
-  public static void createPcUserInterface(Connection conn) {
+  public static void createPcUserInterface() {
     String introStr = "";
     String decStr = "";
     System.out.println("Entrer le nom du nouvel ordinateur:");
@@ -110,7 +112,7 @@ public class App {
     Scanner idScan = new Scanner(System.in);
     String idStr = idScan.nextLine();
     idScan.close();
-    computerServices.createComputer(conn, nameStr, introStr, decStr, Integer.parseInt(idStr));
+    computerController.create(nameStr, introStr, decStr, Integer.parseInt(idStr));
   }
 
   /**
@@ -119,7 +121,7 @@ public class App {
    * @param conn : Connexion a la BDD
    */
 
-  public static void updatePcUserInterface(Connection conn) {
+  public static void updatePcUserInterface() {
     String introStr = "";
     String decStr = "";
     System.out.println("Entrer le nom de l'ordinateur à mofifier:");
@@ -152,7 +154,7 @@ public class App {
     Scanner idScan = new Scanner(System.in);
     String idStr = idScan.nextLine();
     idScan.close();
-    computerServices.updateComputer(conn, oldNameStr, newNameStr, introStr, decStr,
+    computerController.update(oldNameStr, newNameStr, introStr, decStr,
         Integer.parseInt(idStr));
   }
 
@@ -162,12 +164,12 @@ public class App {
    * @param conn : Connexion a la BDD
    */
 
-  public static void deletePcUserInterface(Connection conn) {
+  public static void deletePcUserInterface() {
     System.out.println("Entrer le nom de l'ordinateur à supprimer:");
     Scanner nameScan = new Scanner(System.in);
     String nameStr = nameScan.nextLine();
     nameScan.close();
-    computerServices.deleteComputer(conn, nameStr);
+    computerController.delete(nameStr);
   }
 
   /**
@@ -176,12 +178,12 @@ public class App {
    * @param conn : Connexion a la BDD
    */
 
-  public static void showPcDetailsUserInterface(Connection conn) {
+  public static void showPcDetailsUserInterface() {
     System.out.println("Entrer le nom de l'ordinateur:");
     Scanner nameScan = new Scanner(System.in);
     String nameStr = nameScan.nextLine();
     nameScan.close();
-    computerServices.showComputer(conn, nameStr);
+    computerController.show(nameStr);
   }
 
   /**
@@ -192,27 +194,16 @@ public class App {
 
   public static void main(String[] args) {
 
-    try {
-      Class.forName("com.mysql.jdbc.Driver");
-    } catch (ClassNotFoundException e1) {
-      logger.error("JDBC error");
-      e1.printStackTrace();
-    }
 
-    try {
-      Connection conn = DriverManager.getConnection(URL, USER, PASS);
       System.out.println("Bonjour utilisateur");
       while (true) {
         logger.info("apllication démarre");
         System.out.println("Entrer votre commande:");
         Scanner in = new Scanner(System.in);
-        interfaceCases(conn, in);
+        interfaceCases(in);
         // System.in.read();
       }
-    } catch (SQLException e) {
-      logger.error("connection error");
-      e.printStackTrace();
-    }
+
 
   }
 }

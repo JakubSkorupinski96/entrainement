@@ -6,8 +6,8 @@ public class Computer {
 
   public int id;
   public String name;
-  public Date intro_date;
-  public Date discontinued_date;
+  public Date introduced;
+  public Date discontinued;
   public int companyId;
 
   /**
@@ -28,8 +28,8 @@ public class Computer {
   public Computer(int id, String name, Date introDate, Date discontinuedDate, int companyId) {
     this.id = id;
     this.name = name;
-    this.intro_date = introDate;
-    this.discontinued_date = discontinuedDate;
+    this.introduced = introDate;
+    this.discontinued = discontinuedDate;
     this.companyId = companyId;
   }
 
@@ -49,20 +49,20 @@ public class Computer {
     this.name = name;
   }
 
-  public Date getIntroDate() {
-    return intro_date;
+  public Date getIntroduced() {
+    return introduced;
   }
 
-  public void setIntroDate(Date introDate) {
-    this.intro_date = introDate;
+  public void setIntroduced(Date introDate) {
+    this.introduced = introDate;
   }
 
-  public Date getDiscontinuedDate() {
-    return discontinued_date;
+  public Date getDiscontinued() {
+    return discontinued;
   }
 
-  public void setDiscontinuedDate(Date discontinuedDate) {
-    this.discontinued_date = discontinuedDate;
+  public void setDiscontinued(Date discontinuedDate) {
+    this.discontinued = discontinuedDate;
   }
 
   public int getCompany() {
@@ -75,7 +75,7 @@ public class Computer {
 
   @Override
   public String toString() {
-    return "Computer [id=" + id + ", name=" + name + ", intro_date=" + intro_date
-        + ", discontinued_date=" + discontinued_date + ", company=" + companyId + "]";
+    return "Computer [id=" + id + ", name=" + name + ", intro_date=" + introduced
+        + ", discontinued_date=" + discontinued + ", company=" + companyId + "]";
   }
 }

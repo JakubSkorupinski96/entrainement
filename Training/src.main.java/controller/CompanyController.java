@@ -44,7 +44,7 @@ public class CompanyController {
    * @return List<Company>
    */
 
-  public List<Company> listCompanies(Connection conn, int page) {
-    return companyServices.listCompanies(conn, page);
+  public List<Company> listCompanies(int page) {
+    return companyServices.listCompanies(page);
   }
 }

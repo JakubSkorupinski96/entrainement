@@ -13,9 +13,10 @@ public class ComputerController {
 
   private static ComputerController instance;
 
-  private static Logger logger = LoggerFactory.getLogger(ComputerController.class);
+  //private static Logger logger = LoggerFactory.getLogger(ComputerController.class);
 
   ComputerServices computerServices = ComputerServices.getInstance();
+  
 
   /**
    * . Constructeur vide du controlleur de computer
@@ -43,8 +44,8 @@ public class ComputerController {
    * @param page : la page sélectionné
    * @return List<Computer>
    */
-  public List<Computer> list(Connection conn, int page) {
-    return computerServices.listComputers(conn, page);
+  public List<Computer> list(int page) {
+    return computerServices.listComputers(page);
   }
 
   /**
@@ -56,8 +57,8 @@ public class ComputerController {
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
    */
-  public void create(Connection conn, String name, String intro, String discon, int compId) {
-    computerServices.createComputer(conn, name, intro, discon, compId);
+  public void create(String name, String intro, String discon, int compId) {
+    computerServices.createComputer(name, intro, discon, compId);
   }
 
   /**
@@ -70,9 +71,9 @@ public class ComputerController {
    * @param newDiscon : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
    */
-  public void update(Connection conn, String name, String newName, String newIntro,
+  public void update(String name, String newName, String newIntro,
       String newDiscon, int newCompanyId) {
-    computerServices.updateComputer(conn, name, newName, newIntro, newDiscon, newCompanyId);
+    computerServices.updateComputer(name, newName, newIntro, newDiscon, newCompanyId);
   }
 
   /**
@@ -81,8 +82,8 @@ public class ComputerController {
    * @param conn : la connexion à la BDD
    * @param name : nom de l'ordinateur
    */
-  public void delete(Connection conn, String name) {
-    computerServices.deleteComputer(conn, name);
+  public void delete(String name) {
+    computerServices.deleteComputer(name);
   }
 
   /**
@@ -91,7 +92,11 @@ public class ComputerController {
    * @param conn : la connexion à la BDD
    * @param name : le nom de l'ordinateur
    */
-  public void show(Connection conn, String name) {
-    computerServices.showComputer(conn, name);
+  public void show(String name) {
+    computerServices.showComputer(name);
+  }
+  
+  public List<Computer> listAll() {
+    return computerServices.listAllComputers();
   }
 }

@@ -39,8 +39,8 @@ public class ComputerServices {
    *
    * @return List<Computer>
    */
-  public List<Computer> listComputers(Connection conn, int page) {
-    return ComputerDAO.listComputers(conn, page);
+  public List<Computer> listComputers(int page) {
+    return computerDAO.listComputers(page);
   }
 
   /**
@@ -53,9 +53,9 @@ public class ComputerServices {
    * @param compId : id de la companie
    */
 
-  public void createComputer(Connection conn, String name, String intro, String discon,
+  public void createComputer(String name, String intro, String discon,
       int compId) {
-    ComputerDAO.createComputer(conn, name, intro, discon, compId);
+    computerDAO.createComputer(name, intro, discon, compId);
   }
 
   /**
@@ -69,9 +69,9 @@ public class ComputerServices {
    * @param newCompanyId : nouvel id de companie
    */
 
-  public void updateComputer(Connection conn, String name, String newName, String newIntro,
+  public void updateComputer(String name, String newName, String newIntro,
       String newDiscon, int newCompanyId) {
-    ComputerDAO.updatePC(conn, name, newName, newIntro, newDiscon, newCompanyId);
+    computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
   }
 
   /**
@@ -81,8 +81,8 @@ public class ComputerServices {
    * @param name : nom de l'ordinateur
    */
 
-  public void deleteComputer(Connection conn, String name) {
-    ComputerDAO.deleteComputer(conn, name);
+  public void deleteComputer(String name) {
+    computerDAO.deleteComputer(name);
   }
 
   /**
@@ -92,7 +92,11 @@ public class ComputerServices {
    * @param name : le nom de l'ordinateur
    */
 
-  public void showComputer(Connection conn, String name) {
-    ComputerDAO.listDetails(conn, name);
+  public void showComputer(String name) {
+    computerDAO.listDetails(name);
+  }
+  
+  public List<Computer> listAllComputers() {
+    return computerDAO.listAllComputers();
   }
 }

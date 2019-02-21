@@ -17,6 +17,18 @@
     	</plugins>
   </build>
   <dependencies>
+  	<dependency>
+  		<groupId>com.mockrunner</groupId>
+		<artifactId>mockrunner-jms</artifactId>
+		<version>1.0.0</version>
+  	</dependency>
+  	<dependency>
+    	<groupId>org.mockito</groupId>
+    	<artifactId>mockito-all</artifactId>
+    	<version>1.9.5</version>
+    	<scope>test</scope>
+	</dependency>
+  
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
@@ -27,21 +39,27 @@
 		<artifactId>slf4j-jdk14</artifactId>
 		<version>1.7.13</version>
 	</dependency>
+	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.47</version>
+	</dependency>
+	
   </dependencies>
   <reporting>
-  <plugins>
-      		<plugin>
-   				<groupId>org.apache.maven.plugins</groupId>
-   				<artifactId>maven-checkstyle-plugin</artifactId>
-   				<version>3.0.0</version>
-   				<configuration>
-         					<configLocation>scr/main/resources/checkstyle.xml</configLocation>
-<!--          					<encoding>UTF-8</encoding> -->
-<!--          					<consoleOutput>true</consoleOutput> -->
-<!--          					<failsOnError>true</failsOnError> -->
-<!--          					<linkXRef>false</linkXRef> -->
-       			</configuration>
- 			</plugin>
- 		</plugins>
+<!--   <plugins> -->
+<!--       		<plugin> -->
+<!--    				<groupId>org.apache.maven.plugins</groupId> -->
+<!--    				<artifactId>maven-checkstyle-plugin</artifactId> -->
+<!--    				<version>3.0.0</version> -->
+<!--    				<configuration> -->
+<!--          					<configLocation>scr/main/resources/checkstyle.xml</configLocation> -->
+<!--          					<encoding>UTF-8</encoding> --> 
+<!--         					<consoleOutput>true</consoleOutput> --> 
+<!--          					<failsOnError>true</failsOnError> --> 
+<!--         					<linkXRef>false</linkXRef> -->
+<!--        			</configuration> -->
+<!--  			</plugin> -->
+<!--  		</plugins> -->
   </reporting>
 </project>

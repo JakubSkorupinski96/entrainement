@@ -38,7 +38,7 @@ public class CompanyServices {
    *
    * @return List<Company>
    */
-  public List<Company> listCompanies(Connection conn, int page) {
-    return CompanyDAO.listCompanies(conn, page);
+  public List<Company> listCompanies(int page) {
+    return companyDAO.listCompanies(page);
   }
 }

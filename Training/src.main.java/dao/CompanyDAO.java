@@ -15,6 +15,7 @@ import model.Company;
 public class CompanyDAO {
 
   private static CompanyDAO instance;
+  private Connection conn;
 
   private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 
@@ -24,6 +25,7 @@ public class CompanyDAO {
    * . Constructeur vide de la DAO de company
    */
   private CompanyDAO() {
+    this.conn = DAOFactory.getInstance().getConnection();
   }
 
   /**
@@ -46,11 +48,11 @@ public class CompanyDAO {
    * @return List<Company>
    */
 
-  public static List<Company> listCompanies(Connection conn, int page) {
+  public List<Company> listCompanies(int page) {
     List<Company> companies = new ArrayList<>();
     Statement stmt;
     try {
-      stmt = conn.createStatement();
+      stmt = this.conn.createStatement();
       ResultSet rs = stmt.executeQuery(SELECT_ALL + " Limit " + (page - 1) * 25 + ", " + 25);
       while (rs.next()) {
         Company company = new Company();

@@ -193,8 +193,6 @@ public class App {
    */
 
   public static void main(String[] args) {
-
-
       System.out.println("Bonjour utilisateur");
       while (true) {
         logger.info("apllication démarre");

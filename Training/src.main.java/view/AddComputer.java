@@ -51,8 +51,6 @@ public class AddComputer extends HttpServlet {
     List<Company> companies = companyController.listAll();
     //companies = companyController.list(1);
     request.setAttribute("companies", companies);
-    //int nbPc = allComputer.size();
-    //request.setAttribute("size", nbPc);
     request.getRequestDispatcher("/addComputer.jsp").forward(request, response);
   }
 
@@ -68,7 +66,11 @@ public class AddComputer extends HttpServlet {
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    // TODO Auto-generated method stub
+    String name = request.getParameter("name");
+    String introduced = request.getParameter("introduced") + " 00:00:00";
+    String discontinued = request.getParameter("discontinued") + " 00:00:00";
+    String companyId = request.getParameter("companyId");
+    computerController.create(name, introduced, discontinued, Integer.parseInt(companyId));
     doGet(request, response);
   }
 

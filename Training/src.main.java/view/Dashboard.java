@@ -49,7 +49,7 @@ public class Dashboard extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       List<Computer> allComputer = computerController.listAll();
-      computers = computerController.list(1);
+      computers = computerController.list(9);
       request.setAttribute("list", computers);
       int nbPc = allComputer.size();
       request.setAttribute("size", nbPc);
@@ -67,6 +67,7 @@ public class Dashboard extends HttpServlet {
      */
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      //String page = request.getParameter("");
       doGet(request, response);
     }
 

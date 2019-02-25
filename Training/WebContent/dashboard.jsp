@@ -36,8 +36,8 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/addComputer.jsp">Add Computer</a> 
-                    <a class="btn btn-default" id="editComputer" href="views/#" onclick="$.fn.toggleEditMode();">Edit</a>
+                    <a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/AddComputer">Add Computer</a> 
+                    <a class="btn btn-default" id="editComputer" onclick="$.fn.toggleEditMode();">Edit</a>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                             	<input type="checkbox" name="cb" class="cb" value="0">
                         	</td>
                         	<td>
-                            	<a href="editComputer.html" onclick="">${item.name}</a>
+                            	<a href="editComputer.jsp" onclick="">${item.name}</a>
                         	</td>
                         	<td>${item.introduced}</td>
                         	<td>${item.discontinued}</td>
@@ -105,18 +105,19 @@
                     <a href="#" aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                   </a>
-              </li>
-              <li><a href="#">1</a></li>
-              <li><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-              <li><a href="#">5</a></li>
-              <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
+              	</li>
+             	<li><a href="#">1</a></li>
+              	<li><a href="#">2</a></li>
+              	<li><a href="#">3</a></li>
+              	<li><a href="#">4</a></li>
+              	<li><a href="#">5</a></li>
+              	<li>
+                	<a href="#" aria-label="Next">
+                    	<span aria-hidden="true">&raquo;</span>
+                	</a>
+            	</li>
+        	</ul>
+        </div>
 
         <div class="btn-group btn-group-sm pull-right" role="group" >
             <button type="button" class="btn btn-default">10</button>

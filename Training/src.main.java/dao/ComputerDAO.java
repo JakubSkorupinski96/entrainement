@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +10,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
-import controller.ComputerController;
 import model.Company;
 import model.Computer;
 
@@ -56,7 +54,6 @@ public class ComputerDAO {
   /**
    * . Crée un ordinateur dans la BDD
    *
-   * @param conn   : la connexion à la BDD
    * @param name   : nom de l'ordinateur
    * @param intro  : date d'introduction de l'ordinateur
    * @param discon : date d'arrêt de production de l'ordinateur
@@ -83,7 +80,6 @@ public class ComputerDAO {
   /**
    * . Supprime un ordinateur dans la BDD à partir de son nom
    *
-   * @param conn : la connexion à la BDD
    * @param name : nom de l'ordinateur
    */
 
@@ -103,7 +99,6 @@ public class ComputerDAO {
   /**
    * . Liste les details d'un ordinateur à l'aide de son nom
    *
-   * @param conn : La connection à la BDD
    * @param name : nom de l'ordinateur
    */
 
@@ -130,7 +125,6 @@ public class ComputerDAO {
   /**
    * . Met à jour un ordinateur dans la BDD à travers son nom
    *
-   * @param conn         : la connexion à la BDD
    * @param name         : nom de l'ordinateur
    * @param newName      : nouveau nom
    * @param newIntro     : nouvelle date d'introduction
@@ -200,6 +194,12 @@ public class ComputerDAO {
     }
     return computers;
   }
+
+  /**
+   * . Liste tous les ordinateurs
+   *
+   * @return List<Computer>
+   */
 
   public List<Computer> listAllComputers() {
     List<Computer> computers = new ArrayList<>();

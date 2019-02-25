@@ -1,6 +1,5 @@
 package services;
 
-import java.sql.Connection;
 import java.util.List;
 
 import dao.ComputerDAO;
@@ -34,7 +33,6 @@ public class ComputerServices {
   /**
    * . Affiche la liste des ordinateur dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param page : la page sélectionné
    *
    * @return List<Computer>
@@ -46,7 +44,6 @@ public class ComputerServices {
   /**
    * . Crée un ordinateur dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param name : nom de l'ordinateur
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
@@ -61,7 +58,6 @@ public class ComputerServices {
   /**
    * . Met à jour un ordinateur dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param name : nom de l'ordinateur
    * @param newName : nouveau nom de l'ordinateur
    * @param newIntro : nouvelle date d'introduction
@@ -77,7 +73,6 @@ public class ComputerServices {
   /**
    * . Supprime un ordinateur dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param name : nom de l'ordinateur
    */
 
@@ -88,14 +83,19 @@ public class ComputerServices {
   /**
    * . Affiche les détails d'un ordinateur dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param name : le nom de l'ordinateur
    */
 
   public void showComputer(String name) {
     computerDAO.listDetails(name);
   }
-  
+
+  /**
+   *. Liste touts les ordinateurs
+   *
+   * @return List<Computer>
+   */
+
   public List<Computer> listAllComputers() {
     return computerDAO.listAllComputers();
   }

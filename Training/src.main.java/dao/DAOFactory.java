@@ -34,15 +34,19 @@ public class DAOFactory {
     return instance;
   }
 
+  /**
+   * . Démarre la connexion à la BDD
+   */
+
   public void startConnection() {
-    
+
       try {
       Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e1) {
       //logger.error("JDBC error");
       e1.printStackTrace();
     }
-    
+
     try {
       this.conn = DriverManager.getConnection(URL, USER, PASS);
       System.out.println("here" + this.conn);
@@ -52,7 +56,12 @@ public class DAOFactory {
     }
     System.out.println(conn);
   }
-  
+
+  /**
+   * . Récupére la connexion
+   *
+   * @return Connection
+   */
   public Connection getConnection() {
     System.out.println(this.conn);
     return this.conn;

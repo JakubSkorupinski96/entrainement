@@ -1,8 +1,5 @@
 package ui;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -10,14 +7,8 @@ import org.slf4j.LoggerFactory;
 
 import controller.CompanyController;
 import controller.ComputerController;
-import services.CompanyServices;
-import services.ComputerServices;
 
 public class App {
-
-  private static final String URL = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
-  private static final String USER = "root";
-  private static final String PASS = "";
 
   // Expression regex pour les dates
   private static final String REGEX_DATE = "\\d{4}-[0-1][0-9]-[0-3][0-9]\\s[0-2][0-9]:[0-5][0-9]:[0-5][0-9]";
@@ -30,7 +21,6 @@ public class App {
   /**
    * . Renvoie différentes méthodes par rapport aux caractères entrées
    *
-   * @param conn : Connexion a la BDD
    * @param scan : chaine de caractères entrées par l'utilisateur
    */
 
@@ -81,7 +71,6 @@ public class App {
   /**
    * . Cree un nouvel ordinateur avec les donnees entrees
    *
-   * @param conn : Connexion a la BDD
    */
   public static void createPcUserInterface() {
     String introStr = "";
@@ -118,7 +107,6 @@ public class App {
   /**
    * . Mets a jour un ordinateur dans la BDD a partir du nom
    *
-   * @param conn : Connexion a la BDD
    */
 
   public static void updatePcUserInterface() {
@@ -161,7 +149,6 @@ public class App {
   /**
    * . Supprime un ordinateur dans la BDD a partir de son nom
    *
-   * @param conn : Connexion a la BDD
    */
 
   public static void deletePcUserInterface() {
@@ -175,7 +162,6 @@ public class App {
   /**
    * . Affiche les détails d'un ordinateur dans la BDD à partir de son nom
    *
-   * @param conn : Connexion a la BDD
    */
 
   public static void showPcDetailsUserInterface() {

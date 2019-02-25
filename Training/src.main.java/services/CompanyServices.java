@@ -1,6 +1,5 @@
 package services;
 
-import java.sql.Connection;
 import java.util.List;
 
 import dao.CompanyDAO;
@@ -33,12 +32,21 @@ public class CompanyServices {
   /**
    * . Retourne la liste des companies
    *
-   * @param conn : la connexion à la BDD
    * @param page : la page sélectionné
    *
    * @return List<Company>
    */
   public List<Company> listCompanies(int page) {
     return companyDAO.listCompanies(page);
+  }
+
+  /**
+   * . liste toutes les companies
+   *
+   * @return List<Comapny>
+   */
+
+  public List<Company> listAll() {
+    return companyDAO.listAll();
   }
 }

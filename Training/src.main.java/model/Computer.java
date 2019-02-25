@@ -10,7 +10,7 @@ public class Computer {
   private Date discontinued;
   private Company company;
   private String companyName;
-  
+
 
   /**
    * . Constructeur vide de computer
@@ -25,7 +25,8 @@ public class Computer {
    * @param name : nom de l'ordinateur
    * @param introDate : date d'introduction de l'ordinateur
    * @param discontinuedDate : date d'arrêt de production de l'ordinateur
-   * @param companyId : id de la companie associé
+   * @param company : companie associé à l'id_company de l'ordinateur
+   * @param companyName : nom de cette companie
    */
   public Computer(int id, String name, Date introDate, Date discontinuedDate, Company company, String companyName) {
     this.id = id;
@@ -67,7 +68,7 @@ public class Computer {
   public void setDiscontinued(Date discontinuedDate) {
     this.discontinued = discontinuedDate;
   }
-  
+
   public Company getCompany() {
     return company;
   }
@@ -75,7 +76,7 @@ public class Computer {
   public void setCompany(Company company) {
     this.company = company;
   }
-  
+
   public String getCompanyName() {
     return companyName;
   }

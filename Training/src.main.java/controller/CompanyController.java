@@ -1,10 +1,9 @@
 package controller;
 
-import java.sql.Connection;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import model.Company;
 import services.CompanyServices;
@@ -13,7 +12,7 @@ public class CompanyController {
 
   private static CompanyController instance;
 
-  private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
+  //private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
   CompanyServices companyServices = CompanyServices.getInstance();
 
@@ -38,7 +37,6 @@ public class CompanyController {
   /**
    * . Retourne la liste des companies dans la BDD
    *
-   * @param conn : la connexion à la BDD
    * @param page : la page sélectionné
    *
    * @return List<Company>
@@ -46,5 +44,15 @@ public class CompanyController {
 
   public List<Company> listCompanies(int page) {
     return companyServices.listCompanies(page);
+  }
+
+  /**
+   * . Liste toutes les companies
+   *
+   * @return List<Compan>
+   */
+
+  public List<Company> listAll() {
+    return companyServices.listAll();
   }
 }

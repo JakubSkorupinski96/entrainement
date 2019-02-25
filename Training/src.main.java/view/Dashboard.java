@@ -1,9 +1,6 @@
 package view;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -12,11 +9,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import controller.ComputerController;
-import dao.DAOFactory;
 import model.Computer;
 
 /**
@@ -28,7 +24,7 @@ public class Dashboard extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static ComputerController computerController = ComputerController.getInstance();
     private List<Computer> computers;
-   
+
 
 
     //private static Logger logger = LoggerFactory.getLogger(Dashboard.class);

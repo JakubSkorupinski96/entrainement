@@ -16,27 +16,25 @@ import controller.ComputerController;
 import model.Company;
 
 /**
- * . Servlet implementation class AddComputer
+ * . Servlet implementation class EditComputer
  */
-
-@WebServlet("/AddComputer")
-public class AddComputer extends HttpServlet {
+@WebServlet("/EditComputer")
+public class EditComputer extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   private ComputerController computerController = ComputerController.getInstance();
   private CompanyController companyController = CompanyController.getInstance();
 
-
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public AddComputer() {
+  public EditComputer() {
     super();
     // TODO Auto-generated constructor stub
   }
 
   /**
-   * . DoGet de addComputer
+   * . DoGet de editComputer
    *
    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
    *
@@ -50,10 +48,25 @@ public class AddComputer extends HttpServlet {
 
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
     List<Company> companies = companyController.listAll();
-    //companies = companyController.list(1);
     request.setAttribute("companies", companies);
-    request.getRequestDispatcher("/addComputer.jsp").forward(request, response);
+
+    String id = request.getParameter("computerId");
+    String oldName = request.getParameter("computerName");
+    String introduced = request.getParameter("computerIntroduced");
+    String discontinued = request.getParameter("computerDiscontinued");
+    String companyName = request.getParameter("companyName");
+    String companyId = request.getParameter("CompanyId");
+    //Computer computer = computerController.show(oldName);
+    request.setAttribute("id", id);
+    request.setAttribute("name", oldName);
+    request.setAttribute("introduced", introduced);
+    request.setAttribute("discontinued", discontinued);
+    request.setAttribute("companyName", companyName);
+    request.setAttribute("companyId", companyId);
+    System.out.println(companyId);
+    request.getRequestDispatcher("/editComputer.jsp").forward(request, response);
   }
 
   /**
@@ -68,11 +81,12 @@ public class AddComputer extends HttpServlet {
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    String oldName = request.getParameter("oldName");
     String name = request.getParameter("name");
     String introduced = request.getParameter("introduced") + " 00:00:00";
     String discontinued = request.getParameter("discontinued") + " 00:00:00";
-    String companyId = request.getParameter("companyId");
-    computerController.create(name, introduced, discontinued, Integer.parseInt(companyId));
+    String id = request.getParameter("companyId");
+    computerController.update(oldName, name, introduced, discontinued, Integer.parseInt(id));
     ServletContext context = getServletContext();
     RequestDispatcher rd = context.getRequestDispatcher("/Dashboard");
     rd.forward(request, response);

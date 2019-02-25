@@ -83,10 +83,19 @@
                       <c:forEach items="${list}" var="item">
                       	<tr>
                       		<td class="editMode">
-                            	<input type="checkbox" name="cb" class="cb" value="0">
+                            	<input type="checkbox" name="cb" class="cb">
                         	</td>
                         	<td>
-                            	<a href="editComputer.jsp" onclick="">${item.name}</a>
+                        		<form action="EditComputer" method="GET">
+                        			<input type="hidden" name="computerId" value="${item.id}">
+                        			<input type="hidden" name="computerName" value="${item.name}">  
+                        			<input type="hidden" name="computerIntroduced" value="${item.introduced}">  
+                        			<input type="hidden" name="computerDiscontinued" value="${item.discontinued}">
+                        			<input type="hidden" name="companyName" value="${item.companyName}">
+                        			<input type="hidden" name="companyId" value="${item.company}">
+                        			<input type="submit" value="${item.name}" class="btn btn-primary">      
+<%--                             		<a href="EditComputer" onclick="">${item.name}</a> --%>
+                            	</form>
                         	</td>
                         	<td>${item.introduced}</td>
                         	<td>${item.discontinued}</td>

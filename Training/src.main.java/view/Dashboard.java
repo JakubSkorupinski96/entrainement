@@ -53,7 +53,9 @@ public class Dashboard extends HttpServlet {
       computers = computerController.list(queryPage);
       request.setAttribute("list", computers);
       int nbPc = allComputer.size();
-      int nbPage = nbPc / computers.size();
+      int pageSize = computers.size();
+      int divider = pageSize != 0 ? pageSize : 1;
+      int nbPage = nbPc / divider;
       request.setAttribute("size", nbPc);
       request.setAttribute("nbPages", nbPage);
       request.getRequestDispatcher("/dashboard.jsp").forward(request, response);

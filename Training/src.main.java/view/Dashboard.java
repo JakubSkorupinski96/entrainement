@@ -49,10 +49,13 @@ public class Dashboard extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       List<Computer> allComputer = computerController.listAll();
-      computers = computerController.list(9);
+      int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 2;
+      computers = computerController.list(queryPage);
       request.setAttribute("list", computers);
       int nbPc = allComputer.size();
+      int nbPage = nbPc / computers.size();
       request.setAttribute("size", nbPc);
+      request.setAttribute("nbPages", nbPage);
       request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
 

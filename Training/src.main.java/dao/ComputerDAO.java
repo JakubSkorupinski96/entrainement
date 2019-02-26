@@ -28,8 +28,7 @@ public class ComputerDAO {
   private static final String SELECT_COMPUTER = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE name = ?";
   private static final String UPDATE_BY_NAME = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
   private static final String SELECT_COMPUTERS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, "
-      + "computer.company_id, company.id, company.name FROM computer computer, company company WHERE computer.company_id = "
-      + "company.id";
+      + "computer.company_id, company.id, company.name FROM computer computer LEFT JOIN company company ON computer.company_id = company.id ";
 
   /**
    * . Constructeur vide du DAO de computer

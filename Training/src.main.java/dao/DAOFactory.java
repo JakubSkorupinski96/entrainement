@@ -1,8 +1,14 @@
 package dao;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,9 +18,7 @@ public class DAOFactory {
   private static DAOFactory instance;
   private Connection conn;
 
-  private static final String URL = "jdbc:mysql://localhost:3306/computer-database-db?zeroDateTimeBehavior=convertToNull";
-  private static final String USER = "root";
-  private static final String PASS = "";
+  private static final String PROPERTY_FILE_NAME = "C:\\Users\\jakub\\git\\repository\\Training\\db.properties";
 
   private static Logger logger = LoggerFactory.getLogger(DAOFactory.class);
 
@@ -23,7 +27,8 @@ public class DAOFactory {
    */
 
   private DAOFactory() {
-    startConnection();
+    List<String> data = getConnectionURL(PROPERTY_FILE_NAME);
+    startConnection(data);
   }
 
   /**
@@ -40,9 +45,10 @@ public class DAOFactory {
 
   /**
    * . Démarre la connexion à la BDD
+   * @param data : données nécessaire à la connexion (0=URL, 1=user et 2=password)
    */
 
-  public void startConnection() {
+  public void startConnection(List<String> data) {
 
       try {
       Class.forName("com.mysql.jdbc.Driver");
@@ -52,13 +58,11 @@ public class DAOFactory {
     }
 
     try {
-      this.conn = DriverManager.getConnection(URL, USER, PASS);
-      System.out.println("here" + this.conn);
+      this.conn = DriverManager.getConnection(data.get(0), data.get(1), data.get(2));
     } catch (SQLException e) {
       logger.error("connection error");
       e.printStackTrace();
     }
-    System.out.println(conn);
   }
 
   /**
@@ -68,5 +72,44 @@ public class DAOFactory {
    */
   public Connection getConnection() {
     return this.conn;
+  }
+
+  /**
+   * . Gets connection info from a properties file
+   *
+   * @param propertyFile : name of the file with DB info
+   *
+   * @return List<String>
+   */
+
+  public List<String> getConnectionURL(String propertyFile) {
+
+    Properties prop = new Properties();
+    InputStream input = null;
+    List<String> data = new ArrayList<>();
+
+    try {
+      input = new FileInputStream(propertyFile);
+      prop.load(input);
+      System.out.println(prop.getProperty("dbURL"));
+      data.add(prop.getProperty("dbURL"));
+      data.add(prop.getProperty("dbUser"));
+      data.add(prop.getProperty("dbPassword"));
+      System.out.println(prop.getProperty("dbUser"));
+      System.out.println(prop.getProperty("dbPassword"));
+
+    } catch (IOException ex) {
+      ex.printStackTrace();
+    } finally {
+      if (input != null) {
+        try {
+          input.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+  }
+    System.out.print("here: " + data.get(0) + ", " + data.get(1));
+    return data;
   }
 }

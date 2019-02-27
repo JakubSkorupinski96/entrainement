@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DAOFactory {
 
   private static DAOFactory instance;
@@ -13,12 +16,13 @@ public class DAOFactory {
   private static final String USER = "root";
   private static final String PASS = "";
 
+  private static Logger logger = LoggerFactory.getLogger(DAOFactory.class);
+
   /**
    * . Constructeur vide du DAO de computer
    */
 
   private DAOFactory() {
-    System.out.println("start");
     startConnection();
   }
 
@@ -43,7 +47,7 @@ public class DAOFactory {
       try {
       Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e1) {
-      //logger.error("JDBC error");
+      logger.error("JDBC error");
       e1.printStackTrace();
     }
 
@@ -51,7 +55,7 @@ public class DAOFactory {
       this.conn = DriverManager.getConnection(URL, USER, PASS);
       System.out.println("here" + this.conn);
     } catch (SQLException e) {
-      //logger.error("connection error");
+      logger.error("connection error");
       e.printStackTrace();
     }
     System.out.println(conn);
@@ -63,7 +67,6 @@ public class DAOFactory {
    * @return Connection
    */
   public Connection getConnection() {
-    System.out.println(this.conn);
     return this.conn;
   }
 }

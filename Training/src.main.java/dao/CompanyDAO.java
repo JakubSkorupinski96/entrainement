@@ -7,8 +7,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import model.Company;
 
@@ -17,7 +17,7 @@ public class CompanyDAO {
   private static CompanyDAO instance;
   private Connection conn;
 
-  //private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
+  private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 
   private static final String SELECT_ALL = "SELECT id, name FROM company";
 
@@ -63,7 +63,7 @@ public class CompanyDAO {
         companies.add(company);
       }
     } catch (SQLException e) {
-      //logger.error("erreur de liste");
+      logger.error("erreur de liste");
       e.printStackTrace();
     }
     return companies;
@@ -91,7 +91,7 @@ public class CompanyDAO {
         companies.add(company);
       }
     } catch (SQLException e) {
-      //logger.error("erreur de liste");
+      logger.error("erreur de liste");
       e.printStackTrace();
     }
     return companies;

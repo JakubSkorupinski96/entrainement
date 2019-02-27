@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-//import org.slf4j.Logger;
-//import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import model.Company;
 import model.Computer;
@@ -21,7 +21,7 @@ public class ComputerDAO {
   private static ComputerDAO instance;
   private Connection conn;
 
-  // private static Logger logger = LoggerFactory.getLogger(ComputerDAO.class);
+  private static Logger logger = LoggerFactory.getLogger(ComputerDAO.class);
 
   private static final String INSERT_COMPUTER = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
   private static final String DELETE_BY_NAME = "DELETE FROM computer WHERE NAME = ?";
@@ -71,7 +71,7 @@ public class ComputerDAO {
 
       System.out.println("OK");
     } catch (SQLException e) {
-      // logger.error("erreur de création");
+      logger.error("erreur de création");
       e.printStackTrace();
     }
   }
@@ -90,7 +90,7 @@ public class ComputerDAO {
       preparedS.executeUpdate();
       System.out.println("Deleted");
     } catch (SQLException e) {
-      // logger.error("erreur de suppression");
+      logger.error("erreur de suppression");
       e.printStackTrace();
     }
   }
@@ -116,7 +116,7 @@ public class ComputerDAO {
       }
     } catch (SQLException e) {
       System.out.println("Fatal Error: Select");
-      // logger.error("erreur de sélection");
+      logger.error("erreur de sélection");
       e.printStackTrace();
     }
   }
@@ -145,7 +145,7 @@ public class ComputerDAO {
 
       System.out.println("updated");
     } catch (SQLException e) {
-      // logger.error("erreur de mise à jour");
+      logger.error("erreur de mise à jour");
       e.printStackTrace();
     }
   }
@@ -165,7 +165,6 @@ public class ComputerDAO {
     Statement stmt;
     try {
       stmt = this.conn.createStatement();
-      // ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
       ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS + " Limit " + (page - 1) * 25 + ", " + 25);
       while (rs.next()) {
         Company company = new Company();
@@ -188,7 +187,7 @@ public class ComputerDAO {
         computers.add(computer);
       }
     } catch (SQLException e) {
-      // logger.error("erreur de liste");
+      logger.error("erreur de liste");
       e.printStackTrace();
     }
     return computers;
@@ -205,7 +204,6 @@ public class ComputerDAO {
     Statement stmt;
     try {
       stmt = this.conn.createStatement();
-      // ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
       ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
       while (rs.next()) {
         Company company = new Company();
@@ -228,7 +226,7 @@ public class ComputerDAO {
         computers.add(computer);
       }
     } catch (SQLException e) {
-      // logger.error("erreur de liste");
+      logger.error("erreur de liste");
       e.printStackTrace();
     }
     return computers;

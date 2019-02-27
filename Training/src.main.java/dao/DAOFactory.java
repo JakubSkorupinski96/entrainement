@@ -85,31 +85,18 @@ public class DAOFactory {
   public List<String> getConnectionURL(String propertyFile) {
 
     Properties prop = new Properties();
-    InputStream input = null;
+    //InputStream input = null;
     List<String> data = new ArrayList<>();
 
-    try {
-      input = new FileInputStream(propertyFile);
+    try (InputStream input = new FileInputStream(propertyFile);) {
       prop.load(input);
-      System.out.println(prop.getProperty("dbURL"));
       data.add(prop.getProperty("dbURL"));
       data.add(prop.getProperty("dbUser"));
       data.add(prop.getProperty("dbPassword"));
-      System.out.println(prop.getProperty("dbUser"));
-      System.out.println(prop.getProperty("dbPassword"));
 
     } catch (IOException ex) {
       ex.printStackTrace();
-    } finally {
-      if (input != null) {
-        try {
-          input.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
-  }
-    System.out.print("here: " + data.get(0) + ", " + data.get(1));
+    }
     return data;
   }
 }

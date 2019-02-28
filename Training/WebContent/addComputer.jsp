@@ -27,11 +27,11 @@
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 box">
                     <h1>Add Computer</h1>
-                    <form action="AddComputer" method="POST">
+                    <form action="AddComputer" method="POST" id="addComputerForm">
                         <fieldset>
                             <div class="form-group">
                                 <label for="name">Computer name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Computer name">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Computer name" required>
                             </div>
                             <div class="form-group">
                                 <label for="introduced">Introduced date</label>
@@ -51,11 +51,23 @@
                             </div>                  
                         </fieldset>
                         <div class="actions pull-right">
-                            <input type="submit" value="Add" class="btn btn-primary">
+                            <input id="submit" type="submit" value="Add" class="btn btn-primary">
                             or
                             <a href="${pageContext.request.contextPath}/Dashboard" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
+					<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js">
+                    $(document).ready(function () {
+                        $("#submit").click(function () {
+                        	alert("Please input a hjsdgfhjxdsgfjhsdgjhfed");
+                            var name = document.getElementById('name').value;
+                            if (name.length == 0) {
+                                alert("Please input a name");
+                            }
+                        });
+                    });</script>
+					<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.js"></script>
+					<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
                 </div>
             </div>
         </div>

@@ -99,4 +99,37 @@ public class ComputerServices {
   public List<Computer> listAllComputers() {
     return computerDAO.listAllComputers();
   }
+
+  /**
+   * . Searches for all computer from said company
+   *
+   * @param name : the company's
+   *
+   * @return List<Computer>
+   */
+
+  public List<Computer> searchComputers(String name) {
+    return computerDAO.searchComputer(name);
+  }
+
+  /**
+   * . Returns the number of computers in the BD
+   *
+   * @return String
+   */
+
+  public String countAll() {
+    return computerDAO.countAll();
+  }
+  /**
+   * . Returns the number of computers matching search criterias
+   *
+   * @param name : company name
+   *
+   * @return String
+   */
+
+  public String countSearch(String name) {
+    return computerDAO.countSearch(name);
+  }
 }

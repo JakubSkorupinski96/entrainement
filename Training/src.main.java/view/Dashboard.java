@@ -48,16 +48,29 @@ public class Dashboard extends HttpServlet {
      */
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      List<Computer> allComputer = computerController.listAll();
-      int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 2;
-      computers = computerController.list(queryPage);
+      String searchReq = request.getParameter("search");
+      System.out.println("here: " + searchReq);
+      boolean search = searchReq != null ? true : false;
+      int nbPc;
+      if (search) {
+        computers = computerController.search(request.getParameter("search"));
+        nbPc = Integer.parseInt(computerController.countSearch(searchReq));
+      } else {
+        int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        computers = computerController.list(queryPage);
+        nbPc = Integer.parseInt(computerController.countAll());
+      }
+      //int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 2;
+      //System.out.println(search);
+      //computers = search ? computerController.search(request.getParameter("search")) : computerController.list(queryPage);
       request.setAttribute("list", computers);
-      int nbPc = allComputer.size();
+      //nbPc = Integer.parseInt(computerController.countAll());
       int pageSize = computers.size();
       int divider = pageSize != 0 ? pageSize : 1;
       int nbPage = nbPc / divider;
       request.setAttribute("size", nbPc);
       request.setAttribute("nbPages", nbPage);
+      request.setAttribute("searchAttri", searchReq);
       request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
 

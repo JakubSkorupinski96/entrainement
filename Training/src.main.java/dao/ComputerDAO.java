@@ -29,6 +29,12 @@ public class ComputerDAO {
   private static final String UPDATE_BY_NAME = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
   private static final String SELECT_COMPUTERS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, "
       + "computer.company_id, company.id, company.name FROM computer computer LEFT JOIN company company ON computer.company_id = company.id ";
+  private static final String SEARCH_COMPUTERS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued,"
+      + "computer.company_id, company.id, company.name FROM computer computer LEFT JOIN company company ON computer.company_id = company.id"
+      + " WHERE company.name LIKE ?";
+  private static final String COUNT_ALL = "SELECT COUNT(id) AS computers FROM computer";
+  private static final String COUNT_SEARCH = "SELECT COUNT(computer.id) AS computers FROM computer computer LEFT JOIN company company ON "
+      + "computer.company_id = company.id WHERE company.name LIKE ?";
 
   /**
    * . Constructeur vide du DAO de computer
@@ -222,7 +228,6 @@ public class ComputerDAO {
         computer.setDiscontinued(discontinuedDate);
         computer.setCompany(company);
         computer.setCompanyName(companyName);
-        System.out.println(computer.toString());
         computers.add(computer);
       }
     } catch (SQLException e) {
@@ -230,5 +235,95 @@ public class ComputerDAO {
       e.printStackTrace();
     }
     return computers;
+  }
+
+  /**
+   * . Searches for all computer from said company
+   *
+   * @param name : the company's
+   *
+   * @return List<Computer>
+   */
+
+  public List<Computer> searchComputer(String name) {
+    List<Computer> computers = new ArrayList<>();
+    String search = SEARCH_COMPUTERS;
+    try {
+      PreparedStatement preparedS = this.conn.prepareStatement(search);
+      preparedS.setString(1, "%" + name + "%");
+      System.out.println("stat" + preparedS);
+      ResultSet rs = preparedS.executeQuery();
+      System.out.println(rs);
+      System.out.println("stat" + preparedS);
+      while (rs.next()) {
+        Company company = new Company();
+        Computer computer = new Computer();
+        int id = rs.getInt("id");
+        String computerName = rs.getString("name");
+        Date introDate = rs.getDate("introduced");
+        Date discontinuedDate = rs.getDate("discontinued");
+        int companyId = rs.getInt("company_id");
+        String companyName = rs.getString("company.name");
+        company.setId(companyId);
+        company.setName(companyName);
+        computer.setId(id);
+        computer.setName(computerName);
+        computer.setIntroduced(introDate);
+        computer.setDiscontinued(discontinuedDate);
+        computer.setCompany(company);
+        computer.setCompanyName(companyName);
+        computers.add(computer);
+      }
+    } catch (SQLException e) {
+      logger.error("search error");
+      e.printStackTrace();
+    }
+    return computers;
+  }
+
+  /**
+   * . Returns the number of computers in the BD
+   *
+   * @return String
+   */
+
+  public String countAll() {
+    String count = "";
+    Statement stmt;
+    try {
+      stmt = this.conn.createStatement();
+      ResultSet rs = stmt.executeQuery(COUNT_ALL);
+      rs.next();
+      count += rs.getString("computers");
+    } catch (SQLException e) {
+      logger.error("erreur de liste");
+      e.printStackTrace();
+    }
+    System.out.println(count);
+    return count;
+  }
+
+  /**
+   * . Returns the number of computers matching search criterias
+   *
+   * @param name : company name
+   *
+   * @return String
+   */
+
+  public String countSearch(String name) {
+    String count = "";
+    try {
+      PreparedStatement preparedS = this.conn.prepareStatement(COUNT_SEARCH);
+      preparedS.setString(1, "%" + name + "%");
+      ResultSet rs = preparedS.executeQuery();
+      rs.next();
+      count += rs.getString("computers");
+    } catch (SQLException e) {
+      logger.error("erreur de liste");
+      e.printStackTrace();
+    }
+    System.out.println(count);
+    return count;
   }
 }

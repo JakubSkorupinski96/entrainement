@@ -28,9 +28,8 @@
             </h1>
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
-                    <form id="searchForm" action="#" method="GET" class="form-inline">
-
-                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" />
+                    <form id="searchForm" action="Dashboard" method="GET" class="form-inline">
+                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" value="${searchAttri}"/>
                         <input type="submit" id="searchsubmit" value="Filter by name"
                         class="btn btn-primary" />
                     </form>
@@ -86,15 +85,15 @@
                             	<input type="checkbox" name="cb" class="cb">
                         	</td>
                         	<td>
-                        		<form action="EditComputer" method="GET">
+                        		<form action="EditComputer" method="GET" id="invisibleForm">
                         			<input type="hidden" name="computerId" value="${item.id}">
                         			<input type="hidden" name="computerName" value="${item.name}">  
                         			<input type="hidden" name="computerIntroduced" value="${item.introduced}">  
                         			<input type="hidden" name="computerDiscontinued" value="${item.discontinued}">
                         			<input type="hidden" name="companyName" value="${item.companyName}">
                         			<input type="hidden" name="companyId" value="${item.company}">
-                        			<input type="submit" value="${item.name}" class="btn btn-primary">      
-<%--                             		<a href="EditComputer" onclick="">${item.name}</a> --%>
+                        			<input type="submit" value="${item.name}" class="btn btn-primary">
+<%--                         			<a href="${pageContext.request.contextPath}/EditComputer" onclick="document.invisibleForm.submit();">${item.name}</a>       --%>
                             	</form>
                         	</td>
                         	<td>${item.introduced}</td>

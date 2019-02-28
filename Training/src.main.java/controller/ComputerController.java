@@ -98,4 +98,37 @@ public class ComputerController {
   public List<Computer> listAll() {
     return computerServices.listAllComputers();
   }
+
+  /**
+   * . Searches for all computer from said company
+   *
+   * @param name : the company's
+   *
+   * @return List<Computer>
+   */
+  public List<Computer> search(String name) {
+    return computerServices.searchComputers(name);
+  }
+
+  /**
+   * . Returns the number of computers in the BD
+   *
+   * @return String
+   */
+
+  public String countAll() {
+    return computerServices.countAll();
+  }
+
+  /**
+   * . Returns the number of computers matching search criterias
+   *
+   * @param name : company name
+   *
+   * @return String
+   */
+
+  public String countSearch(String name) {
+    return computerServices.countSearch(name);
+  }
 }

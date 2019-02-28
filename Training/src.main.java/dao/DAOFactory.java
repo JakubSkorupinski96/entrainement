@@ -94,8 +94,9 @@ public class DAOFactory {
       data.add(prop.getProperty("dbUser"));
       data.add(prop.getProperty("dbPassword"));
 
-    } catch (IOException ex) {
-      ex.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+      logger.error("Properties file error");
     }
     return data;
   }

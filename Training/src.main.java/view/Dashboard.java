@@ -58,19 +58,12 @@ public class Dashboard extends HttpServlet {
         computers = computerController.search(request.getParameter("search"));
         nbPc = Integer.parseInt(computerController.countSearch(searchReq));
       } else {
-        int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        computers = computerController.list(queryPage);
+        //int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        //computers = computerController.list(queryPage);
+        computers = computerController.listAll();
         nbPc = Integer.parseInt(computerController.countAll());
       }
-      computers = computerController.listAll();
-      //List<Computer> sortedComputers = computers.stream().sorted(Comparator.comparing(Computer::getName).reversed()).collect(Collectors.toList());
-      //sortedComputers.forEach(e -> System.out.println("Id:" + e.getId() + ", Name: " + e.getName() + ", Age:" + e.getCompanyName()));
-      //System.out.println(sortedComputers);
-      //int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 2;
-      //System.out.println(search);
-      //computers = search ? computerController.search(request.getParameter("search")) : computerController.list(queryPage);
       request.setAttribute("list", computers);
-      //nbPc = Integer.parseInt(computerController.countAll());
       int pageSize = computers.size();
       int divider = pageSize != 0 ? pageSize : 1;
       int nbPage = nbPc / divider;

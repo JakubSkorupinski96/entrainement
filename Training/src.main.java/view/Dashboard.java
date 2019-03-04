@@ -11,8 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//import org.slf4j.Logger;
+import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
+import org.slf4j.LoggerFactory;
 
 import controller.ComputerController;
 import model.Computer;
@@ -29,7 +30,7 @@ public class Dashboard extends HttpServlet {
 
 
 
-    //private static Logger logger = LoggerFactory.getLogger(Dashboard.class);
+    private static Logger logger = LoggerFactory.getLogger(Dashboard.class);
 
 //    @Override
 //    public void init() throws ServletException {
@@ -51,7 +52,6 @@ public class Dashboard extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       String searchReq = request.getParameter("search");
-      System.out.println("here: " + searchReq);
       boolean search = searchReq != null ? true : false;
       int nbPc;
       if (search) {

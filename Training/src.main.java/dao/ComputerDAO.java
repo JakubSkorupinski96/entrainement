@@ -35,6 +35,7 @@ public class ComputerDAO {
   private static final String COUNT_ALL = "SELECT COUNT(id) AS computers FROM computer";
   private static final String COUNT_SEARCH = "SELECT COUNT(computer.id) AS computers FROM computer computer LEFT JOIN company company ON "
       + "computer.company_id = company.id WHERE company.name LIKE ?";
+  //private static final String ORDER_BY_ID_DESCENDING = "";    //TODO: kete
 
   /**
    * . Constructeur vide du DAO de computer

@@ -13,6 +13,7 @@
 <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet" media="screen">
 <link href="${pageContext.request.contextPath}/css/font-awesome.css" rel="stylesheet" media="screen">
 <link href="${pageContext.request.contextPath}/css/main.css" rel="stylesheet" media="screen">
+
 </head>
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
@@ -29,7 +30,7 @@
             <div id="actions" class="form-horizontal">
                 <div class="pull-left">
                     <form id="searchForm" action="Dashboard" method="GET" class="form-inline">
-                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" value="${searchAttri}"/>
+                        <input type="search" id="searchbox" name="search" class="form-control" placeholder="Search name" value="${searchAttri}" required/>
                         <input type="submit" id="searchsubmit" value="Filter by name"
                         class="btn btn-primary" />
                     </form>
@@ -46,7 +47,7 @@
         </form>
 
         <div class="container" style="margin-top: 10px;">
-            <table class="table table-striped table-bordered">
+            <table id="computersTable" class="table table-striped table-bordered display">
                 <thead>
                     <tr>
                         <!-- Variable declarations for passing labels as parameters -->
@@ -61,18 +62,22 @@
                             </span>
                         </th>
                         <th>
-                            Computer name
+                            Computer name 
+                            <i class="fa fa-fw fa-sort"></i>
                         </th>
                         <th>
-                            Introduced date
+                            Introduced date 
+<!--                             <i class="fa fa-fw fa-sort-asc"></i> -->
                         </th>
                         <!-- Table header for Discontinued Date -->
                         <th>
-                            Discontinued date
+                            Discontinued date 
+<!--                             <i class="fa fa-fw fa-sort-asc"></i> -->
                         </th>
                         <!-- Table header for Company -->
                         <th>
-                            Company
+                            Company 
+<!--                             <i class="fa fa-fw fa-sort-asc"></i> -->
                         </th>
 
                     </tr>
@@ -133,9 +138,40 @@
         </div>
 
     </footer>
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/dashboard.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script> --%>
+<script src="${pageContext.request.contextPath}/js/jquery-3.3.1.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/dashboard.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+	
+	jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+	    "non-empty-string-asc": function (str1, str2) {
+	        if(str1 == "")
+	            return 1;
+	        if(str2 == "")
+	            return -1;
+	        return ((str1 < str2) ? -1 : ((str1 > str2) ? 1 : 0));
+	    },
+	 
+	    "non-empty-string-desc": function (str1, str2) {
+	        if(str1 == "")
+	            return 1;
+	        if(str2 == "")
+	            return -1;
+	        return ((str1 < str2) ? 1 : ((str1 > str2) ? -1 : 0));
+	    }
+	} );
+	
+    $('#computersTable').DataTable( {
+        stateSave: true,
+        columnDefs: [
+            {type: 'non-empty-string', targets: [2,3,4]}
+         ]
+    } );
+} );
+</script>
 
 </body>
 </html>

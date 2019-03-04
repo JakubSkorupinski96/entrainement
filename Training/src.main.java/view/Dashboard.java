@@ -1,7 +1,9 @@
 package view;
 
 import java.io.IOException;
+//import java.util.Comparator;
 import java.util.List;
+//import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,6 +62,10 @@ public class Dashboard extends HttpServlet {
         computers = computerController.list(queryPage);
         nbPc = Integer.parseInt(computerController.countAll());
       }
+      computers = computerController.listAll();
+      //List<Computer> sortedComputers = computers.stream().sorted(Comparator.comparing(Computer::getName).reversed()).collect(Collectors.toList());
+      //sortedComputers.forEach(e -> System.out.println("Id:" + e.getId() + ", Name: " + e.getName() + ", Age:" + e.getCompanyName()));
+      //System.out.println(sortedComputers);
       //int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 2;
       //System.out.println(search);
       //computers = search ? computerController.search(request.getParameter("search")) : computerController.list(queryPage);

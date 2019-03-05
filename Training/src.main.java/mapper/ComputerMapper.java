@@ -1,6 +1,7 @@
 package mapper;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import model.Company;
 import model.Computer;
@@ -20,13 +21,13 @@ public class ComputerMapper {
    * . Crée une company
    *
    * @param id : id de la compagnie
-   * @param name : nom de la compagnie
+   * @param companyName : nom de la compagnie
    *
    * @return Company
    */
 
-  public Company createCompany(int id, String name) {
-    return company = new Company(id, name);
+  public Company createCompany(int id, String companyName) {
+    return company = new Company(id, companyName);
   }
 
   /**
@@ -41,7 +42,7 @@ public class ComputerMapper {
    *
    * @return Computer
    */
-  public Computer createComputer(int id, String name, Date introduced, Date discontinued, Company company, String companyName) {
+  public Computer createComputer(int id, String name, LocalDate introduced, LocalDate discontinued, Company company, String companyName) {
     return computer = new Computer(id, name, introduced, discontinued, company, companyName);
   }
 

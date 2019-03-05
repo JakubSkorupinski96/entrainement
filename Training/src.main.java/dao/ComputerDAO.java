@@ -7,8 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +39,6 @@ public class ComputerDAO {
   private static final String COUNT_ALL = "SELECT COUNT(id) AS computers FROM computer";
   private static final String COUNT_SEARCH = "SELECT COUNT(computer.id) AS computers FROM computer computer LEFT JOIN company company ON "
       + "computer.company_id = company.id WHERE company.name LIKE ?";
-  //private static final String ORDER_BY_ID_DESCENDING = "";    //TODO: kete
 
   /**
    * . Constructeur vide du DAO de computer
@@ -144,8 +147,17 @@ public class ComputerDAO {
 
       PreparedStatement preparedS = this.conn.prepareStatement(update);
       preparedS.setString(1, newName);
-      preparedS.setTimestamp(2, Timestamp.valueOf(newIntro));
-      preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
+      if (newIntro.equals("00:00:00")) {
+        preparedS.setTimestamp(2, Timestamp.valueOf(newIntro));
+      } else {
+        preparedS.setTimestamp(2, null);
+      }
+      if (newDiscon.equals("00:00:00")) {
+        preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
+      } else {
+        preparedS.setTimestamp(3, null);
+      }
+      //preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
       preparedS.setInt(4, newCompanyId);
       preparedS.setString(5, name);
       preparedS.executeUpdate();
@@ -178,8 +190,9 @@ public class ComputerDAO {
         Computer computer = new Computer();
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        Date introDate = rs.getDate("introduced");
-        Date discontinuedDate = rs.getDate("discontinued");
+        System.out.println(rs.getDate("introduced"));
+        LocalDate introDate = LocalDate.parse(rs.getString("introduced"));
+        LocalDate discontinuedDate = LocalDate.parse(rs.getString("discontinued"));
         int companyId = rs.getInt("company_id");
         String companyName = rs.getString("company.name");
         company.setId(companyId);
@@ -213,14 +226,37 @@ public class ComputerDAO {
       stmt = this.conn.createStatement();
       ResultSet rs = stmt.executeQuery(SELECT_COMPUTERS);
       while (rs.next()) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
         Company company = new Company();
         Computer computer = new Computer();
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        Date introDate = rs.getDate("introduced");
-        Date discontinuedDate = rs.getDate("discontinued");
+        //System.out.println(rs.getString("introduced").length());
+        //System.out.println((rs.getString("introduced")).substring(0,19));
         int companyId = rs.getInt("company_id");
         String companyName = rs.getString("company.name");
+        //String intro = rs.getString("introduced").substring(0,19);
+        //String dis = rs.getString("discontinued").substring(0,19);
+//        LocalDate introDate = Optional.ofNullable(LocalDate.parse((rs.getString("introduced")).substring(0,19),formatter))
+//            .map(intro -> {
+//              try {
+//                return LocalDate.parse((rs.getString("introduced")).substring(0,19),formatter);
+//              } catch (SQLException e) {
+//                // TODO Auto-generated catch block
+//                e.printStackTrace();
+//              }
+//              return intro;
+//            })
+//            .orElseGet(null);
+        LocalDate introDate = null;
+        LocalDate discontinuedDate = null;
+        if (rs.getString("introduced") != null) {
+          introDate = LocalDate.parse(rs.getString("introduced").substring(0,19),formatter);
+        }
+        if (rs.getString("discontinued") != null) {
+          discontinuedDate = LocalDate.parse(rs.getString("discontinued").substring(0,19),formatter);
+        } 
+        //LocalDate discontinuedDate = LocalDate.parse(rs.getString("discontinued").substring(0,19),formatter);
         company.setId(companyId);
         company.setName(companyName);
         computer.setId(id);
@@ -261,8 +297,8 @@ public class ComputerDAO {
         Computer computer = new Computer();
         int id = rs.getInt("id");
         String computerName = rs.getString("name");
-        Date introDate = rs.getDate("introduced");
-        Date discontinuedDate = rs.getDate("discontinued");
+        LocalDate introDate = LocalDate.parse(rs.getString("introduced"));
+        LocalDate discontinuedDate = LocalDate.parse(rs.getString("discontinued"));
         int companyId = rs.getInt("company_id");
         String companyName = rs.getString("company.name");
         company.setId(companyId);

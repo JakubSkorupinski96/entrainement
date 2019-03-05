@@ -1,13 +1,14 @@
 package model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class Computer {
 
   private int id;
   private String name;
-  private Date introduced;
-  private Date discontinued;
+  private LocalDate introduced;
+  private LocalDate discontinued;
   private Company company;
   private String companyName;
 
@@ -27,7 +28,7 @@ public class Computer {
    * @param company          : companie associé à l'id_company de l'ordinateur
    * @param companyName      : nom de cette companie
    */
-  public Computer(int id, String name, Date introDate, Date discontinuedDate, Company company,
+  public Computer(int id, String name, LocalDate introDate, LocalDate discontinuedDate, Company company,
       String companyName) {
     this.id = id;
     this.name = name;
@@ -53,19 +54,19 @@ public class Computer {
     this.name = name;
   }
 
-  public Date getIntroduced() {
+  public LocalDate getIntroduced() {
     return this.introduced;
   }
 
-  public void setIntroduced(Date introDate) {
+  public void setIntroduced(LocalDate introDate) {
     this.introduced = introDate;
   }
 
-  public Date getDiscontinued() {
+  public LocalDate getDiscontinued() {
     return discontinued;
   }
 
-  public void setDiscontinued(Date discontinuedDate) {
+  public void setDiscontinued(LocalDate discontinuedDate) {
     this.discontinued = discontinuedDate;
   }
 
@@ -95,8 +96,8 @@ public class Computer {
 
     private int id;
     private String name;
-    private Date introduced;
-    private Date discontinued;
+    private LocalDate introduced;
+    private LocalDate discontinued;
     private Company company;
     private String companyName;
 
@@ -129,7 +130,7 @@ public class Computer {
      * @return Builder
      */
 
-    public Builder computerIntroduced(Date introduced) {
+    public Builder computerIntroduced(LocalDate introduced) {
       this.introduced = introduced;
       return this;
     }
@@ -141,7 +142,7 @@ public class Computer {
      * @return Builder
      */
 
-    public Builder computerDiscontinued(Date discontinued) {
+    public Builder computerDiscontinued(LocalDate discontinued) {
       this.discontinued = discontinued;
       return this;
     }

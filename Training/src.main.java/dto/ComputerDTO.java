@@ -23,7 +23,7 @@ public class ComputerDTO {
 
   public ComputerDTO(String id, String name, String introduced, String discontinued, String company, String companyName) {
     this.id = id;
-    this.companyName = name;
+    this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
     this.company = company;

@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import exception.ComputerException;
+
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
@@ -52,8 +54,9 @@ public class ComputerController {
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
+   * @throws ComputerException 
    */
-  public void create(String name, String intro, String discon, int compId) {
+  public void create(String name, String intro, String discon, int compId) throws ComputerException {
     computerServices.createComputer(name, intro, discon, compId);
   }
 

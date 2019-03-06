@@ -1,15 +1,25 @@
 package services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import dao.ComputerDAO;
+import dto.ComputerDTO;
+import exception.ComputerException;
+import mapper.ComputerMapper;
 import model.Computer;
+import validation.ComputerValidation;
 
 public class ComputerServices {
 
   private static ComputerServices instance;
 
   ComputerDAO computerDAO = ComputerDAO.getInstance();
+  
+  private ComputerDTO computerDTO;
+  private ComputerMapper computerMapper;
+  private ComputerValidation computerValidator = new ComputerValidation();
 
   /**
    * . Constructeu vide des services de computer
@@ -48,10 +58,14 @@ public class ComputerServices {
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
+   * @throws ComputerException 
    */
 
   public void createComputer(String name, String intro, String discon,
-      int compId) {
+      int compId) throws ComputerException {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    computerValidator.validateComputerName(name);
+    computerValidator.validateComputerDates(LocalDate.parse(intro, formatter), LocalDate.parse(discon, formatter));
     computerDAO.createComputer(name, intro, discon, compId);
   }
 
@@ -63,10 +77,14 @@ public class ComputerServices {
    * @param newIntro : nouvelle date d'introduction
    * @param newDiscon : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
+   * @throws ComputerException 
    */
 
   public void updateComputer(String name, String newName, String newIntro,
-      String newDiscon, int newCompanyId) {
+      String newDiscon, int newCompanyId) throws ComputerException {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    computerValidator.validateComputerName(name);
+    computerValidator.validateComputerDates(LocalDate.parse(newIntro, formatter), LocalDate.parse(newDiscon, formatter));
     computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
   }
 

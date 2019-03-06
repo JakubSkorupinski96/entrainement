@@ -82,7 +82,6 @@ public class ComputerDAO {
       System.out.println("OK");
     } catch (SQLException e) {
       logger.error("erreur de création");
-      e.printStackTrace();
     }
   }
 
@@ -101,7 +100,6 @@ public class ComputerDAO {
       System.out.println("Deleted");
     } catch (SQLException e) {
       logger.error("erreur de suppression");
-      e.printStackTrace();
     }
   }
 
@@ -125,9 +123,7 @@ public class ComputerDAO {
         System.out.println(pcName + " " + dateIntro + " " + dateDiscon + " " + compId);
       }
     } catch (SQLException e) {
-      System.out.println("Fatal Error: Select");
       logger.error("erreur de sélection");
-      e.printStackTrace();
     }
   }
 
@@ -165,7 +161,6 @@ public class ComputerDAO {
       System.out.println("updated");
     } catch (SQLException e) {
       logger.error("erreur de mise à jour");
-      e.printStackTrace();
     }
   }
 
@@ -208,7 +203,6 @@ public class ComputerDAO {
       }
     } catch (SQLException e) {
       logger.error("erreur de liste");
-      e.printStackTrace();
     }
     return computers;
   }
@@ -231,23 +225,8 @@ public class ComputerDAO {
         Computer computer = new Computer();
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        //System.out.println(rs.getString("introduced").length());
-        //System.out.println((rs.getString("introduced")).substring(0,19));
         int companyId = rs.getInt("company_id");
         String companyName = rs.getString("company.name");
-        //String intro = rs.getString("introduced").substring(0,19);
-        //String dis = rs.getString("discontinued").substring(0,19);
-//        LocalDate introDate = Optional.ofNullable(LocalDate.parse((rs.getString("introduced")).substring(0,19),formatter))
-//            .map(intro -> {
-//              try {
-//                return LocalDate.parse((rs.getString("introduced")).substring(0,19),formatter);
-//              } catch (SQLException e) {
-//                // TODO Auto-generated catch block
-//                e.printStackTrace();
-//              }
-//              return intro;
-//            })
-//            .orElseGet(null);
         LocalDate introDate = null;
         LocalDate discontinuedDate = null;
         if (rs.getString("introduced") != null) {
@@ -256,7 +235,6 @@ public class ComputerDAO {
         if (rs.getString("discontinued") != null) {
           discontinuedDate = LocalDate.parse(rs.getString("discontinued").substring(0,19),formatter);
         } 
-        //LocalDate discontinuedDate = LocalDate.parse(rs.getString("discontinued").substring(0,19),formatter);
         company.setId(companyId);
         company.setName(companyName);
         computer.setId(id);
@@ -269,7 +247,6 @@ public class ComputerDAO {
       }
     } catch (SQLException e) {
       logger.error("erreur de liste");
-      e.printStackTrace();
     }
     return computers;
   }
@@ -313,7 +290,6 @@ public class ComputerDAO {
       }
     } catch (SQLException e) {
       logger.error("search error");
-      e.printStackTrace();
     }
     return computers;
   }
@@ -358,9 +334,7 @@ public class ComputerDAO {
       count += rs.getString("computers");
     } catch (SQLException e) {
       logger.error("erreur de liste");
-      e.printStackTrace();
     }
-    System.out.println(count);
     return count;
   }
 }

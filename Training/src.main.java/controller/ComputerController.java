@@ -2,7 +2,8 @@ package controller;
 
 import java.util.List;
 
-import exception.ComputerException;
+import exception.ComputerDateCoherenceException;
+import exception.ComputerNameException;
 
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -54,9 +55,10 @@ public class ComputerController {
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
-   * @throws ComputerException 
+   * @throws ComputerNameException 
+   * @throws ComputerDateCoherenceException 
    */
-  public void create(String name, String intro, String discon, int compId) throws ComputerException {
+  public void create(String name, String intro, String discon, int compId) throws ComputerNameException, ComputerDateCoherenceException {
     computerServices.createComputer(name, intro, discon, compId);
   }
 
@@ -68,9 +70,11 @@ public class ComputerController {
    * @param newIntro : nouvelle date d'introduction
    * @param newDiscon : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
+   * @throws ComputerNameException 
+   * @throws ComputerDateCoherenceException 
    */
   public void update(String name, String newName, String newIntro,
-      String newDiscon, int newCompanyId) {
+      String newDiscon, int newCompanyId) throws ComputerNameException, ComputerDateCoherenceException {
     computerServices.updateComputer(name, newName, newIntro, newDiscon, newCompanyId);
   }
 

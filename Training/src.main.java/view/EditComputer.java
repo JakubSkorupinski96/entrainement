@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import controller.CompanyController;
 import controller.ComputerController;
+import exception.ComputerDateCoherenceException;
+import exception.ComputerNameException;
 import model.Company;
 
 /**
@@ -25,6 +30,12 @@ public class EditComputer extends HttpServlet {
   private ComputerController computerController = ComputerController.getInstance();
   private CompanyController companyController = CompanyController.getInstance();
 
+  private static Logger logger = LoggerFactory.getLogger(AddComputer.class);
+  
+  private String view = "/Dashboard";
+  
+  List<Company> companies = companyController.listAll();
+  
   /**
    * @see HttpServlet#HttpServlet()
    */
@@ -49,7 +60,6 @@ public class EditComputer extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    List<Company> companies = companyController.listAll();
     request.setAttribute("companies", companies);
 
     String id = request.getParameter("computerId");
@@ -58,7 +68,6 @@ public class EditComputer extends HttpServlet {
     String discontinued = request.getParameter("computerDiscontinued");
     String companyName = request.getParameter("companyName");
     String companyId = request.getParameter("CompanyId");
-    //Computer computer = computerController.show(oldName);
     request.setAttribute("id", id);
     request.setAttribute("name", oldName);
     request.setAttribute("introduced", introduced);
@@ -86,10 +95,39 @@ public class EditComputer extends HttpServlet {
     String introduced = request.getParameter("introduced") + " 00:00:00";
     String discontinued = request.getParameter("discontinued") + " 00:00:00";
     String id = request.getParameter("companyId");
-    computerController.update(oldName, name, introduced, discontinued, Integer.parseInt(id));
+    
+    String view = "/Dashboard";
+    String errorMessage = "";
+    boolean error = false;
+    
+    try {
+      computerController.update(oldName, name, introduced, discontinued, Integer.parseInt(id));
+    } catch (NumberFormatException e) {
+      errorMessage = "The selected company doesn't have an id";
+      logger.error(errorMessage);
+      error = true;
+    } catch (ComputerNameException e) {
+      errorMessage = "Computer name cannot be empty";
+      logger.error(errorMessage);
+      error = true;
+    } catch (ComputerDateCoherenceException e) {
+      errorMessage = "Introduced cannot be greater than Discontinued";
+      logger.error(errorMessage);
+      error = true;
+    }
+    
+    if (error) {
+      view = "/editComputer.jsp";
+      request.setAttribute("errorMessage", errorMessage);
+      request.setAttribute("error", error);
+      request.setAttribute("name", name);
+      request.setAttribute("companies", companies);
+    }
+    
     ServletContext context = getServletContext();
-    RequestDispatcher rd = context.getRequestDispatcher("/Dashboard");
+    RequestDispatcher rd = context.getRequestDispatcher(view);
     rd.forward(request, response);
-  }
+    }
 
 }
+

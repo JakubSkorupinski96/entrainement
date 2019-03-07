@@ -18,9 +18,14 @@
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <a class="navbar-brand" href="${pageContext.request.contextPath}/Dashboard"> Application - Computer Database </a>
-        </div>
-        
+        </div>        
     </header>
+		
+	<c:if test="${error}">
+    	<div style="text-align:center" class="alert alert-danger" role="alert">
+  			<c:out value="${errorMessage}"></c:out> 
+		</div>
+	</c:if>
 
     <section id="main">
         <div class="container">
@@ -31,7 +36,7 @@
                         <fieldset>
                             <div class="form-group">
                                 <label for="name">Computer name</label>
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Computer name" required>
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Computer name" value="${name}" required>
                             </div>
                             <div class="form-group">
                                 <label for="introduced">Introduced date</label>

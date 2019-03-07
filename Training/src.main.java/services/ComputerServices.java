@@ -6,10 +6,11 @@ import java.util.List;
 
 import dao.ComputerDAO;
 import dto.ComputerDTO;
-import exception.ComputerException;
+import exception.ComputerDateCoherenceException;
+import exception.ComputerNameException;
 import mapper.ComputerMapper;
 import model.Computer;
-import validation.ComputerValidation;
+import validator.ComputerValidator;
 
 public class ComputerServices {
 
@@ -19,7 +20,7 @@ public class ComputerServices {
   
   private ComputerDTO computerDTO;
   private ComputerMapper computerMapper;
-  private ComputerValidation computerValidator = new ComputerValidation();
+  private ComputerValidator computerValidator = new ComputerValidator();
 
   /**
    * . Constructeu vide des services de computer
@@ -58,11 +59,12 @@ public class ComputerServices {
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
-   * @throws ComputerException 
+   * @throws ComputerNameException 
+   * @throws ComputerDateCoherenceException 
    */
 
   public void createComputer(String name, String intro, String discon,
-      int compId) throws ComputerException {
+      int compId) throws ComputerNameException, ComputerDateCoherenceException {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
     computerValidator.validateComputerName(name);
     computerValidator.validateComputerDates(LocalDate.parse(intro, formatter), LocalDate.parse(discon, formatter));
@@ -77,11 +79,12 @@ public class ComputerServices {
    * @param newIntro : nouvelle date d'introduction
    * @param newDiscon : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
-   * @throws ComputerException 
+   * @throws ComputerNameException 
+   * @throws ComputerDateCoherenceException 
    */
 
   public void updateComputer(String name, String newName, String newIntro,
-      String newDiscon, int newCompanyId) throws ComputerException {
+      String newDiscon, int newCompanyId) throws ComputerNameException, ComputerDateCoherenceException {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
     computerValidator.validateComputerName(name);
     computerValidator.validateComputerDates(LocalDate.parse(newIntro, formatter), LocalDate.parse(newDiscon, formatter));

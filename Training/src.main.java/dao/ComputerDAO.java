@@ -143,17 +143,8 @@ public class ComputerDAO {
 
       PreparedStatement preparedS = this.conn.prepareStatement(update);
       preparedS.setString(1, newName);
-      if (newIntro.equals("00:00:00")) {
-        preparedS.setTimestamp(2, Timestamp.valueOf(newIntro));
-      } else {
-        preparedS.setTimestamp(2, null);
-      }
-      if (newDiscon.equals("00:00:00")) {
-        preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
-      } else {
-        preparedS.setTimestamp(3, null);
-      }
-      //preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
+      preparedS.setTimestamp(2, Timestamp.valueOf(newIntro));
+      preparedS.setTimestamp(3, Timestamp.valueOf(newDiscon));
       preparedS.setInt(4, newCompanyId);
       preparedS.setString(5, name);
       preparedS.executeUpdate();

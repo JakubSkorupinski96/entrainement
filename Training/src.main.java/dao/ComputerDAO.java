@@ -45,7 +45,13 @@ public class ComputerDAO {
    */
 
   private ComputerDAO() {
-    this.conn = DAOFactory.getInstance().getConnection();
+    try {
+      DAOFactory.getInstance();
+      this.conn = DAOFactory.getConnection();
+    } catch (SQLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   /**

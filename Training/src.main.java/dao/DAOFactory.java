@@ -13,6 +13,9 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 public class DAOFactory {
 
   private static DAOFactory instance;
@@ -21,14 +24,33 @@ public class DAOFactory {
   private static final String PROPERTY_FILE_NAME = "C:\\Users\\jakub\\git\\repository\\Training\\db.properties";
 
   private static Logger logger = LoggerFactory.getLogger(DAOFactory.class);
+  
+  private static HikariConfig config = new HikariConfig();
+  private static HikariDataSource ds;
+  
+  static List<String> data = getConnectionURL(PROPERTY_FILE_NAME);
+  private static String URL = data.get(0);;
+  private static String USERNAME = data.get(1);
+  private static String PASSWORD = data.get(2);
 
+  
+  static {
+    config.setJdbcUrl(URL);
+    config.setUsername(USERNAME);
+    config.setPassword(PASSWORD);
+    config.setDriverClassName("com.mysql.jdbc.Driver");
+    config.addDataSourceProperty( "cachePrepStmts" , "true" );
+    config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
+    config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+    ds = new HikariDataSource( config );
+}
+  
+  
   /**
    * . Constructeur vide du DAO de computer
    */
 
   private DAOFactory() {
-    List<String> data = getConnectionURL(PROPERTY_FILE_NAME);
-    startConnection(data);
   }
 
   /**
@@ -65,14 +87,14 @@ public class DAOFactory {
     }
   }
 
-  /**
-   * . Récupére la connexion
-   *
-   * @return Connection
-   */
-  public Connection getConnection() {
-    return this.conn;
-  }
+//  /**
+//   * . Récupére la connexion
+//   *
+//   * @return Connection
+//   */
+//  public Connection getConnection() {
+//    return this.conn;
+//  }
 
   /**
    * . Gets connection info from a properties file
@@ -82,7 +104,7 @@ public class DAOFactory {
    * @return List<String>
    */
 
-  public List<String> getConnectionURL(String propertyFile) {
+  public static List<String> getConnectionURL(String propertyFile) {
 
     Properties prop = new Properties();
     //InputStream input = null;
@@ -100,4 +122,10 @@ public class DAOFactory {
     }
     return data;
   }
+
+  public static Connection getConnection() throws SQLException {
+      return ds.getConnection();
+  }
+  
+  
 }

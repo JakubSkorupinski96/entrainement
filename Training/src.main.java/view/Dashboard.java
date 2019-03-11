@@ -1,6 +1,7 @@
 package view;
 
 import java.io.IOException;
+import java.util.ArrayList;
 //import java.util.Comparator;
 import java.util.List;
 //import java.util.stream.Collectors;
@@ -16,18 +17,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import controller.ComputerController;
+import dto.ComputerDTO;
+import mapper.ComputerMapper;
 import model.Computer;
 
 /**
  * . Servlet implementation class Dashboard
  */
-@WebServlet("/Dashboard")
+@WebServlet(
+    name = "Dashboard",
+    description = "Application's dashboard",
+    urlPatterns = {"/Dashboard"}
+  )
 public class Dashboard extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private static ComputerController computerController = ComputerController.getInstance();
-    private List<Computer> computers;
-
+    //private static ComputerDTO computerDTO = new ComputerDTO();
+    private static ComputerMapper computerMapper = ComputerMapper.getInstance();
+    private ArrayList<Computer> computers;
+    private ArrayList<ComputerDTO> computerDTOs;
 
 
     private static Logger logger = LoggerFactory.getLogger(Dashboard.class);
@@ -55,20 +64,23 @@ public class Dashboard extends HttpServlet {
       boolean search = searchReq != null ? true : false;
       int nbPc;
       if (search) {
-        computers = computerController.search(request.getParameter("search"));
+        //computers = computerController.search(request.getParameter("search"));
         nbPc = Integer.parseInt(computerController.countSearch(searchReq));
       } else {
-        //int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+        int queryPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
         //computers = computerController.list(queryPage);
         computers = computerController.listAll();
-        nbPc = Integer.parseInt(computerController.countAll());
+        System.out.println(computers);
+        computerDTOs = computerMapper.computersToDTOs(computers);
+        //computers = computerController.listAll();
+        //nbPc = Integer.parseInt(computerController.countAll());
       }
-      request.setAttribute("list", computers);
+      request.setAttribute("list", computerDTOs);
       int pageSize = computers.size();
       int divider = pageSize != 0 ? pageSize : 1;
-      int nbPage = nbPc / divider;
-      request.setAttribute("size", nbPc);
-      request.setAttribute("nbPages", nbPage);
+      //int nbPage = nbPc / divider;
+      //request.setAttribute("size", nbPc);
+      //request.setAttribute("nbPages", nbPage);
       request.setAttribute("searchAttri", searchReq);
       request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
     }
@@ -84,7 +96,6 @@ public class Dashboard extends HttpServlet {
      */
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      //String page = request.getParameter("");
       doGet(request, response);
     }
 

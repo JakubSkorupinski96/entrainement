@@ -16,7 +16,7 @@ public class ComputerMapper {
 
   private static ComputerMapper instance;
   
-  public ComputerMapper getInstance() {
+  public static ComputerMapper getInstance() {
     if (instance == null) {
       instance =  new ComputerMapper();
     }
@@ -33,8 +33,8 @@ public class ComputerMapper {
     ComputerDTO computerDTO = new ComputerDTO();
     computerDTO.setId(computer.getId());
     computerDTO.setName(computer.getName());
-    computerDTO.setIntroduced(computer.getIntroduced().toString());
-    computerDTO.setDiscontinued(computer.getDiscontinued().toString());
+    computerDTO.setIntroduced(computer.getIntroduced() == null ? null : computer.getIntroduced().toString());
+    computerDTO.setDiscontinued(computer.getDiscontinued() == null ? null : computer.getDiscontinued().toString());
     computerDTO.setCompanyName(computer.getCompanyName());
     return computerDTO;
   }

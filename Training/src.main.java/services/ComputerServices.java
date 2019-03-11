@@ -2,6 +2,7 @@ package services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.ComputerDAO;
@@ -114,10 +115,10 @@ public class ComputerServices {
   /**
    *. Liste touts les ordinateurs
    *
-   * @return List<Computer>
+   * @return ArrayList<Computer>
    */
 
-  public List<Computer> listAllComputers() {
+  public ArrayList<Computer> listAllComputers() {
     return computerDAO.listAllComputers();
   }
 

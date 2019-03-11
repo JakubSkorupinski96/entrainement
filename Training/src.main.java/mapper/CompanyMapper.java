@@ -1,25 +1,56 @@
 package mapper;
 
 import java.util.ArrayList;
-import java.util.List;
 
+import dto.CompanyDTO;
 import model.Company;
+
 
 public class CompanyMapper {
   
-  Company company;
+  private static CompanyMapper instance;
   
-  public Company createCompany(int id, String companyName) {
-    return company = new Company(id, companyName);
+  public static CompanyMapper getInstance() {
+    if (instance == null) {
+      instance =  new CompanyMapper();
+    }
+    return instance;
   }
   
-  public List<String> companyToDTO(Company company) {
-    List<String> listCompany = new ArrayList<>();
-    String id = Integer.toString(company.getId());
-    String name = company.getName();
-    listCompany.add(id);
-    listCompany.add(name);
-    return listCompany;
+  private CompanyMapper() {
+    
   }
-
+  
+  public CompanyDTO companyToDTO(Company company) {
+    CompanyDTO companyDTO = new CompanyDTO();
+    companyDTO.setId(company.getId());
+    companyDTO.setName(company.getName());
+    return companyDTO;
+  }
+  
+  public Company DTOToCompany (CompanyDTO companyDTO) {
+    Company company = new Company();
+    company.setId(companyDTO.getId());
+    company.setName(company.getName());
+    return company;
+  }
+  
+  public ArrayList<CompanyDTO> companiesToDTOs(ArrayList<Company> companies){
+    ArrayList<CompanyDTO> companyDTOs = new ArrayList<>();
+    for (Company company : companies) {
+      CompanyDTO companyDTO = companyToDTO(company);
+      companyDTOs.add(companyDTO);
+    }
+    return companyDTOs;
+  }
+  
+  public ArrayList<Company> DTOsToCompanies(ArrayList<CompanyDTO> companyDTOs){
+    ArrayList<Company> companies = new ArrayList<>();
+    for (CompanyDTO companyDTO : companyDTOs) {
+      Company company = DTOToCompany(companyDTO);
+      companies.add(company);
+    }
+    return companies;
+  }
+  
 }

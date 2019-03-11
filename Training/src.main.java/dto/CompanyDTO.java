@@ -2,19 +2,23 @@ package dto;
 
 public class CompanyDTO {
   
-  private String id;
+  private int id;
   private String name;
   
-  public CompanyDTO(String id, String name) {
+  public CompanyDTO() {
+    
+  }
+  
+  public CompanyDTO(int id, String name) {
     this.id = id;
     this.name = name;
   }
   
-  public String getId() {
+  public int getId() {
     return this.id;
   }
 
-  public void setId(String id) {
+  public void setId(int id) {
     this.id = id;
   }
 

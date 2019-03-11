@@ -31,7 +31,6 @@ public class CompanyControllerTest {
       Class.forName("com.mysql.jdbc.Driver");
     } catch (ClassNotFoundException e1) {
       logger.error("JDBC error");
-      e1.printStackTrace();
     }
 
     try {
@@ -44,7 +43,7 @@ public class CompanyControllerTest {
 
   @Test
   public void listCompaniesPageTest() {
-    List<Company> companies = companyController.listCompanies(conn, 1);
+    List<Company> companies = companyController.listCompanies(1);
     assertEquals(25, companies.size());
   }
 

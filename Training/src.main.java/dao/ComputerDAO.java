@@ -210,8 +210,8 @@ public class ComputerDAO {
    * @return List<Computer>
    */
 
-  public List<Computer> listAllComputers() {
-    List<Computer> computers = new ArrayList<>();
+  public ArrayList<Computer> listAllComputers() {
+    ArrayList<Computer> computers = new ArrayList<>();
     Statement stmt;
     try {
       stmt = this.conn.createStatement();

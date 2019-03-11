@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import exception.ComputerDateCoherenceException;
@@ -102,7 +103,7 @@ public class ComputerController {
    * @return List<Computer>
    */
 
-  public List<Computer> listAll() {
+  public ArrayList<Computer> listAll() {
     return computerServices.listAllComputers();
   }
 

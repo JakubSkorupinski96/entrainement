@@ -16,9 +16,11 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import model.Company;
 import model.Computer;
+import spring.SpringConfig;
 
 public class ComputerDAO {
 
@@ -44,10 +46,11 @@ public class ComputerDAO {
    * . Constructeur vide du DAO de computer
    */
 
+  @Autowired
   private ComputerDAO() {
     try {
       DAOFactory.getInstance();
-      this.conn = DAOFactory.getConnection();
+      this.conn = SpringConfig.getConnection();
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -171,8 +174,9 @@ public class ComputerDAO {
    * @return List<Computer>
    */
 
-  public List<Computer> listComputers(int page) {
-    List<Computer> computers = new ArrayList<>();
+  public ArrayList<Computer> listComputers(int page) {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    ArrayList<Computer> computers = new ArrayList<>();
     Statement stmt;
     try {
       stmt = this.conn.createStatement();
@@ -183,7 +187,7 @@ public class ComputerDAO {
         int id = rs.getInt("id");
         String name = rs.getString("name");
         System.out.println(rs.getDate("introduced"));
-        LocalDate introDate = LocalDate.parse(rs.getString("introduced"));
+        LocalDate introDate = LocalDate.parse(rs.getString("introduced"),formatter);
         LocalDate discontinuedDate = LocalDate.parse(rs.getString("discontinued"));
         int companyId = rs.getInt("company_id");
         String companyName = rs.getString("company.name");
@@ -256,8 +260,8 @@ public class ComputerDAO {
    * @return List<Computer>
    */
 
-  public List<Computer> searchComputer(String name) {
-    List<Computer> computers = new ArrayList<>();
+  public ArrayList<Computer> searchComputer(String name) {
+    ArrayList<Computer> computers = new ArrayList<>();
     String search = SEARCH_COMPUTERS;
     try {
       PreparedStatement preparedS = this.conn.prepareStatement(search);

@@ -9,8 +9,10 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import model.Company;
+import spring.SpringConfig;
 
 public class CompanyDAO {
 
@@ -24,10 +26,12 @@ public class CompanyDAO {
   /**
    * . Constructeur vide de la DAO de company
    */
+  
+  @Autowired
   private CompanyDAO() {
     try {
       DAOFactory.getInstance();
-      this.conn = DAOFactory.getConnection();
+      this.conn = SpringConfig.getConnection();
     } catch (SQLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

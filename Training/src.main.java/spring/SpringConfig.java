@@ -1,0 +1,85 @@
+package spring;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import dao.DAOFactory;
+import model.Company;
+import model.Computer;
+
+@Configuration
+public class SpringConfig {
+  
+  private static Logger logger = LoggerFactory.getLogger(DAOFactory.class);
+  
+  private static final String PROPERTY_FILE_NAME = "C:\\Users\\jakub\\git\\repository\\Training\\db.properties";
+  
+  private static HikariConfig config = new HikariConfig();
+  private static HikariDataSource ds;
+  
+  static List<String> data = getConnectionURL(PROPERTY_FILE_NAME);
+  private static String URL = data.get(0);;
+  private static String USERNAME = data.get(1);
+  private static String PASSWORD = data.get(2);
+  
+  static {
+    config.setJdbcUrl(URL);
+    config.setUsername(USERNAME);
+    config.setPassword(PASSWORD);
+    config.setDriverClassName("com.mysql.jdbc.Driver");
+    config.addDataSourceProperty( "cachePrepStmts" , "true" );
+    config.addDataSourceProperty( "prepStmtCacheSize" , "250" );
+    config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
+    ds = new HikariDataSource( config );
+}
+  
+  @Bean
+  public Computer computer() {
+    return new Computer();
+  }
+  
+  @Bean
+  public Company company() {
+    return new Company();
+  }
+
+  public static List<String> getConnectionURL(String propertyFile) {
+
+    Properties prop = new Properties();
+    //InputStream input = null;
+    List<String> data = new ArrayList<>();
+
+    try (InputStream input = new FileInputStream(propertyFile);) {
+      prop.load(input);
+      data.add(prop.getProperty("dbURL"));
+      data.add(prop.getProperty("dbUser"));
+      data.add(prop.getProperty("dbPassword"));
+
+    } catch (IOException e) {
+      e.printStackTrace();
+      logger.error("Properties file error");
+    }
+    return data;
+  }
+  
+  @Bean
+  public static Connection getConnection() throws SQLException {
+    return ds.getConnection();
+}
+
+  
+}

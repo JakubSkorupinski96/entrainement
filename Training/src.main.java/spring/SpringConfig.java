@@ -12,19 +12,20 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import dao.DAOFactory;
 import model.Company;
 import model.Computer;
 
 @Configuration
+@ComponentScan(basePackages = {"controller.ComputerController"})
 public class SpringConfig {
   
-  private static Logger logger = LoggerFactory.getLogger(DAOFactory.class);
+  private static Logger logger = LoggerFactory.getLogger(SpringConfig.class);
   
   private static final String PROPERTY_FILE_NAME = "C:\\Users\\jakub\\git\\repository\\Training\\db.properties";
   

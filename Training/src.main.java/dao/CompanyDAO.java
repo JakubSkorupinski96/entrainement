@@ -30,7 +30,6 @@ public class CompanyDAO {
   @Autowired
   private CompanyDAO() {
     try {
-      DAOFactory.getInstance();
       this.conn = SpringConfig.getConnection();
     } catch (SQLException e) {
       // TODO Auto-generated catch block

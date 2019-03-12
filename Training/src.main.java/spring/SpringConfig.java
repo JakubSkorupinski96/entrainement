@@ -22,7 +22,7 @@ import model.Company;
 import model.Computer;
 
 @Configuration
-@ComponentScan(basePackages = {"controller.ComputerController"})
+@ComponentScan(basePackages = {"controller", "services", "dao"})
 public class SpringConfig {
   
   private static Logger logger = LoggerFactory.getLogger(SpringConfig.class);
@@ -47,21 +47,11 @@ public class SpringConfig {
     config.addDataSourceProperty( "prepStmtCacheSqlLimit" , "2048" );
     ds = new HikariDataSource( config );
 }
-  
-  @Bean
-  public Computer computer() {
-    return new Computer();
-  }
-  
-  @Bean
-  public Company company() {
-    return new Company();
-  }
+
 
   public static List<String> getConnectionURL(String propertyFile) {
 
     Properties prop = new Properties();
-    //InputStream input = null;
     List<String> data = new ArrayList<>();
 
     try (InputStream input = new FileInputStream(propertyFile);) {

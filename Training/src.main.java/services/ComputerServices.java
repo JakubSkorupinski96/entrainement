@@ -3,7 +3,9 @@ package services;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import dao.ComputerDAO;
 import dto.ComputerDTO;
@@ -13,14 +15,14 @@ import mapper.ComputerMapper;
 import model.Computer;
 import validator.ComputerValidator;
 
+@Service("computerServices")
 public class ComputerServices {
 
   private static ComputerServices instance;
 
-  ComputerDAO computerDAO = ComputerDAO.getInstance();
+  @Autowired
+  ComputerDAO computerDAO;
   
-  private ComputerDTO computerDTO;
-  private ComputerMapper computerMapper;
   private ComputerValidator computerValidator = new ComputerValidator();
 
   /**
@@ -49,7 +51,7 @@ public class ComputerServices {
    *
    * @return List<Computer>
    */
-  public List<Computer> listComputers(int page) {
+  public ArrayList<Computer> listComputers(int page) {
     return computerDAO.listComputers(page);
   }
 
@@ -130,7 +132,7 @@ public class ComputerServices {
    * @return List<Computer>
    */
 
-  public List<Computer> searchComputers(String name) {
+  public ArrayList<Computer> searchComputers(String name) {
     return computerDAO.searchComputer(name);
   }
 

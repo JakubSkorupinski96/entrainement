@@ -1,5 +1,6 @@
 package ui;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -7,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import controller.CompanyController;
 import controller.ComputerController;
+import exception.ComputerDateCoherenceException;
+import exception.ComputerNameException;
 
 public class App {
 
@@ -63,6 +66,16 @@ public class App {
       System.out.println("showPCDetails");
       System.out.println("exit");
       break;
+    case "deleteCompany":
+      System.out.println("Which company?:");
+      Scanner companyDelete = new Scanner(System.in);
+      try {
+        companyController.deleteCompany(companyDelete.next());
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+      break;
     default:
       System.out.println("Invalid command");
     }
@@ -101,7 +114,18 @@ public class App {
     Scanner idScan = new Scanner(System.in);
     String idStr = idScan.nextLine();
     idScan.close();
-    computerController.create(nameStr, introStr, decStr, Integer.parseInt(idStr));
+    try {
+      computerController.create(nameStr, introStr, decStr, Integer.parseInt(idStr));
+    } catch (NumberFormatException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ComputerNameException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ComputerDateCoherenceException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -142,8 +166,19 @@ public class App {
     Scanner idScan = new Scanner(System.in);
     String idStr = idScan.nextLine();
     idScan.close();
-    computerController.update(oldNameStr, newNameStr, introStr, decStr,
-        Integer.parseInt(idStr));
+    try {
+      computerController.update(oldNameStr, newNameStr, introStr, decStr,
+          Integer.parseInt(idStr));
+    } catch (NumberFormatException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ComputerNameException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (ComputerDateCoherenceException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -185,7 +220,6 @@ public class App {
         System.out.println("Entrer votre commande:");
         Scanner in = new Scanner(System.in);
         interfaceCases(in);
-        // System.in.read();
       }
 
 

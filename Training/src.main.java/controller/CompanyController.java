@@ -1,5 +1,6 @@
 package controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 //import org.slf4j.Logger;
@@ -54,5 +55,9 @@ public class CompanyController {
 
   public List<Company> listAll() {
     return companyServices.listAll();
+  }
+  
+  public void deleteCompany(String name) throws SQLException {
+    companyServices.deleteCompany(name);
   }
 }

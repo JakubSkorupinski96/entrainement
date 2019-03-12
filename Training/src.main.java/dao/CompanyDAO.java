@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,6 +23,8 @@ public class CompanyDAO {
   private static Logger logger = LoggerFactory.getLogger(CompanyDAO.class);
 
   private static final String SELECT_ALL = "SELECT id, name FROM company";
+  private static final String DELETE_COMPANY = "DELETE FROM company WHERE name = ?";
+  private static final String DELETE_COMPUTERS = "DELETE computer FROM computer computer JOIN company company ON computer.company_id = company.id WHERE company.name = ?"; 
 
   /**
    * . Constructeur vide de la DAO de company
@@ -104,6 +107,33 @@ public class CompanyDAO {
       e.printStackTrace();
     }
     return companies;
+  }
+  
+  public void deleteCompany(String name) throws SQLException {
+    
+    PreparedStatement deleteComputers = null;
+    PreparedStatement deleteCompany = null;
+    
+    try {
+      conn.setAutoCommit(false);
+      deleteComputers = conn.prepareStatement(DELETE_COMPUTERS);
+      deleteCompany = conn.prepareStatement(DELETE_COMPANY);
+  
+      deleteComputers.setString(1, name);
+      deleteComputers.executeUpdate();
+      deleteCompany.setString(1, name);
+      deleteCompany.executeUpdate();
+      System.out.println(deleteComputers);
+      System.out.println(deleteCompany);
+      conn.commit();
+    
+    } catch (SQLException e ) {
+      logger.error("delete error");
+      conn.rollback();
+    } finally {
+      conn.setAutoCommit(true);
+    }
+    
   }
 
 }

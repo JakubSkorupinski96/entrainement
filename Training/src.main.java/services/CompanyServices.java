@@ -1,10 +1,14 @@
 package services;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 import dao.CompanyDAO;
 import model.Company;
 
+@Service("companyServices")
 public class CompanyServices {
 
   private static CompanyServices instance;
@@ -48,5 +52,9 @@ public class CompanyServices {
 
   public List<Company> listAll() {
     return companyDAO.listAll();
+  }
+  
+  public void deleteCompany(String name) throws SQLException {
+    companyDAO.deleteCompany(name);
   }
 }

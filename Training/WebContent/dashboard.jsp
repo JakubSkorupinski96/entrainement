@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <form id="deleteForm" action="#" method="POST">
+        <form id="deleteForm" action="DeleteComputer" method="POST">
             <input type="hidden" name="selection" value="">
         </form>
 
@@ -56,8 +56,8 @@
                         <th class="editMode" style="width: 60px; height: 22px;">
                             <input type="checkbox" id="selectall" /> 
                             <span style="vertical-align: top;">
-<!--                                  -  <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected(); check()"> -->
-										<a href="${pageContext.request.contextPath}/DeleteComputer" id="deleteSelected" onclick="check()">
+                                   <a href="#" id="deleteSelected" onclick="$.fn.deleteSelected()">
+<%-- 										<a href="${pageContext.request.contextPath}/DeleteComputer" id="deleteSelected" onclick="check()"> --%>
                                         <i class="fa fa-trash-o fa-lg"></i>
                                     </a>
                             </span>
@@ -88,7 +88,7 @@
                       <c:forEach items="${list}" var="item">
                       	<tr>
                       		<td class="editMode">
-                            	<input type="checkbox" name="cb" class="cb" id="cb">
+                            	<input type="checkbox" name="cb" class="cb" value="${item.name}">
                         	</td>
                         	<td>
                         		<a href="${pageContext.request.contextPath}/EditComputer?computerId=${item.id}&computerName=${item.name}&computerIntroduced=${item.introduced}&computerDiscontinued=${item.discontinued}&companyName=${item.companyName}">${item.name}</a> 
@@ -165,25 +165,6 @@ $(document).ready(function() {
     } );
    
 } );
-
-function check() {
-	
-    var boxList = $('#input.cb');
-    var deleteList = [];
-    var deleteListTest = ["test1", "test2"];
-    var box;
-    
-    console.log(deleteListTest);
-    //for (box = 0; box < document.getElementsByName("computersTable_length").value; box++) {
-    for (box = 0; box < 10; box++) {
-    	 if (boxList.checked){
-    		 deleteList.push("test1");
-    		 //deleteList.push(document.getElementById("name"));
-    	 }
-    }
-    console.log(deleteList);
-    document.getElementsById("deleteSelected").href += "&computersList=" + deleteList ;
-}
 
 </script>
 

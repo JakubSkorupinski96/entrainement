@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import controller.ComputerController;
+import spring.SpringConfig;
 
 /**
  * Servlet implementation class DeleteComputer
@@ -19,7 +23,8 @@ import controller.ComputerController;
 public class DeleteComputer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private ComputerController computerController = ComputerController.getInstance();
+  ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+  ComputerController computerController = (ComputerController) context.getBean(ComputerController.class);
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,14 +38,11 @@ public class DeleteComputer extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String computerName = request.getParameter("computersList");
-		System.out.println("hello there"  + computerName);
-		List<String> items = Arrays.asList(computerName.split("\\s*,\\s*"));
+		String computerName = request.getParameter("selection");
+		List<String> items = Arrays.asList(computerName.split(","));
 		for (String item : items) {
-		  System.out.println(item);
 		  computerController.delete(item);
 		}
-		//response.sendRedirect("Dashboard");
 		request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

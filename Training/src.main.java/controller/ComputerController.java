@@ -3,6 +3,9 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
 
@@ -12,13 +15,13 @@ import exception.ComputerNameException;
 import model.Computer;
 import services.ComputerServices;
 
+@Component("ComputerController")
 public class ComputerController {
 
   private static ComputerController instance;
 
-  //private static Logger logger = LoggerFactory.getLogger(ComputerController.class);
-
-  ComputerServices computerServices = ComputerServices.getInstance();
+  @Autowired
+  ComputerServices computerServices;
 
   /**
    * . Constructeur vide du controlleur de computer
@@ -45,7 +48,7 @@ public class ComputerController {
    * @param page : la page sélectionné
    * @return List<Computer>
    */
-  public List<Computer> list(int page) {
+  public ArrayList<Computer> list(int page) {
     return computerServices.listComputers(page);
   }
 
@@ -114,7 +117,7 @@ public class ComputerController {
    *
    * @return List<Computer>
    */
-  public List<Computer> search(String name) {
+  public ArrayList<Computer> search(String name) {
     return computerServices.searchComputers(name);
   }
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.ComputerDAO;
+import dao.ComputerJDBCTemplate;
 import dto.ComputerDTO;
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
@@ -22,6 +23,9 @@ public class ComputerServices {
 
   @Autowired
   ComputerDAO computerDAO;
+  
+  @Autowired
+  ComputerJDBCTemplate ComputerJdbc;
   
   private ComputerValidator computerValidator = new ComputerValidator();
 
@@ -71,7 +75,8 @@ public class ComputerServices {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
     computerValidator.validateComputerName(name);
     computerValidator.validateComputerDates(LocalDate.parse(intro, formatter), LocalDate.parse(discon, formatter));
-    computerDAO.createComputer(name, intro, discon, compId);
+    //computerDAO.createComputer(name, intro, discon, compId);
+    ComputerJdbc.create(name, intro, discon, compId);
   }
 
   /**
@@ -91,7 +96,8 @@ public class ComputerServices {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
     computerValidator.validateComputerName(name);
     computerValidator.validateComputerDates(LocalDate.parse(newIntro, formatter), LocalDate.parse(newDiscon, formatter));
-    computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
+    //computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
+    ComputerJdbc.update(newName, newIntro, newDiscon, newCompanyId, name);
   }
 
   /**
@@ -101,7 +107,8 @@ public class ComputerServices {
    */
 
   public void deleteComputer(String name) {
-    computerDAO.deleteComputer(name);
+    //computerDAO.deleteComputer(name);
+    ComputerJdbc.delete(name);
   }
 
   /**
@@ -111,7 +118,8 @@ public class ComputerServices {
    */
 
   public void showComputer(String name) {
-    computerDAO.listDetails(name);
+    //computerDAO.listDetails(name);
+    ComputerJdbc.show(name);
   }
 
   /**
@@ -142,8 +150,9 @@ public class ComputerServices {
    * @return String
    */
 
-  public String countAll() {
-    return computerDAO.countAll();
+  public int countAll() {
+    //return computerDAO.countAll();
+    return ComputerJdbc.countAll();
   }
   /**
    * . Returns the number of computers matching search criterias

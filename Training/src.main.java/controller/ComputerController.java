@@ -127,7 +127,7 @@ public class ComputerController {
    * @return String
    */
 
-  public String countAll() {
+  public int countAll() {
     return computerServices.countAll();
   }
 

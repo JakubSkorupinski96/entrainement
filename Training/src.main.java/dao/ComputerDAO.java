@@ -108,6 +108,7 @@ public class ComputerDAO {
       preparedS.setString(1, name);
       preparedS.executeUpdate();
       System.out.println("Deleted");
+      logger.info("computer " + name + "deleted");
     } catch (SQLException e) {
       logger.error("erreur de suppression");
     }

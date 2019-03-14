@@ -43,7 +43,7 @@ public class DeleteComputer extends HttpServlet {
 		for (String item : items) {
 		  computerController.delete(item);
 		}
-		request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+		request.getRequestDispatcher("/Dashboard").forward(request, response);
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

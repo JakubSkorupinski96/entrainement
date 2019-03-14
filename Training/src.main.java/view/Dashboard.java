@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -55,12 +56,14 @@ public class Dashboard extends HttpServlet {
       boolean search = searchReq != null ? true : false;
       int nbPc;
       if (search) {
-        computers = computerController.search(request.getParameter("search"));
-        nbPc = Integer.parseInt(computerController.countSearch(searchReq));
-      } else {
-        computers = computerController.listAll();
+        computers = new ArrayList<Computer>(computerController.search(request.getParameter("search")));
         computerDTOs = computerMapper.computersToDTOs(computers);
-        nbPc = Integer.parseInt(computerController.countAll());
+        nbPc = computerController.countSearch(searchReq);
+      } else {
+        //System.out.println("hey listen: " + computerController.listAll());
+        computers = new ArrayList<Computer>(computerController.listAll());
+        computerDTOs = computerMapper.computersToDTOs(computers);
+        nbPc = computerController.countAll();
       }
       request.setAttribute("list", computerDTOs);
       int pageSize = computers.size();

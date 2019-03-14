@@ -1,17 +1,31 @@
 package dao;
 
-import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import com.zaxxer.hikari.HikariDataSource;
+
+import mapper.ComputerMapper;
+import model.Computer;
 
 @Component("ComputerJdbc")
 public class ComputerJDBCTemplate{
   
-  private DataSource dataSource;
+  private HikariDataSource dataSource;
   private JdbcTemplate jdbcTemplate;
+  private ComputerMapper computerMappper;
+  
+  @Autowired
+  public ComputerJDBCTemplate(HikariDataSource dataSource, ComputerMapper computerMappper) {
+    this.dataSource = dataSource;
+    this.computerMappper = computerMappper;
+  }
   
   private static final String INSERT_COMPUTER = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
   private static final String DELETE_BY_NAME = "DELETE FROM computer WHERE NAME = ?";
@@ -28,33 +42,51 @@ public class ComputerJDBCTemplate{
   
   private static Logger logger = LoggerFactory.getLogger(ComputerJDBCTemplate.class);
 
-  public void setDataSource(DataSource dataSource) {
-    this.dataSource = dataSource;
-    this.jdbcTemplate = new JdbcTemplate(dataSource);
+  public void setDataSource() {
+    this.jdbcTemplate = new JdbcTemplate(this.dataSource);
   }
   
   public void create(String name, String intro, String discon, int compId) {
+    setDataSource();
     jdbcTemplate.update( INSERT_COMPUTER, name, intro, discon, compId);
     logger.info("computer created");
   }
   
   public void delete(String name) {
+    setDataSource();
+    setDataSource();
     jdbcTemplate.update(DELETE_BY_NAME,name);
     logger.info("cumputer " + name + " deleted");
   }
   
   public void show(String name) {
+    setDataSource();
     jdbcTemplate.update(SELECT_COMPUTER,name);
   }
   
   public void update(String newName, String newIntro, String newDiscon, int newCompanyId, String name) {
+    setDataSource();
     jdbcTemplate.update(UPDATE_BY_NAME,newName, newIntro, newDiscon, newCompanyId, name);
     logger.info("computer " + name + " updated to " + newName);
   }
   
   public int countAll() {
-    return jdbcTemplate.update(COUNT_ALL);
+    setDataSource();
+    return jdbcTemplate.queryForObject(COUNT_ALL, Integer.class);
   }
   
+  public List<Computer> listComputers(){
+    setDataSource();
+    //System.out.println(jdbcTemplate.queryForList(SELECT_COMPUTERS,computerMappper));
+    return jdbcTemplate.query(SELECT_COMPUTERS,computerMappper);
+  }
+  
+  public List<Computer> listSearched(String name){
+    return jdbcTemplate.query(SEARCH_COMPUTERS, new Object[] {name}, computerMappper);
+  }
+  
+  public int countSearched(String name) {
+    return jdbcTemplate.queryForObject(COUNT_SEARCH, new Object[] {name}, Integer.class);
+  }
   
 }

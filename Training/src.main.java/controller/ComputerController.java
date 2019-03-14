@@ -106,7 +106,7 @@ public class ComputerController {
    * @return List<Computer>
    */
 
-  public ArrayList<Computer> listAll() {
+  public List<Computer> listAll() {
     return computerServices.listAllComputers();
   }
 
@@ -117,7 +117,7 @@ public class ComputerController {
    *
    * @return List<Computer>
    */
-  public ArrayList<Computer> search(String name) {
+  public List<Computer> search(String name) {
     return computerServices.searchComputers(name);
   }
 
@@ -139,7 +139,7 @@ public class ComputerController {
    * @return String
    */
 
-  public String countSearch(String name) {
+  public int countSearch(String name) {
     return computerServices.countSearch(name);
   }
 }

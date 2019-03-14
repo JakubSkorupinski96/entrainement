@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -15,14 +16,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import controller.CompanyController;
 import controller.ComputerController;
+import dto.CompanyDTO;
 import dto.ComputerDTO;
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
 import mapper.ComputerMapper;
 import model.Company;
+import spring.SpringConfig;
 import validator.ComputerValidator;
 
 /**
@@ -33,7 +38,9 @@ import validator.ComputerValidator;
 public class AddComputer extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  private ComputerController computerController = ComputerController.getInstance();
+  ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+  ComputerController computerController = (ComputerController) context.getBean(ComputerController.class);
+  
   private ComputerDTO computerDTO;
   private ComputerMapper computerMapper;
   private ComputerValidator computerValidator = new ComputerValidator();
@@ -43,6 +50,7 @@ public class AddComputer extends HttpServlet {
   private static Logger logger = LoggerFactory.getLogger(AddComputer.class);
   
   List<Company> companies = companyController.listAll();
+  CompanyDTO companyDTO = new CompanyDTO();
 
 
   /**

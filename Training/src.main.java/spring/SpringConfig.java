@@ -9,11 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
+import org.springframework.web.WebApplicationInitializer;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -22,7 +29,7 @@ import model.Company;
 import model.Computer;
 
 @Configuration
-@ComponentScan(basePackages = {"controller", "services", "dao"})
+@ComponentScan(basePackages = {"controller", "services", "dao", "mapper"})
 public class SpringConfig {
   
   private static Logger logger = LoggerFactory.getLogger(SpringConfig.class);
@@ -70,7 +77,26 @@ public class SpringConfig {
   @Bean
   public static Connection getConnection() throws SQLException {
     return ds.getConnection();
-}
+  }
+  
+  @Bean 
+  public static HikariDataSource getDataSource() {
+    return ds;
+  }
+  
+//  @Autowired
+//  private Environment environement;
+//  
+  
+//  @Bean
+//  public HikariDataSource dataSource() {
+//    HikariDataSource dataSource = new HikariDataSource();
+//    dataSource.setJdbcUrl(environement.getRequiredProperty(URL));
+//    dataSource.setUsername(environement.getRequiredProperty(USERNAME));
+//    dataSource.setPassword(environement.getRequiredProperty(PASSWORD));
+//    dataSource.setDriverClassName(environement.getRequiredProperty("com.mysql.jdbc.Driver"));
+//    return dataSource;
+//}
 
   
 }

@@ -3,6 +3,7 @@ package services;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,8 +129,8 @@ public class ComputerServices {
    * @return ArrayList<Computer>
    */
 
-  public ArrayList<Computer> listAllComputers() {
-    return computerDAO.listAllComputers();
+  public List<Computer> listAllComputers() {
+    return ComputerJdbc.listComputers();
   }
 
   /**
@@ -140,8 +141,8 @@ public class ComputerServices {
    * @return List<Computer>
    */
 
-  public ArrayList<Computer> searchComputers(String name) {
-    return computerDAO.searchComputer(name);
+  public List<Computer> searchComputers(String name) {
+    return ComputerJdbc.listSearched(name);
   }
 
   /**
@@ -162,7 +163,7 @@ public class ComputerServices {
    * @return String
    */
 
-  public String countSearch(String name) {
-    return computerDAO.countSearch(name);
+  public int countSearch(String name) {
+    return ComputerJdbc.countSearched(name);
   }
 }

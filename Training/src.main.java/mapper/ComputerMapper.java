@@ -1,15 +1,21 @@
 package mapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import model.Company;
 import model.Computer;
 
 import dto.ComputerDTO;
 
-public class ComputerMapper {
+@Component("ComputerMapper")
+public class ComputerMapper implements RowMapper {
 
   Computer computer;
   Company company;
@@ -67,6 +73,22 @@ public class ComputerMapper {
       computers.add(computer);
     }
     return computers;
+  }
+
+  @Override
+  public Computer mapRow(ResultSet rs, int rowNum) throws SQLException {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    Computer computer = new Computer();
+    computer.setId(rs.getInt(1));
+    computer.setName(rs.getString(2));
+    if (rs.getString("introduced") != null) {
+    computer.setIntroduced(LocalDate.parse(rs.getString(3).substring(0,19),formatter));
+    }
+    if (rs.getString("discontinued") != null) {
+      computer.setDiscontinued(LocalDate.parse(rs.getString(4).substring(0,19),formatter));
+    }
+    computer.setCompanyName(rs.getString(7));
+    return computer;
   }
 
 }

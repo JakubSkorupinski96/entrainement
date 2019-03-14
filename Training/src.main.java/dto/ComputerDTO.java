@@ -4,6 +4,7 @@ package dto;
 public class ComputerDTO {
 
   private int id;
+  private int companyId;
   private String name;
   private String introduced;
   private String discontinued;
@@ -23,6 +24,14 @@ public class ComputerDTO {
 
   public ComputerDTO() {
     
+  }
+  
+  public ComputerDTO(int id, String name, String introduced, String discontinued, int companyId) {
+    this.id = id;
+    this.name = name;
+    this.introduced = introduced;
+    this.discontinued = discontinued;
+    this.companyId = companyId;
   }
   
   public ComputerDTO(int id, String name, String introduced, String discontinued, String company, String companyName) {
@@ -80,6 +89,14 @@ public class ComputerDTO {
 
   public void setCompanyName(String companyName) {
     this.companyName = companyName;
+  }
+  
+  public int getCompanyId() {
+    return this.companyId;
+  }
+  
+  public void setCompanyId(int companyId) {
+    this.companyId = companyId;
   }
 
 }

@@ -54,7 +54,6 @@ public class ComputerJDBCTemplate{
   
   public void delete(String name) {
     setDataSource();
-    setDataSource();
     jdbcTemplate.update(DELETE_BY_NAME,name);
     logger.info("cumputer " + name + " deleted");
   }
@@ -82,6 +81,7 @@ public class ComputerJDBCTemplate{
   }
   
   public List<Computer> listSearched(String name){
+    setDataSource();
     return jdbcTemplate.query(SEARCH_COMPUTERS, new Object[] {name}, computerMappper);
   }
   

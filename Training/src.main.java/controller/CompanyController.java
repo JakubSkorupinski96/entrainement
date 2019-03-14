@@ -3,19 +3,24 @@ package controller;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
 
 import model.Company;
 import services.CompanyServices;
 
+@Component("companyController")
 public class CompanyController {
 
   private static CompanyController instance;
 
   //private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
-  CompanyServices companyServices = CompanyServices.getInstance();
+  @Autowired
+  CompanyServices companyServices;
 
   /**
    * . Constructeur vide du controlleur de Company

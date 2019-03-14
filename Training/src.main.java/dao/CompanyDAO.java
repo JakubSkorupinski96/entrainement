@@ -11,10 +11,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import model.Company;
 import spring.SpringConfig;
 
+@Component("CompanyDAO")
 public class CompanyDAO {
 
   private static CompanyDAO instance;
@@ -35,8 +37,7 @@ public class CompanyDAO {
     try {
       this.conn = SpringConfig.getConnection();
     } catch (SQLException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      logger.error("companyDAO instance error");
     }
   }
 

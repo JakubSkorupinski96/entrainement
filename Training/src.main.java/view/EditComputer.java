@@ -13,12 +13,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import controller.CompanyController;
 import controller.ComputerController;
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
 import model.Company;
+import spring.SpringConfig;
 
 /**
  * . Servlet implementation class EditComputer
@@ -27,8 +30,10 @@ import model.Company;
 public class EditComputer extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
-  private ComputerController computerController = ComputerController.getInstance();
-  private CompanyController companyController = CompanyController.getInstance();
+  ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+  ComputerController computerController = (ComputerController) context.getBean(ComputerController.class);
+  CompanyController companyController = (CompanyController) context.getBean(CompanyController.class);
+  
 
   private static Logger logger = LoggerFactory.getLogger(AddComputer.class);
   

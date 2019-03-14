@@ -40,12 +40,11 @@ public class AddComputer extends HttpServlet {
 
   ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
   ComputerController computerController = (ComputerController) context.getBean(ComputerController.class);
+  CompanyController companyController = (CompanyController) context.getBean(CompanyController.class);
   
   private ComputerDTO computerDTO;
   private ComputerMapper computerMapper;
   private ComputerValidator computerValidator = new ComputerValidator();
-  
-  private CompanyController companyController = CompanyController.getInstance();
   
   private static Logger logger = LoggerFactory.getLogger(AddComputer.class);
   

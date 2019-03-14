@@ -1,12 +1,17 @@
 package mapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import dto.CompanyDTO;
 import model.Company;
 
-
-public class CompanyMapper {
+@Component("companyMapper")
+public class CompanyMapper implements RowMapper{
   
   private static CompanyMapper instance;
   
@@ -51,6 +56,14 @@ public class CompanyMapper {
       companies.add(company);
     }
     return companies;
+  }
+
+  @Override
+  public Company mapRow(ResultSet rs, int rowNum) throws SQLException {
+    Company company = new Company();
+    company.setId(rs.getInt(1));
+    company.setName(rs.getString(2));
+    return company;
   }
   
 }

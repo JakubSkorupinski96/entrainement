@@ -3,9 +3,11 @@ package services;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.CompanyDAO;
+import dao.CompanyJDBCTemplate;
 import model.Company;
 
 @Service("companyServices")
@@ -13,7 +15,11 @@ public class CompanyServices {
 
   private static CompanyServices instance;
 
-  CompanyDAO companyDAO = CompanyDAO.getInstance();
+  @Autowired
+  CompanyDAO companyDAO;
+  
+  @Autowired
+  CompanyJDBCTemplate companyJDBC;
 
   /**
    * . Constructeur vide des services de company
@@ -51,10 +57,10 @@ public class CompanyServices {
    */
 
   public List<Company> listAll() {
-    return companyDAO.listAll();
+    return companyJDBC.listCompanies();
   }
   
   public void deleteCompany(String name) throws SQLException {
-    companyDAO.deleteCompany(name);
+    companyJDBC.delete(name);
   }
 }

@@ -34,6 +34,7 @@ public class ComputerServices {
    * . Constructeu vide des services de computer
    */
 
+  @Autowired
   private ComputerServices() {
   }
 

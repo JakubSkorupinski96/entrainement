@@ -15,8 +15,8 @@ public class CompanyServices {
 
   private static CompanyServices instance;
 
-  @Autowired
-  CompanyDAO companyDAO;
+//  @Autowired
+//  CompanyDAO companyDAO;
   
   @Autowired
   CompanyJDBCTemplate companyJDBC;
@@ -46,9 +46,9 @@ public class CompanyServices {
    *
    * @return List<Company>
    */
-  public List<Company> listCompanies(int page) {
-    return companyDAO.listCompanies(page);
-  }
+//  public List<Company> listCompanies(int page) {
+//    return companyDAO.listCompanies(page);
+//  }
 
   /**
    * . liste toutes les companies

@@ -22,11 +22,11 @@ import spring.SpringConfig;
 /**
  * . Servlet implementation class Dashboard
  */
-@WebServlet(
-    name = "Dashboard",
-    description = "Application's dashboard",
-    urlPatterns = {"/Dashboard"}
-  )
+//@WebServlet(
+//    name = "Dashboard",
+//    description = "Application's dashboard",
+//    urlPatterns = {"/Dashboard"}
+//  )
 public class Dashboard extends HttpServlet {
 
     private static final long serialVersionUID = 1L;

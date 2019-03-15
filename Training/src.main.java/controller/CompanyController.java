@@ -48,9 +48,9 @@ public class CompanyController {
    * @return List<Company>
    */
 
-  public List<Company> listCompanies(int page) {
-    return companyServices.listCompanies(page);
-  }
+//  public List<Company> listCompanies(int page) {
+//    return companyServices.listCompanies(page);
+//  }
 
   /**
    * . Liste toutes les companies

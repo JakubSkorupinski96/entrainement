@@ -11,6 +11,7 @@ import java.util.Properties;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -21,6 +22,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -29,8 +39,9 @@ import model.Company;
 import model.Computer;
 
 @Configuration
-@ComponentScan(basePackages = {"controller", "services", "dao", "mapper"})
-public class SpringConfig {
+@EnableWebMvc
+@ComponentScan(basePackages = {"controller", "services", "mapper"})
+public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
   
   private static Logger logger = LoggerFactory.getLogger(SpringConfig.class);
   
@@ -83,6 +94,33 @@ public class SpringConfig {
   public static HikariDataSource getDataSource() {
     return ds;
   }
+
+  @Override
+  public void onStartup(ServletContext servletContext) throws ServletException {
+    AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+    context.register(SpringConfig.class);
+    servletContext.addListener(new ContextLoaderListener(context));
+
+    ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+    servlet.setLoadOnStartup(1);
+    servlet.addMapping("/"); 
+  }
+  
+  @Bean
+  public ViewResolver viewResolver() {
+      InternalResourceViewResolver bean = new InternalResourceViewResolver();
+      bean.setViewClass(JstlView.class);
+      bean.setPrefix("/WEB-INF/");
+      bean.setSuffix(".jsp");
+      return bean;
+  }
+  
+  @Override
+  public void addResourceHandlers(final ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/js/**").addResourceLocations("/js/");
+    registry.addResourceHandler("/css/**").addResourceLocations("/css/");
+    registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts/");
+}
   
 //  @Autowired
 //  private Environment environement;

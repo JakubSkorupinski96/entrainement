@@ -55,30 +55,31 @@ public class ComputerController {
   /**
    * . Crée un ordinateur dans la BDD
    *
-   * @param name : nom de l'ordinateur
-   * @param intro : date d'introduction
+   * @param name   : nom de l'ordinateur
+   * @param intro  : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
-   * @throws ComputerNameException 
-   * @throws ComputerDateCoherenceException 
+   * @throws ComputerNameException : name cannot be empty
+   * @throws ComputerDateCoherenceException : introduction cannot be greater than discontinued
    */
-  public void create(String name, String intro, String discon, int compId) throws ComputerNameException, ComputerDateCoherenceException {
+  public void create(String name, String intro, String discon, int compId)
+      throws ComputerNameException, ComputerDateCoherenceException {
     computerServices.createComputer(name, intro, discon, compId);
   }
 
   /**
    * . Met à jour un ordinateur dans la BDD
    *
-   * @param name : nom de l'ordinateur
-   * @param newName : nouveau nom de l'ordinateur
-   * @param newIntro : nouvelle date d'introduction
-   * @param newDiscon : nouvelle date d'arrêt de production
+   * @param name         : nom de l'ordinateur
+   * @param newName      : nouveau nom de l'ordinateur
+   * @param newIntro     : nouvelle date d'introduction
+   * @param newDiscon    : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
-   * @throws ComputerNameException 
-   * @throws ComputerDateCoherenceException 
+   * @throws ComputerNameException : name cannot be empty
+   * @throws ComputerDateCoherenceException : introduction cannot be greater than discontinued
    */
-  public void update(String name, String newName, String newIntro,
-      String newDiscon, int newCompanyId) throws ComputerNameException, ComputerDateCoherenceException {
+  public void update(String name, String newName, String newIntro, String newDiscon,
+      int newCompanyId) throws ComputerNameException, ComputerDateCoherenceException {
     computerServices.updateComputer(name, newName, newIntro, newDiscon, newCompanyId);
   }
 

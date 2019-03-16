@@ -18,17 +18,18 @@ import spring.SpringConfig;
 @Controller
 @RequestMapping("/Dashboard")
 public class DashboardController {
- 
+
   ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
-  ComputerController computerController = (ComputerController) context.getBean(ComputerController.class);
-  
+  ComputerController computerController = (ComputerController) context
+      .getBean(ComputerController.class);
+
   private static ComputerMapper computerMapper = ComputerMapper.getInstance();
   private ArrayList<Computer> computers;
   private ArrayList<ComputerDTO> computerDTOs;
-  
+
   @RequestMapping(method = RequestMethod.GET)
   public String get(@RequestParam("search") String searchReq, Model model) {
-    
+
     boolean search = searchReq != null ? true : false;
     int nbPc;
     if (search) {
@@ -36,25 +37,25 @@ public class DashboardController {
       computerDTOs = computerMapper.computersToDTOs(computers);
       nbPc = computerController.countSearch(searchReq);
     } else {
-      //System.out.println("hey listen: " + computerController.listAll());
+      // System.out.println("hey listen: " + computerController.listAll());
       computers = new ArrayList<Computer>(computerController.listAll());
       computerDTOs = computerMapper.computersToDTOs(computers);
       nbPc = computerController.countAll();
     }
     model.addAttribute("list", computerDTOs);
-    //request.setAttribute("list", computerDTOs);
+    // request.setAttribute("list", computerDTOs);
     int pageSize = computers.size();
     int divider = pageSize != 0 ? pageSize : 1;
     int nbPage = nbPc / divider;
     model.addAttribute("size", nbPc);
-    //request.setAttribute("size", nbPc);
+    // request.setAttribute("size", nbPc);
     model.addAttribute("nbPages", nbPage);
-    //request.setAttribute("nbPages", nbPage);
+    // request.setAttribute("nbPages", nbPage);
     model.addAttribute("searchAttri", searchReq);
-    //request.setAttribute("searchAttri", searchReq);
-    
-    //request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
-    
+    // request.setAttribute("searchAttri", searchReq);
+
+    // request.getRequestDispatcher("/dashboard.jsp").forward(request, response);
+
     return "dashboard";
   }
 }

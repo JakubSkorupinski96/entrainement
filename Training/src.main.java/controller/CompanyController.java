@@ -17,7 +17,7 @@ public class CompanyController {
 
   private static CompanyController instance;
 
-  //private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
+  // private static Logger logger = LoggerFactory.getLogger(CompanyController.class);
 
   @Autowired
   CompanyServices companyServices;
@@ -61,7 +61,12 @@ public class CompanyController {
   public List<Company> listAll() {
     return companyServices.listAll();
   }
-  
+
+  /**
+   * . Deletes a company and all associated computers
+   * @param name : the company's name
+   * @throws SQLException : SQLException
+   */
   public void deleteCompany(String name) throws SQLException {
     companyServices.deleteCompany(name);
   }

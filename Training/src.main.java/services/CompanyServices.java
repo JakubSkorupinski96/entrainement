@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dao.CompanyDAO;
 import dao.CompanyJDBCTemplate;
 import model.Company;
 
@@ -14,9 +13,6 @@ import model.Company;
 public class CompanyServices {
 
   private static CompanyServices instance;
-
-//  @Autowired
-//  CompanyDAO companyDAO;
   
   @Autowired
   CompanyJDBCTemplate companyJDBC;

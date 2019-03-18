@@ -42,15 +42,15 @@ public class ComputerController {
     return instance;
   }
 
-  /**
-   * . Affiche la liste des ordinateurs dans la BDD
-   *
-   * @param page : la page sélectionné
-   * @return List<Computer>
-   */
-  public ArrayList<Computer> list(int page) {
-    return computerServices.listComputers(page);
-  }
+//  /**
+//   * . Affiche la liste des ordinateurs dans la BDD
+//   *
+//   * @param page : la page sélectionné
+//   * @return List<Computer>
+//   */
+//  public ArrayList<Computer> list(int page) {
+//    return computerServices.listComputers(page);
+//  }
 
   /**
    * . Crée un ordinateur dans la BDD

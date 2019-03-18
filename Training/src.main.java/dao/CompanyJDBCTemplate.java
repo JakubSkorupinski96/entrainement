@@ -12,7 +12,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import mapper.CompanyMapper;
 import model.Company;
 
-@Component("CompanyJdbc")
+@Component("CompanyJdbcTemplate")
 public class CompanyJDBCTemplate {
 
   private HikariDataSource dataSource;

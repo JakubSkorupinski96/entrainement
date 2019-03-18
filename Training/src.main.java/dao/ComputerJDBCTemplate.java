@@ -14,7 +14,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import mapper.ComputerMapper;
 import model.Computer;
 
-@Component("ComputerJdbc")
+@Component("ComputerJdbcTemplate")
 public class ComputerJDBCTemplate{
   
   private HikariDataSource dataSource;

@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dao.ComputerDAO;
 import dao.ComputerJDBCTemplate;
 import dto.ComputerDTO;
 import exception.ComputerDateCoherenceException;
@@ -22,8 +21,6 @@ public class ComputerServices {
 
   private static ComputerServices instance;
 
-  @Autowired
-  ComputerDAO computerDAO;
   
   @Autowired
   ComputerJDBCTemplate ComputerJdbc;
@@ -57,9 +54,9 @@ public class ComputerServices {
    *
    * @return List<Computer>
    */
-  public ArrayList<Computer> listComputers(int page) {
-    return computerDAO.listComputers(page);
-  }
+//  public ArrayList<Computer> listComputers(int page) {
+//    return ComputerJdbc.listComputers(page);
+//  }
 
   /**
    * . Crée un ordinateur dans la BDD

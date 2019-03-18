@@ -93,6 +93,10 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
     servlet.addMapping("/");
   }
 
+  /**
+   * . view resolver bean
+   * @return ViewResolver
+   */
   @Bean
   public ViewResolver viewResolver() {
     InternalResourceViewResolver bean = new InternalResourceViewResolver();

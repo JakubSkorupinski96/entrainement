@@ -11,36 +11,62 @@ import dto.CompanyDTO;
 import model.Company;
 
 @Component("companyMapper")
-public class CompanyMapper implements RowMapper{
-  
+public class CompanyMapper implements RowMapper {
+
   private static CompanyMapper instance;
-  
+
+  /**
+   * . CompanyMapper instance getter
+   * @return : CompanyMapper instance
+   */
+
   public static CompanyMapper getInstance() {
     if (instance == null) {
-      instance =  new CompanyMapper();
+      instance = new CompanyMapper();
     }
     return instance;
   }
-  
+
+  /**
+   * . CompanyMapper constructor
+   */
+
   private CompanyMapper() {
-    
+
   }
-  
+
+  /**
+   * . company to company DTO converter
+   * @param company : company to be converted
+   * @return : companyDTO
+   */
+
   public CompanyDTO companyToDTO(Company company) {
     CompanyDTO companyDTO = new CompanyDTO();
     companyDTO.setId(company.getId());
     companyDTO.setName(company.getName());
     return companyDTO;
   }
-  
-  public Company DTOToCompany (CompanyDTO companyDTO) {
+
+  /**
+   * . companyDTO to company converter
+   *
+   * @param companyDTO : DTO to be converted
+   * @return : Company
+   */
+  public Company dtoToCompany(CompanyDTO companyDTO) {
     Company company = new Company();
     company.setId(companyDTO.getId());
     company.setName(company.getName());
     return company;
   }
-  
-  public ArrayList<CompanyDTO> companiesToDTOs(ArrayList<Company> companies){
+
+  /**
+   * . convertes multiple companies to DTOs
+   * @param companies : companies to be converted
+   * @return : ArrayList<CompanyDTO>
+   */
+  public ArrayList<CompanyDTO> companiesToDTOs(ArrayList<Company> companies) {
     ArrayList<CompanyDTO> companyDTOs = new ArrayList<>();
     for (Company company : companies) {
       CompanyDTO companyDTO = companyToDTO(company);
@@ -48,11 +74,16 @@ public class CompanyMapper implements RowMapper{
     }
     return companyDTOs;
   }
-  
-  public ArrayList<Company> DTOsToCompanies(ArrayList<CompanyDTO> companyDTOs){
+
+  /**
+   * . convertes multiple DTOs to companies
+   * @param companyDTOs : DTO to be converted
+   * @return : ArrayList<List>
+   */
+  public ArrayList<Company> dTOsToCompanies(ArrayList<CompanyDTO> companyDTOs) {
     ArrayList<Company> companies = new ArrayList<>();
     for (CompanyDTO companyDTO : companyDTOs) {
-      Company company = DTOToCompany(companyDTO);
+      Company company = dtoToCompany(companyDTO);
       companies.add(company);
     }
     return companies;
@@ -65,5 +96,5 @@ public class CompanyMapper implements RowMapper{
     company.setName(rs.getString(2));
     return company;
   }
-  
+
 }

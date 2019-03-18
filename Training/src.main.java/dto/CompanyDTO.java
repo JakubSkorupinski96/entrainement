@@ -1,19 +1,27 @@
 package dto;
 
 public class CompanyDTO {
-  
+
   private int id;
   private String name;
-  
+
+  /**
+   * . companyDTO constructor
+   */
+
   public CompanyDTO() {
-    
   }
-  
+
+  /**
+   * . companyDTO constructor
+   * @param id : company ID
+   * @param name : company name
+   */
   public CompanyDTO(int id, String name) {
     this.id = id;
     this.name = name;
   }
-  
+
   public int getId() {
     return this.id;
   }

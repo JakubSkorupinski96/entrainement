@@ -14,6 +14,32 @@ public class ComputerDTO {
   /**
    * . Constructeur de computerDTO
    *
+   */
+
+  public ComputerDTO() {
+  }
+
+  /**
+   * . Constructeur de computerDTO
+   *
+   * @param id : id du computer
+   * @param name : nom du computer
+   * @param introduced : date d'introduction du computer
+   * @param discontinued : date d'arrêt de production du computer
+   * @param companyId : company Id
+   */
+
+  public ComputerDTO(int id, String name, String introduced, String discontinued, int companyId) {
+    this.id = id;
+    this.name = name;
+    this.introduced = introduced;
+    this.discontinued = discontinued;
+    this.companyId = companyId;
+  }
+
+  /**
+   * . Constructeur de computerDTO
+   *
    * @param id : id du computer
    * @param name : nom du computer
    * @param introduced : date d'introduction du computer
@@ -22,18 +48,6 @@ public class ComputerDTO {
    * @param companyName : nom de la compagnie
    */
 
-  public ComputerDTO() {
-    
-  }
-  
-  public ComputerDTO(int id, String name, String introduced, String discontinued, int companyId) {
-    this.id = id;
-    this.name = name;
-    this.introduced = introduced;
-    this.discontinued = discontinued;
-    this.companyId = companyId;
-  }
-  
   public ComputerDTO(int id, String name, String introduced, String discontinued, String company, String companyName) {
     this.id = id;
     this.name = name;
@@ -90,11 +104,11 @@ public class ComputerDTO {
   public void setCompanyName(String companyName) {
     this.companyName = companyName;
   }
-  
+
   public int getCompanyId() {
     return this.companyId;
   }
-  
+
   public void setCompanyId(int companyId) {
     this.companyId = companyId;
   }

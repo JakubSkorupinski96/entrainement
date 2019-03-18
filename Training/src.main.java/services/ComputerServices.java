@@ -2,17 +2,14 @@ package services;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.ComputerJDBCTemplate;
-import dto.ComputerDTO;
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
-import mapper.ComputerMapper;
 import model.Computer;
 import validator.ComputerValidator;
 
@@ -21,10 +18,10 @@ public class ComputerServices {
 
   private static ComputerServices instance;
 
-  
+
   @Autowired
   ComputerJDBCTemplate ComputerJdbc;
-  
+
   private ComputerValidator computerValidator = new ComputerValidator();
 
   /**
@@ -65,8 +62,8 @@ public class ComputerServices {
    * @param intro : date d'introduction
    * @param discon : date d'arrêt de production
    * @param compId : id de la companie
-   * @throws ComputerNameException 
-   * @throws ComputerDateCoherenceException 
+   * @throws ComputerNameException : computer name not null
+   * @throws ComputerDateCoherenceException : computer date are coherent
    */
 
   public void createComputer(String name, String intro, String discon,
@@ -81,13 +78,13 @@ public class ComputerServices {
   /**
    * . Met à jour un ordinateur dans la BDD
    *
-   * @param name : nom de l'ordinateur
-   * @param newName : nouveau nom de l'ordinateur
-   * @param newIntro : nouvelle date d'introduction
-   * @param newDiscon : nouvelle date d'arrêt de production
+   * @param name         : nom de l'ordinateur
+   * @param newName      : nouveau nom de l'ordinateur
+   * @param newIntro     : nouvelle date d'introduction
+   * @param newDiscon    : nouvelle date d'arrêt de production
    * @param newCompanyId : nouvel id de companie
-   * @throws ComputerNameException 
-   * @throws ComputerDateCoherenceException 
+   * @throws ComputerNameException          : computer name not null
+   * @throws ComputerDateCoherenceException : computer date are coherent
    */
 
   public void updateComputer(String name, String newName, String newIntro,

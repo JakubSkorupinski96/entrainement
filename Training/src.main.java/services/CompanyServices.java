@@ -13,7 +13,7 @@ import model.Company;
 public class CompanyServices {
 
   private static CompanyServices instance;
-  
+
   @Autowired
   CompanyJDBCTemplate companyJDBC;
 
@@ -55,7 +55,12 @@ public class CompanyServices {
   public List<Company> listAll() {
     return companyJDBC.listCompanies();
   }
-  
+
+  /**
+   * . Deletes a company and all its computers
+   * @param name : company name
+   * @throws SQLException : exception
+   */
   public void deleteCompany(String name) throws SQLException {
     companyJDBC.delete(name);
   }

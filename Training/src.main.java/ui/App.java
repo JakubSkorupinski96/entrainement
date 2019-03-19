@@ -37,7 +37,7 @@ public class App {
       System.out.println("Quelle page?:");
       Scanner companyPageScan = new Scanner(System.in);
       int companyPage = Integer.parseInt(companyPageScan.nextLine());
-      companyController.listCompanies(companyPage);
+      //companyController.listCompanies(companyPage);
       break;
     case "createPC":
       createPcUserInterface();
@@ -52,7 +52,7 @@ public class App {
       System.out.println("Quelle page?:");
       Scanner computerPageScan = new Scanner(System.in);
       int computerPage = Integer.parseInt(computerPageScan.nextLine());
-      computerController.list(computerPage);
+      //computerController.list(computerPage);
       break;
     case "showPCDetails":
       showPcDetailsUserInterface();

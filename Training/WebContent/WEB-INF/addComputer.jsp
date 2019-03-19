@@ -17,7 +17,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/Dashboard"> Application - Computer Database </a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/Dashboard?search="> Application - Computer Database </a>
         </div>        
     </header>
 		
@@ -58,13 +58,12 @@
                         <div class="actions pull-right">
                             <input id="submit" type="submit" value="Add" class="btn btn-primary">
                             or
-                            <a href="${pageContext.request.contextPath}/Dashboard" class="btn btn-default">Cancel</a>
+                            <a href="${pageContext.request.contextPath}/Dashboard?search=" class="btn btn-default">Cancel</a>
                         </div>
                     </form>
 					<script language="JavaScript" type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js">
                     $(document).ready(function () {
                         $("#submit").click(function () {
-                        	alert("Please input a hjsdgfhjxdsgfjhsdgjhfed");
                             var name = document.getElementById('name').value;
                             if (name.length == 0) {
                                 alert("Please input a name");

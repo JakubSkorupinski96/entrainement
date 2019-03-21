@@ -2,21 +2,42 @@ package model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "computer")
 public class Computer {
 
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
+
+  @Column
   private String name;
+
+  @Column (name = "introduced", nullable = true)
   private LocalDate introduced;
+
+  @Column (name = "discontinued", nullable = true)
   private LocalDate discontinued;
+
+  @ManyToOne
+  @JoinColumn(name = "company_id", nullable = true)
   private Company company;
-  private String companyName;
 
   /**
    * . Constructeur vide de computer
    */
   public Computer() {
   }
-
   /**
    * . Constructeur de computer
    *
@@ -27,14 +48,12 @@ public class Computer {
    * @param company          : companie associé à l'id_company de l'ordinateur
    * @param companyName      : nom de cette companie
    */
-  public Computer(int id, String name, LocalDate introDate, LocalDate discontinuedDate, Company company,
-      String companyName) {
+  public Computer(int id, String name, LocalDate introDate, LocalDate discontinuedDate, Company company) {
     this.id = id;
     this.name = name;
     this.introduced = introDate;
     this.discontinued = discontinuedDate;
     this.company = company;
-    this.companyName = companyName;
   }
 
   public int getId() {
@@ -77,18 +96,10 @@ public class Computer {
     this.company = company;
   }
 
-  public String getCompanyName() {
-    return companyName;
-  }
-
-  public void setCompanyName(String companyName) {
-    this.companyName = companyName;
-  }
-
   @Override
   public String toString() {
     return "Computer [id=" + id + ", name=" + name + ", intro_date=" + introduced
-        + ", discontinued_date=" + discontinued + ", company=" + companyName + " ]";
+        + ", discontinued_date=" + "discontinued ]";
   }
 
   public static class Builder {
@@ -182,7 +193,6 @@ public class Computer {
       computer.introduced = this.introduced;
       computer.discontinued = this.discontinued;
       computer.company = this.company;
-      computer.companyName = this.companyName;
       return computer;
     }
   }

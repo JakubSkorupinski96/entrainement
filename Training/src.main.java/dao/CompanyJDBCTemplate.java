@@ -2,15 +2,20 @@ package dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 import com.zaxxer.hikari.HikariDataSource;
 
 import mapper.CompanyMapper;
 import model.Company;
+import model.QCompany;
+import model.QComputer;
 
 @Component("CompanyJdbcTemplate")
 public class CompanyJDBCTemplate {
@@ -18,21 +23,23 @@ public class CompanyJDBCTemplate {
   private HikariDataSource dataSource;
   private JdbcTemplate jdbcTemplate;
   private CompanyMapper companyMapper;
+  private SessionFactory sessionFactory;
 
   /**
    * . JDBCTemplate autowired constructor
    *
    * @param dataSource : connection datasource
    * @param companyMapper : company Mapper
+   * @param sessionFactory : session factory
    */
 
   @Autowired
-  public CompanyJDBCTemplate(HikariDataSource dataSource, CompanyMapper companyMapper) {
+  public CompanyJDBCTemplate(HikariDataSource dataSource, CompanyMapper companyMapper, SessionFactory sessionFactory) {
     this.dataSource = dataSource;
     this.companyMapper = companyMapper;
+    this.sessionFactory = sessionFactory;
   }
 
-  private static final String SELECT_ALL = "SELECT id, name FROM company";
   private static final String DELETE_COMPANY = "DELETE FROM company WHERE name = ?";
   private static final String DELETE_COMPUTERS = "DELETE computer FROM computer computer JOIN company company ON computer.company_id = "
       + "company.id WHERE company.name = ?";
@@ -52,8 +59,12 @@ public class CompanyJDBCTemplate {
    */
 
   public List<Company> listCompanies() {
-    setDataSource();
-    return jdbcTemplate.query(SELECT_ALL, companyMapper);
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QCompany company = QCompany.company;
+    List<Company> companies = queryF.selectFrom(company).fetch();
+    session.close();
+    return companies;
   }
 
   /**
@@ -63,9 +74,14 @@ public class CompanyJDBCTemplate {
 
   @Transactional
   public void delete(String name) {
-    setDataSource();
-    jdbcTemplate.update(DELETE_COMPANY, name);
-    jdbcTemplate.update(DELETE_COMPUTERS, name);
+
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QCompany company = QCompany.company;
+    QComputer computer = QComputer.computer;
+    queryF.delete(computer).where(computer.company.name.eq(name)).execute();
+    queryF.delete(company).where(company.name.eq(name)).execute();
+    session.close();
   }
 
 }

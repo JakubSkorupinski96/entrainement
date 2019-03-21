@@ -1,60 +1,42 @@
 package dao;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
+import com.querydsl.jpa.hibernate.HibernateQueryFactory;
 
-import mapper.ComputerMapper;
+import model.Company;
+import model.QCompany;
 import model.Computer;
+import model.QComputer;
 
 @Component("ComputerJdbcTemplate")
 public class ComputerJDBCTemplate {
 
-  private HikariDataSource dataSource;
-  private JdbcTemplate jdbcTemplate;
-  private ComputerMapper computerMappper;
+  private SessionFactory sessionFactory;
 
   /**
    * . Constructor injection (spring)
    *
    * @param dataSource : dataSource
    * @param computerMappper : computerMapper
+   * @param sessionFactory : session Factory
    */
 
   @Autowired
-  public ComputerJDBCTemplate(HikariDataSource dataSource, ComputerMapper computerMappper) {
-    this.dataSource = dataSource;
-    this.computerMappper = computerMappper;
+  public ComputerJDBCTemplate(SessionFactory sessionFactory) {
+    this.sessionFactory = sessionFactory;
   }
-
-  private static final String INSERT_COMPUTER = "INSERT INTO computer (NAME,INTRODUCED,DISCONTINUED,COMPANY_ID) VALUES (?,?,?,?)";
-  private static final String DELETE_BY_NAME = "DELETE FROM computer WHERE NAME = ?";
-  private static final String SELECT_COMPUTER = "SELECT id, name, introduced, discontinued, company_id FROM computer WHERE name = ?";
-  private static final String UPDATE_BY_NAME = "UPDATE computer SET name=?, introduced=?, discontinued=?, company_id=? WHERE name = ?";
-  private static final String SELECT_COMPUTERS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued, "
-      + "computer.company_id, company.id, company.name FROM computer computer LEFT JOIN company company ON computer.company_id = company.id ";
-  private static final String SEARCH_COMPUTERS = "SELECT computer.id, computer.name, computer.introduced, computer.discontinued,"
-      + "computer.company_id, company.id, company.name FROM computer computer LEFT JOIN company company ON computer.company_id = company.id"
-      + " WHERE company.name LIKE ?";
-  private static final String COUNT_ALL = "SELECT COUNT(id) AS computers FROM computer";
-  private static final String COUNT_SEARCH = "SELECT COUNT(computer.id) AS computers FROM computer computer LEFT JOIN company company ON "
-      + "computer.company_id = company.id WHERE company.name LIKE ?";
 
   private static Logger logger = LoggerFactory.getLogger(ComputerJDBCTemplate.class);
-
-  /**
-   * . DataSource setter
-   */
-
-  public void setDataSource() {
-    this.jdbcTemplate = new JdbcTemplate(this.dataSource);
-  }
 
   /**
    * . Creates a computer
@@ -66,9 +48,22 @@ public class ComputerJDBCTemplate {
    */
 
   public void create(String name, String intro, String discon, int compId) {
-    setDataSource();
-    jdbcTemplate.update(INSERT_COMPUTER, name, intro, discon, compId);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    QCompany qCompany = QCompany.company;
+    Company company = queryF.selectFrom(qCompany).where(qCompany.id.eq(compId)).fetchOne();
+    Computer comp = new Computer();
+    computer.name.as(name);
+    comp.setName(name);
+    comp.setIntroduced(LocalDate.parse(intro, formatter));
+    comp.setDiscontinued(LocalDate.parse(discon, formatter));
+    comp.setCompany(company);
+    session.save(comp);
     logger.info("computer created");
+    session.close();
   }
 
   /**
@@ -78,9 +73,14 @@ public class ComputerJDBCTemplate {
    */
 
   public void delete(String name) {
-    setDataSource();
-    jdbcTemplate.update(DELETE_BY_NAME, name);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    System.out.println(computer);
+    queryF.delete(computer).where(computer.name.eq(name)).execute();
     logger.info("cumputer " + name + " deleted");
+    session.close();
   }
 
   /**
@@ -90,8 +90,13 @@ public class ComputerJDBCTemplate {
    */
 
   public void show(String name) {
-    setDataSource();
-    jdbcTemplate.update(SELECT_COMPUTER, name);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    Computer comp = queryF.selectFrom(computer).where(computer.name.eq(name)).fetchOne();
+    logger.info(comp.toString());
+    session.close();
   }
 
   /**
@@ -106,9 +111,20 @@ public class ComputerJDBCTemplate {
 
   public void update(String newName, String newIntro, String newDiscon, int newCompanyId,
       String name) {
-    setDataSource();
-    jdbcTemplate.update(UPDATE_BY_NAME, newName, newIntro, newDiscon, newCompanyId, name);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    Computer comp = queryF.selectFrom(computer).where(computer.name.eq(name)).fetchOne();
+    computer.name.as(name);
+    comp.setName(newName);
+    comp.setIntroduced(LocalDate.parse(newIntro, formatter));
+    comp.setDiscontinued(LocalDate.parse(newDiscon, formatter));
+    queryF.update(computer).where(computer.name.eq(name)).set(computer.name, newName).set(computer.introduced, LocalDate.parse(newIntro, formatter))
+    .set(computer.discontinued, LocalDate.parse(newDiscon, formatter)).set(computer.company.id, newCompanyId).execute();
     logger.info("computer " + name + " updated to " + newName);
+    session.close();
   }
 
   /**
@@ -118,8 +134,13 @@ public class ComputerJDBCTemplate {
    */
 
   public int countAll() {
-    setDataSource();
-    return jdbcTemplate.queryForObject(COUNT_ALL, Integer.class);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    int count = (int) queryF.selectFrom(computer).fetchCount();
+    session.close();
+    return count;
   }
 
   /**
@@ -129,9 +150,13 @@ public class ComputerJDBCTemplate {
    */
 
   public List<Computer> listComputers() {
-    setDataSource();
-    // System.out.println(jdbcTemplate.queryForList(SELECT_COMPUTERS,computerMappper));
-    return jdbcTemplate.query(SELECT_COMPUTERS, computerMappper);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    List<Computer> computers = queryF.selectFrom(computer).fetch();
+    session.close();
+    return computers;
   }
 
   /**
@@ -141,8 +166,14 @@ public class ComputerJDBCTemplate {
    * @return : List<Computer>
    */
   public List<Computer> listSearched(String name) {
-    setDataSource();
-    return jdbcTemplate.query(SEARCH_COMPUTERS, new Object[] {name}, computerMappper);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    QCompany company = QCompany.company;
+    List<Computer> computers = queryF.selectFrom(computer).where(company.name.like(name).or(computer.name.like(name))).fetch();
+    session.close();
+    return computers;
   }
 
   /**
@@ -152,7 +183,14 @@ public class ComputerJDBCTemplate {
    * @return : int
    */
   public int countSearched(String name) {
-    return jdbcTemplate.queryForObject(COUNT_SEARCH, new Object[] {name}, Integer.class);
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    QCompany company = QCompany.company;
+    int count = (int) queryF.selectFrom(computer).where(company.name.like(name).or(computer.name.like(name))).fetchCount();
+    session.close();
+    return count;
   }
 
 }

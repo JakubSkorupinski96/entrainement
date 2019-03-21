@@ -16,6 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -32,6 +36,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableWebMvc
+@EnableTransactionManagement
 @ComponentScan(basePackages = { "controller", "services", "mapper", "dao" })
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
@@ -111,6 +116,48 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
     registry.addResourceHandler("/js/**").addResourceLocations("/js/");
     registry.addResourceHandler("/css/**").addResourceLocations("/css/");
     registry.addResourceHandler("/fonts/**").addResourceLocations("/fonts/");
+  }
+
+  /**
+   * . Hibernate session setup
+   *
+   * @return ListFactoryBean
+   */
+
+  @Bean
+  public LocalSessionFactoryBean sessionFactory() {
+      LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+      sessionFactory.setDataSource(getDataSource());
+      sessionFactory.setPackagesToScan("model");
+      sessionFactory.setHibernateProperties(hibernateProperties());
+      return sessionFactory;
+  }
+
+  /**
+   * . Hibernate setup
+   *
+   * @return PlatformTransactionManager
+   */
+
+  @Bean
+  public PlatformTransactionManager hibernateTransactionManager() {
+      HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+      transactionManager.setSessionFactory(sessionFactory().getObject());
+      return transactionManager;
+  }
+
+  /**
+   * . Hibernate setup
+   *
+   * @return Properties
+   */
+
+  private Properties hibernateProperties() {
+      Properties hibernateProperties = new Properties();
+      //hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+      hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+
+      return hibernateProperties;
   }
 
 }

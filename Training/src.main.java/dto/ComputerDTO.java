@@ -8,7 +8,6 @@ public class ComputerDTO {
   private String name;
   private String introduced;
   private String discontinued;
-  private String company;
   private String companyName;
 
   /**
@@ -48,12 +47,12 @@ public class ComputerDTO {
    * @param companyName : nom de la compagnie
    */
 
-  public ComputerDTO(int id, String name, String introduced, String discontinued, String company, String companyName) {
+  public ComputerDTO(int id, String name, String introduced, String discontinued, int companyId, String companyName) {
     this.id = id;
     this.name = name;
     this.introduced = introduced;
     this.discontinued = discontinued;
-    this.company = company;
+    this.companyId = companyId;
     this.companyName = companyName;
   }
 
@@ -87,14 +86,6 @@ public class ComputerDTO {
 
   public void setDiscontinued(String discontinued) {
     this.discontinued = discontinued;
-  }
-
-  public String getCompany() {
-    return this.company;
-  }
-
-  public void setCompany(String company) {
-    this.company = company;
   }
 
   public String getCompanyName() {

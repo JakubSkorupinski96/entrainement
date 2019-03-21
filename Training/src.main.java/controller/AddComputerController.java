@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import exception.ComputerDateCoherenceException;
 import exception.ComputerNameException;
 import model.Company;
+import model.QCompany;
 import services.CompanyServices;
 import services.ComputerServices;
 

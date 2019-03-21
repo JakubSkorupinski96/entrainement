@@ -55,8 +55,11 @@ public class ComputerMapper implements RowMapper {
         computer.getIntroduced() == null ? null : computer.getIntroduced().toString());
     computerDTO.setDiscontinued(
         computer.getDiscontinued() == null ? null : computer.getDiscontinued().toString());
-    computerDTO.setCompanyName(computer.getCompanyName());
-    return computerDTO;
+    if (computer.getCompany() != null) {
+      computerDTO.setCompanyId(computer.getCompany().getId());
+      computerDTO.setCompanyName(computer.getCompany().getName());
+    }
+      return computerDTO;
   }
 
   /**
@@ -72,7 +75,6 @@ public class ComputerMapper implements RowMapper {
     computer.setName(computerDTO.getName());
     computer.setIntroduced(LocalDate.parse(computerDTO.getIntroduced(), formatter));
     computer.setDiscontinued(LocalDate.parse(computerDTO.getDiscontinued(), formatter));
-    computer.setCompanyName(computerDTO.getCompanyName());
     return computer;
   }
 
@@ -117,7 +119,6 @@ public class ComputerMapper implements RowMapper {
     if (rs.getString("discontinued") != null) {
       computer.setDiscontinued(LocalDate.parse(rs.getString(4).substring(0, 19), formatter));
     }
-    computer.setCompanyName(rs.getString(7));
     return computer;
   }
 

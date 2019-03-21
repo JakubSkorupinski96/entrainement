@@ -97,6 +97,8 @@ public class ComputerController {
    * @param name : le nom de l'ordinateur
    */
   public void show(String name) {
+    System.out.println(computerServices);
+    System.out.println(name);
     computerServices.showComputer(name);
   }
 

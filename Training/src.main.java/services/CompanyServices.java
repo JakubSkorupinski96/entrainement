@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import dao.CompanyJDBCTemplate;
 import model.Company;
+import model.QCompany;
 
 @Service("companyServices")
 public class CompanyServices {

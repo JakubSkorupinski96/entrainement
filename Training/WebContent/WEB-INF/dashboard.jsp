@@ -95,7 +95,7 @@
                         	</td>
                         	<td>${item.introduced}</td>
                         	<td>${item.discontinued}</td>
-                        	<td>${item.companyName}</td>
+                        	<td>${item.getCompanyName()}</td>
                     		</tr>
       						</c:forEach>
                 </tbody>

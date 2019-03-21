@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 //import org.slf4j.LoggerFactory;
 
 import model.Company;
+import model.QCompany;
 import services.CompanyServices;
 
 @Component("companyController")

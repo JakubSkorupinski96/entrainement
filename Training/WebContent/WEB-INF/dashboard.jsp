@@ -2,6 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
 <html>
@@ -36,8 +37,8 @@
                     </form>
                 </div>
                 <div class="pull-right">
-                    <a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/AddComputer">Add Computer</a> 
-                    <a class="btn btn-default" id="editComputer" onclick="$.fn.toggleEditMode();">Edit</a>
+                    <a class="btn btn-success" id="addComputer" href="${pageContext.request.contextPath}/AddComputer"><spring:message code="user.add"/></a> 
+                    <a class="btn btn-default" id="editComputer" onclick="$.fn.toggleEditMode();"><spring:message code="user.edit"/></a>
                 </div>
             </div>
         </div>

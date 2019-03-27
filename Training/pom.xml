@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>Training</groupId>
   <artifactId>Training</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
+  
   <properties>
 	<slf4jVersion>1.7.13</slf4jVersion>
 	<seleniumVersion>3.141.59</seleniumVersion>
@@ -16,9 +18,12 @@
 	<h2Version>1.4.196</h2Version>
 	<javax.servlet.version>3.1.0</javax.servlet.version>
 	<javax.inject.version>1</javax.inject.version>
+	<springSecurity>5.1.2.RELEASE</springSecurity>
+	<logback-classic.version>1.2.3</logback-classic.version>
+	<logback-core.version>1.2.3</logback-core.version>
   </properties>
+  
   <build>
-    <sourceDirectory>src.main.java</sourceDirectory>
     <pluginManagement>
     <plugins>
       <plugin>
@@ -59,6 +64,7 @@
 		            </executions>
 			</plugin>
     	</plugins>
+    	
     </pluginManagement>
     <plugins>
     <plugin>
@@ -71,7 +77,7 @@
             			<goal>process</goal>
           			</goals>
           			<configuration>
-            			<outputDirectory>target/generated-sources</outputDirectory>
+            			<outputDirectory>target/generated-sources/java</outputDirectory>
             			<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
           			</configuration>
         		</execution>
@@ -80,11 +86,23 @@
     </plugins>
     <resources>
     	<resource>
-        	<directory>src.main.resources</directory>
+        	<directory>src/main/java/resources</directory>
      	</resource>
     </resources>
   </build>
+  
+  <dependencyManagement>
   <dependencies>
+  <dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback-classic.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback-core.version}</version>
+		</dependency>
   
 	<dependency>
 		<groupId>org.slf4j</groupId>
@@ -227,19 +245,36 @@
     	<version>${javax.inject.version}</version>
 	</dependency>
 	
-<!-- 	<dependency> -->
-<!--     	<groupId>com.h2database</groupId>  -->
-<!--     	<artifactId>h2</artifactId> -->
-<!--     	<version>${h2Version}</version> -->
-<!-- 	</dependency> -->
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-core</artifactId>
+    	<version>${springSecurity}</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.springframework.security</groupId>
+    	<artifactId>spring-security-config</artifactId>
+    	<version>5.1.4.RELEASE</version>
+	</dependency>
+	<dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-taglibs</artifactId>
+        <version>4.0.4.RELEASE</version>
+    </dependency>
 	
 	<dependency>
     	<groupId>org.sonarsource.scanner.maven</groupId>
     	<artifactId>sonar-maven-plugin</artifactId>
-    <version>3.6.0.1398</version>
-    
-</dependency>
-	
-	        
+    	<version>3.6.0.1398</version>
+    </dependency>        
   </dependencies>
+  </dependencyManagement>
+  
+  <modules>
+    <module>core</module>
+    <module>persistence</module>
+    <module>service</module>
+    <module>binding</module>
+    <module>webapp</module>
+    <module>console</module>
+  </modules>
 </project>

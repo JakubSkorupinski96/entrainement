@@ -44,7 +44,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "controller", "services", "mapper", "dao" })
+@ComponentScan(basePackages = { "controller", "services", "mapper", "dao", "spring" })
 public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer {
 
   private static Logger logger = LoggerFactory.getLogger(SpringConfig.class);
@@ -99,8 +99,7 @@ public class SpringConfig implements WebMvcConfigurer, WebApplicationInitializer
     context.register(SpringConfig.class);
     servletContext.addListener(new ContextLoaderListener(context));
 
-    ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher",
-        new DispatcherServlet(context));
+    ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(context));
     servlet.setLoadOnStartup(1);
     servlet.addMapping("/");
   }

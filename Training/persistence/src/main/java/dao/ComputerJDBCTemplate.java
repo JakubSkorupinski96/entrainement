@@ -65,6 +65,28 @@ public class ComputerJDBCTemplate {
     logger.info("computer created");
     session.close();
   }
+  
+  
+  public Computer createComputer(String name, String intro, String discon, int compId) {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    QCompany qCompany = QCompany.company;
+    Company company = queryF.selectFrom(qCompany).where(qCompany.id.eq(compId)).fetchOne();
+    Computer comp = new Computer();
+    computer.name.as(name);
+    comp.setName(name);
+    comp.setIntroduced(LocalDate.parse(intro, formatter));
+    comp.setDiscontinued(LocalDate.parse(discon, formatter));
+    comp.setCompany(company);
+    session.save(comp);
+    logger.info("computer created");
+    session.close();
+    return comp;
+  }
+  
 
   /**
    * . Deletes a computer
@@ -82,6 +104,20 @@ public class ComputerJDBCTemplate {
     logger.info("cumputer " + name + " deleted");
     session.close();
   }
+  
+  
+  public Computer deleteComputer(String name) {
+    
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    System.out.println(computer);
+    queryF.delete(computer).where(computer.name.eq(name)).execute();
+    logger.info("cumputer " + name + " deleted");
+    session.close();
+    return null;
+  }
+  
 
   /**
    * . Shows all computer information
@@ -126,6 +162,26 @@ public class ComputerJDBCTemplate {
     logger.info("computer " + name + " updated to " + newName);
     session.close();
   }
+  
+  
+  public void updateREST(String newName, String newIntro, String newDiscon, int newCompanyId,
+      int id) {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QComputer computer = QComputer.computer;
+    Computer comp = queryF.selectFrom(computer).where(computer.id.eq(id)).fetchOne();
+    //computer.name.as(name);
+    comp.setName(newName);
+    comp.setIntroduced(LocalDate.parse(newIntro, formatter));
+    comp.setDiscontinued(LocalDate.parse(newDiscon, formatter));
+    queryF.update(computer).where(computer.id.eq(id)).set(computer.name, newName).set(computer.introduced, LocalDate.parse(newIntro, formatter))
+    .set(computer.discontinued, LocalDate.parse(newDiscon, formatter)).set(computer.company.id, newCompanyId).execute();
+    logger.info("computer " + id + " updated to " + newName);
+    session.close();
+  }
+  
 
   /**
    * . Counts all computers in the DB

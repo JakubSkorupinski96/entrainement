@@ -3,6 +3,7 @@ package mapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -66,7 +67,7 @@ public class CompanyMapper implements RowMapper {
    * @param companies : companies to be converted
    * @return : ArrayList<CompanyDTO>
    */
-  public ArrayList<CompanyDTO> companiesToDTOs(ArrayList<Company> companies) {
+  public List<CompanyDTO> companiesToDTOs(List<Company> companies) {
     ArrayList<CompanyDTO> companyDTOs = new ArrayList<>();
     for (Company company : companies) {
       CompanyDTO companyDTO = companyToDTO(company);
@@ -80,7 +81,7 @@ public class CompanyMapper implements RowMapper {
    * @param companyDTOs : DTO to be converted
    * @return : ArrayList<List>
    */
-  public ArrayList<Company> dTOsToCompanies(ArrayList<CompanyDTO> companyDTOs) {
+  public List<Company> dTOsToCompanies(List<CompanyDTO> companyDTOs) {
     ArrayList<Company> companies = new ArrayList<>();
     for (CompanyDTO companyDTO : companyDTOs) {
       Company company = dtoToCompany(companyDTO);

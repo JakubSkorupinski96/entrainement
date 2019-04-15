@@ -21,6 +21,7 @@
 	<springSecurity>5.1.2.RELEASE</springSecurity>
 	<logback-classic.version>1.2.3</logback-classic.version>
 	<logback-core.version>1.2.3</logback-core.version>
+	<jacksonVersion>2.9.8</jacksonVersion>
   </properties>
   
   <build>
@@ -260,6 +261,17 @@
         <artifactId>spring-security-taglibs</artifactId>
         <version>5.1.4.RELEASE</version>
     </dependency>
+	
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
+		<version>${jacksonVersion}</version>
+	</dependency>
+	<dependency>
+    	<groupId>com.fasterxml.jackson.core</groupId>
+    	<artifactId>jackson-core</artifactId>
+    	<version>${jacksonVersion}</version>
+	</dependency>
 	
 	<dependency>
     	<groupId>org.sonarsource.scanner.maven</groupId>

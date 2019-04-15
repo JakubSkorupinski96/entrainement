@@ -75,6 +75,16 @@ public class ComputerServices {
     ComputerJdbc.create(name, intro, discon, compId);
   }
 
+  
+  public Computer createComputerREST(String name, String intro, String discon,
+      int compId) throws ComputerNameException, ComputerDateCoherenceException {  
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    computerValidator.validateComputerName(name);
+    computerValidator.validateComputerDates(LocalDate.parse(intro, formatter), LocalDate.parse(discon, formatter));
+    //computerDAO.createComputer(name, intro, discon, compId);
+    return ComputerJdbc.createComputer(name, intro, discon, compId);
+  }
+  
   /**
    * . Met à jour un ordinateur dans la BDD
    *
@@ -94,6 +104,16 @@ public class ComputerServices {
     computerValidator.validateComputerDates(LocalDate.parse(newIntro, formatter), LocalDate.parse(newDiscon, formatter));
     //computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
     ComputerJdbc.update(newName, newIntro, newDiscon, newCompanyId, name);
+  }
+  
+  
+  public void updateComputerREST(int id, String newName, String newIntro,
+      String newDiscon, int newCompanyId) throws ComputerNameException, ComputerDateCoherenceException {
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:SS");
+    //computerValidator.validateComputerName(name);
+    computerValidator.validateComputerDates(LocalDate.parse(newIntro, formatter), LocalDate.parse(newDiscon, formatter));
+    //computerDAO.updatePC(name, newName, newIntro, newDiscon, newCompanyId);
+    ComputerJdbc.updateREST(newName, newIntro, newDiscon, newCompanyId, id);
   }
 
   /**

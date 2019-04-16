@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +32,8 @@ import services.ComputerServices;
 @RequestMapping(value = "/webServices/computer")
 public class ComputerRestController {
 
+  private static Logger logger = LoggerFactory.getLogger(ComputerRestController.class);
+  
   @Autowired
   ComputerServices computerServices;
   
@@ -52,6 +56,8 @@ public class ComputerRestController {
   @PostMapping(value = "/Add")
   public ComputerDTO addComputer(@RequestBody ComputerDTO add) {
     
+    String errorMessage;
+    
     Computer computer = new Computer();
     ComputerDTO computerDTO = new ComputerDTO();
     String introduced = add.getIntroduced();
@@ -63,8 +69,14 @@ public class ComputerRestController {
       computer = computerServices.createComputerREST(add.getName(), introduced, discontinued, add.getCompanyId());
       computerDTO = computerMapper.computerToDTO(computer);
     } catch (NumberFormatException e) {
+      errorMessage = "The selected company doesn't have an id";
+      logger.error(errorMessage);
     } catch (ComputerNameException e) {
+      errorMessage = "Computer name cannot be empty";
+      logger.error(errorMessage);
     } catch (ComputerDateCoherenceException e) {
+      errorMessage = "Introduced cannot be greater than Discontinued";
+      logger.error(errorMessage);
     }
 
     return computerDTO;
@@ -84,6 +96,8 @@ public class ComputerRestController {
   @PatchMapping(value = "/EditComputer")
   public ComputerDTO edit(@RequestBody ComputerDTO edit) {
     
+    String errorMessage;
+    
     String introduced = edit.getIntroduced();
     introduced += " 00:00:00";
     
@@ -93,8 +107,14 @@ public class ComputerRestController {
     try {
       computerServices.updateComputerREST(edit.getId(), edit.getName(), introduced, discontinued, edit.getCompanyId());
     } catch (NumberFormatException e) {
+      errorMessage = "The selected company doesn't have an id";
+      logger.error(errorMessage);
     } catch (ComputerNameException e) {
+      errorMessage = "Computer name cannot be empty";
+      logger.error(errorMessage);
     } catch (ComputerDateCoherenceException e) {
+      errorMessage = "Introduced cannot be greater than Discontinued";
+      logger.error(errorMessage);
     }
 
 

@@ -83,5 +83,17 @@ public class CompanyJDBCTemplate {
     queryF.delete(company).where(company.name.eq(name)).execute();
     session.close();
   }
+  
+  @Transactional
+  public void deleteREST(int id) {
+
+    Session session = this.sessionFactory.openSession();
+    HibernateQueryFactory queryF = new HibernateQueryFactory(session);
+    QCompany company = QCompany.company;
+    QComputer computer = QComputer.computer;
+    queryF.delete(computer).where(computer.company.id.eq(id)).execute();
+    queryF.delete(company).where(company.id.eq(id)).execute();
+    session.close();
+  }
 
 }

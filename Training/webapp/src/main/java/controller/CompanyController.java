@@ -71,4 +71,8 @@ public class CompanyController {
   public void deleteCompany(String name) throws SQLException {
     companyServices.deleteCompany(name);
   }
+  
+  public void deleteCompanyREST(int id) throws SQLException {
+    companyServices.deleteCompanyREST(id);
+  }
 }

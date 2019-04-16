@@ -65,4 +65,8 @@ public class CompanyServices {
   public void deleteCompany(String name) throws SQLException {
     companyJDBC.delete(name);
   }
+  
+  public void deleteCompanyREST(int id) throws SQLException {
+    companyJDBC.deleteREST(id);
+  }
 }

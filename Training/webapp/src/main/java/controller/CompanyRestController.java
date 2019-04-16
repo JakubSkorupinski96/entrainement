@@ -48,7 +48,7 @@ public class CompanyRestController {
   
   @DeleteMapping(value= "/delete")
   public void deleteCompany(@RequestBody ComputerDTO delete) throws SQLException {
-    companyServices.deleteCompany(delete.getName());
+    companyServices.deleteCompanyREST(delete.getId());
   }
 
 }
